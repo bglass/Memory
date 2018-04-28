@@ -1,0 +1,5 @@
+ul
+  - @this.children.each do |child|
+    - @this = child
+    li: font color=@this.color #{@this.name}
+    = render "folders/folder_tree_node"

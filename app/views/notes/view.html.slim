@@ -1,0 +1,9 @@
+body bgcolor="#eeeeee"
+  .content
+    = markdown @note.content
+  hr
+  .meta
+    ul
+      - @note.raw.each do |k, v|
+        li #{k}: #{v}
+  hr

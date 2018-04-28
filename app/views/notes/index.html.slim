@@ -1,0 +1,7 @@
+body bgcolor="#eeeeee"
+  h1 Notes
+  .notes
+    ul
+      - @notes.each do |n|
+        = link_to :controller=> "note", :action=>"view", :id => n.id do
+          li #{n.title}

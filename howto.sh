@@ -1,4 +1,5 @@
 bash
+#npm install any-json -g
 
 title=boostread
 workpath=~/work/rails
@@ -8,7 +9,7 @@ work=$workpath/$title
 
 cd $work
 
-git init
+#git init
 git add .
 git commit -m "Initial commit."
 

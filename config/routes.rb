@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  get 'static_pages/home'
+
+  get 'tags'      => 'tag#index'
+  get 'folders'   => 'folder#index'
+  get 'notes'     => 'note#index'
+  get 'note/:id'  => 'note#view'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
