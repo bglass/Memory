@@ -7,6 +7,9 @@ class Location
     Rails.configuration.notes
   end
 
+  def self.class_of(name)
+      name.downcase.camelcase.constantize
+  end
 
   def self.read_all
 
@@ -16,14 +19,10 @@ class Location
 
     locations.each do |data|
       (name, type, path) = data
-      case type.downcase
-      when "boostnote"
-        Boostnote.new(name, path)
-      when "nextcloud", "owncloud"
-        # LocationNextCloud.new(name, path)
-      else
-        binding.pry
-      end
+
+      plugin = class_of type
+      plugin.new(name, path) if plugin
+
     end
   end
 
