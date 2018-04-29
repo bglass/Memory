@@ -18,7 +18,7 @@ class Location
       (name, type, path) = data
       case type.downcase
       when "boostnote"
-        LocationBoostNote.new(name, path)
+        Boostnote.new(name, path)
       when "nextcloud", "owncloud"
         # LocationNextCloud.new(name, path)
       else

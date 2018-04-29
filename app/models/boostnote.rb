@@ -1,5 +1,7 @@
-class LocationBoostNote < Location
+require 'boostnote/folder'
+require 'boostnote/note'
 
+class Boostnote < Location
 
   def read(path)
     read_folders(path)
@@ -10,7 +12,7 @@ class LocationBoostNote < Location
     file = File.read(path + "/boostnote.json")
     data = JSON.parse(file)
     data["location"] = self
-    root = FolderBoostNoteRoot.create(data)
+    root = BnRoot.create(data)
     Folder.add_root root
   end
 
@@ -22,9 +24,9 @@ class LocationBoostNote < Location
       note = CSON.load_file file
       case note["type"]
       when "MARKDOWN_NOTE"
-        Noteboostnote.create(note)
+        BnNote.create(note)
       when "SNIPPET_NOTE"
-        NoteBoostSnippet.create(note)
+        BnSnippet.create(note)
       else
         binding.pry
       end

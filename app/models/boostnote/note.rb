@@ -1,7 +1,7 @@
-class Noteboostnote < Note
+class BnNote < Note
 
   def self.create(note)
-    this = Noteboostnote.new
+    this = BnNote.new
     this.setup(note)
   end
 
@@ -24,6 +24,6 @@ class Noteboostnote < Note
 end
 
 
-class NoteBoostSnippet < Noteboostnote
+class BnSnippet < BnNote
     def content()   @note["snippets"].to_s;     end
 end
