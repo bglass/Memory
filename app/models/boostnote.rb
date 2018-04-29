@@ -23,9 +23,9 @@ class Boostnote < Location
       note = CSON.load_file file
       case note["type"]
       when "MARKDOWN_NOTE"
-        BnNote.new.setup(note)
+        BnNote.new(note)
       when "SNIPPET_NOTE"
-        BnSnippet.new.setup(note)
+        BnSnippet.new(note)
       else
         binding.pry
       end

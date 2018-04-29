@@ -1,10 +1,10 @@
 class BnNote < Note
 
-  def setup(note)
+  def initialize(note)
     @note = note
     @note[:id] = @@all.size
     @@all << self
-    Tag.add @note["tags"]
+    Tag.add_by_name @note["tags"]
   end
 
   def id()        @note[:id];           end

@@ -9,7 +9,7 @@ class NcNote < Note
   def self.create(node)
     case node.extname.downcase
     when ".md", ".txt"
-      NcNote.new.setup(node)
+      NcNote.new(node)
     end
   end
 
@@ -17,7 +17,7 @@ class NcNote < Note
     content.lines.first.sub /^#*\s*/, ""
   end
 
-  def setup(node)
+  def initialize(node)
     @path    = node
     @title   = title_of content
     @id      = @@all.size

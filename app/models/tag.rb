@@ -11,8 +11,17 @@ class Tag
     @@all = Set[]
   end
 
-  def self.add(tagNames)
-    @@all.merge(tagNames)
+  def self.add_by_name(tagNames)
+    tagNames.each do |name|
+      Tag.new(name)
+    end
+
   end
+
+  def initialize(name)
+    @name = name
+    @@all << self
+  end
+
 
 end

@@ -1,6 +1,7 @@
 require 'nextcloud/folder'
 require 'nextcloud/note'
 require 'nextcloud/tag'
+require 'nextcloud/database'
 
 class Nextcloud < Location
   def read(path)

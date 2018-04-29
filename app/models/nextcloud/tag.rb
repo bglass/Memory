@@ -1,19 +1,19 @@
-require 'nextcloud/database'
+class NcTag < Tag
 
+  def name()    @tag["name"];     end
+  def date()    @tag["created"];  end
+  def color()   @tag["color"];    end
 
-class NcNoteTagLink < NextCloudDbBase
-  self.table_name = "noteTagLink"
-    connection
-    binding.pry
-end
-
-class NcTag < NextCloudDbBase
-  self.table_name = "tag"
 
   def self.read
-    connection
-    binding.pry
+    NcTagTable.dump.each do |tag|
+      NcTag.new(tag)
+    end
   end
 
+  def initialize(tag)
+    @tag = tag
+    @@all << self
+  end
 
 end
