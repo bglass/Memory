@@ -14,7 +14,7 @@ class NcNote < Note
   end
 
   def title_of(text)
-    content.lines.first
+    content.lines.first.sub /^#*\s*/, ""
   end
 
   def setup(node)
