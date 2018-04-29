@@ -1,8 +1,7 @@
-class BnRoot < Folder
-
-  def name()
-    @folder["location"].name;
-  end
+class BnFolder < Folder
+  def key()      @folder["key"];       end
+  def color()    @folder["color"];     end
+  def name()     @folder["name"];      end
 
   def self.create(data)
     children_data = data.delete "folders"
@@ -15,10 +14,13 @@ class BnRoot < Folder
     end
     root
   end
+  
 end
 
-class BnFolder < BnRoot
-  def key()      @folder["key"];       end
-  def color()    @folder["color"];     end
-  def name()     @folder["name"];      end
+class BnRoot < BnFolder
+
+  def name()
+    @folder["location"].name;
+  end
+
 end
