@@ -24,7 +24,8 @@ module Boostread
     config.active_record.raise_in_transactional_callbacks = true
 
     config.notes = [
-      ["Nexus",  "boostnote", "/home/boris/Nextcloud/Boostnote"]
+      ["Nexus",  "boostnote", "/home/boris/Nextcloud/Boostnote"],
+      ["Mobile", "nextcloud", "/home/boris/Nextcloud/Notes"]
     ]
 
   end

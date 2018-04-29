@@ -1,10 +1,5 @@
 class BnNote < Note
 
-  def self.create(note)
-    this = BnNote.new
-    this.setup(note)
-  end
-
   def setup(note)
     @note = note
     @note[:id] = @@all.size

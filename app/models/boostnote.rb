@@ -9,7 +9,7 @@ class Boostnote < Location
   end
 
   def read_folders(path)
-    file = File.read(path + "/boostnote.json")
+    file = File.read(path + "boostnote.json")
     data = JSON.parse(file)
     data["location"] = self
     root = BnRoot.create(data)
@@ -18,15 +18,14 @@ class Boostnote < Location
 
   def read_notes(path)
     Note
-    files = Dir.glob(path + "/notes/*")
-
+    files = Dir.glob(path + "notes/*")
     files.each do |file|
       note = CSON.load_file file
       case note["type"]
       when "MARKDOWN_NOTE"
-        BnNote.create(note)
+        BnNote.new.setup(note)
       when "SNIPPET_NOTE"
-        BnSnippet.create(note)
+        BnSnippet.new.setup(note)
       else
         binding.pry
       end

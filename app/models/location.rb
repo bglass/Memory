@@ -20,6 +20,7 @@ class Location
     locations.each do |data|
       (name, type, path) = data
 
+      path = Pathname(path)
       plugin = class_of type
       plugin.new(name, path) if plugin
 
