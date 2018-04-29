@@ -9,7 +9,10 @@ class Nextcloud < Location
   end
 
   def read_folders(path)
-    # Folder.add_root NcRoot.create(self)
+    root = NcRoot.new
+    root.setup(self)
+    root.create_tree
+    Folder.add_root root
   end
 
 
