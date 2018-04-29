@@ -1,5 +1,5 @@
 
-class Folder
+class Folder 
   attr_accessor :children
 
   def initialize(data = {})

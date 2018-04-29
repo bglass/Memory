@@ -17,7 +17,7 @@ class NcFolder < Folder
         child.setup(node)
         @children << child
       when node.file?
-        # ignore
+        NcNote.create(node)
       end
     end
   end
