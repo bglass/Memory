@@ -14,7 +14,9 @@ class NcNote < Note
   end
 
   def title_of(text)
-    content.lines.first.sub /^#*\s*/, ""
+    headline = text.lines.first
+    headline.sub! /^#*\s*/, ""
+    headline.chomp
   end
 
   def initialize(node)
