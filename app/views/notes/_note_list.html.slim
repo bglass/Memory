@@ -1,0 +1,4 @@
+ul
+  - @notes.each do |n|
+    = link_to :controller=> "note", :action=>"view", :id => n.id do
+      li #{n.title}

@@ -1,6 +1,4 @@
 body bgcolor="#eeeeee"
   h1 Tags
   .tags
-    ul
-      - @tags.each do |t|
-        li = "[#{t.name}]"
+    = render "tags/tag_list"

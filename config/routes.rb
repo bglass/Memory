@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'folders'   => 'folder#index'
   get 'notes'     => 'note#index'
   get 'note/:id'  => 'note#view'
+  get '/'         => 'main#view'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,14 +1,15 @@
-require 'set'
-
 class Tag
   attr_accessor :name
+
+### to be reimplemented as tree!
+
 
   def self.all
     @@all
   end
 
   def self.reset
-    @@all = Set[]
+    @@all = []
   end
 
   def self.add_by_name(tagNames)

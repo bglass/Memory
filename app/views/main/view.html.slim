@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title United Notes
+    javascript:
+      /* alert('Slim supports embedded javascript!') */
+
+  body
+    h1 Folders
+    #folders
+    - @this = @tagroot
+    .folders
+    = render "folders/folder_tree_node"
+
+    h1 Tags
+    .tags
+      = render "tags/tag_list"
+
+    h1 Notes
+    .notes
+      = render "notes/note_list"
+    
