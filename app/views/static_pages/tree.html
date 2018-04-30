@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <%= stylesheet_link_tag 'application' %>
+  <%= javascript_include_tag "application" %>
+
+</head>
+<body>
+  <h1>ERB version</h1>
+  <div id="jstree">
+    <ul>
+      <li>Root node 1
+        <ul>
+          <li id="child_node_1">Child node 1</li>
+          <li>Child node 2</li>
+        </ul>
+      </li>
+      <li>Root node 2</li>
+    </ul>
+  </div>
+
+  <script>
+  $(function () {
+    $('#jstree').jstree();
+  });
+  </script>
+</body>
+</html>

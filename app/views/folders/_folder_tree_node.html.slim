@@ -1,5 +1,9 @@
-ul
-  - @this.children.each do |child|
-    - @this = child
-    li: font color=@this.color #{@this.name}
-    = render "folders/folder_tree_node"
+= "\n\n"
+- if @this.children.any?
+  <ul>
+    - @this.children.each do |child|
+      - @this = child
+      <li font color=@this.color> #{@this.name}
+      = (render "folders/folder_tree_node") + "\n"
+      </li>
+  </ul>

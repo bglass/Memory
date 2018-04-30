@@ -37,6 +37,7 @@ gem 'pry'
 gem 'coffee-script'
 gem 'psych'
 gem 'redcarpet'
+gem "jstree-rails-4"
 
 
 group :development, :test do

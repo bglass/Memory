@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get 'notes'     => 'note#index'
   get 'note/:id'  => 'note#view'
   get '/'         => 'main#view'
+  get '/tree'     => 'static_pages#tree'
+  get '/slimtree' => 'static_pages#slimtree'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

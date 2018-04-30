@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag "application"
+
+  body
+
+    h1 slim version
+
+    #jstree
+      ul
+        li Root node 1
+          <ul>
+          <li>  Child node 1
+          <li>  Child node 2
+          </ul>
+        li Root node 2
+
+  javascript:
+    $(function () {
+      $('#jstree').jstree();
+    });
