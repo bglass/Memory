@@ -2,10 +2,9 @@ doctype html
 html
   head
     = stylesheet_link_tag 'application'
+    = javascript_include_tag "application"
     title United Notes
-    javascript:
-      /* alert('Slim supports embedded javascript!') */
-
+    link rel="stylesheet" href="dist/themes/default/style.min.css"
   body
     #header
       h1 United Tags
@@ -13,18 +12,23 @@ html
     #navigation
       span viele bunte buttons
 
-    .column
+      #jstree_demo_div this could be your tree
+
+    .folders
       h2 Folders
       - @this = @tagroot
       = render "folders/folder_tree_node"
 
-    .column
+    .tags
       h2 Tags
       = render "tags/tag_list"
 
-    .column
+    .notes
       h2 Notes
       = render "notes/note_list"
 
     #footer
-      span viele kleine Füsse
+      p viele kleine Füsse
+
+  javascript:
+    $(function() { $('.folders').jstree(); });
