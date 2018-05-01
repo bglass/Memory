@@ -23,7 +23,6 @@ $(function () {
     $('.folders').on("changed.jstree", function (e, data) {
 	var i, j, r = [];
 	var request = "";
-  $('.folders').jstree('open_all');
 
 	for(i = 0, j = data.selected.length; i < j; i++) {
 	     r.push(data.instance.get_node(data.selected[i]).id);
