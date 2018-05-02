@@ -1,4 +1,8 @@
-body bgcolor="#eeeeee"
+doctype html
+html
+  head
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag "application"
+  body
   h1 Notes
-  .notes
-    = render "notes/note_list"
+  = render "notes/note_list"

@@ -4,25 +4,26 @@ body {
 
 .app_grid {
   display: grid;
-  grid-template-columns: 15% 15% 15% 52%;
-  /* background-color: #2196F3; */
+  grid-template-columns: auto auto auto auto;
+  background-color: #aaaaaa; 
   height: 98vh;
-  grid-column-gap: 10px;
-  grid-row-gap: 15px;
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
   grid-template-rows: 10ex 10ex auto 10ex;
 }
 
 .app_grid > div {
-  background-color: rgba(155, 155, 155, 80);
-  color: rgba(255, 255, 255, 80);
+  // background-color: rgba(155, 155, 155, 80);
+  // color: rgba(255, 255, 255, 80);
   // border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 10px;
   // font-size: 30px;
-  overflow: auto
 
 }
 
-.folders, .tags, .notes {
+.folder_box, .tag_box, .note_box {
+  overflow: auto
+
 }
 
 .header, .navigation, .footer {

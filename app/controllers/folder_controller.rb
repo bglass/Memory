@@ -3,7 +3,7 @@ class FolderController < ActionController::Base
 
   def index
     Location.read_all
-    @top = Folder.top
+    @folders = Folder.top
     render "folders/index"
   end
 

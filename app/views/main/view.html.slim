@@ -13,16 +13,15 @@ html
       .navigation
         span viele bunte buttons
 
-      .folder_list
+      .folder_box
         h2 Folders
-        - @this = @tagroot
-        = render "folders/folder_tree_node"
+        = render "folders/folder_tree"
 
-      .tag_list
+      .tag_box
         h2 Tags
-        = render "tags/tag_list"
+        = render "tags/tag_tree"
 
-      .note_list
+      .note_box
         h2 Notes
         = render "notes/note_list"
 

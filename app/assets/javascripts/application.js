@@ -15,3 +15,9 @@
 //= require turbolinks
 //= require jstree
 //= require_tree .
+
+if (jQuery) {
+    // alert("jquery is loaded");
+} else {
+    alert("Not loaded");
+}

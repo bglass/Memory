@@ -1,7 +1,7 @@
 
 
 $(function () {
-    $('.folders').jstree({
+    $('.tag_tree').jstree({
   "plugins" : [ "checkbox" ]});
     $('.folders').on("changed.jstree", function (e, data) {
 	var i, j, r = [];
@@ -11,8 +11,8 @@ $(function () {
 
     });
     $('button').on('click', function () {
-	$('.folders').jstree(true).select_node('child_node_1');
-	$('.folders').jstree('select_node', 'child_node_1');
-	$.jstree.reference('.folders').select_node('child_node_1');
+	$('.tag_tree').jstree(true).select_node('child_node_1');
+	$('.tag_tree').jstree('select_node', 'child_node_1');
+	$.jstree.reference('.tag_tree').select_node('child_node_1');
     });
 });

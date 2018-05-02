@@ -3,7 +3,7 @@ class MainController < ActionController::Base
 
   def view
     Location.read_all
-    @tagroot  = Folder.top
+    @folders  = Folder.top
     @tags     = Tag.all
     @notes    = Note.all
     render "main/view"
