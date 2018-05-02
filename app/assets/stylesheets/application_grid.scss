@@ -1,0 +1,31 @@
+body {
+  overflow: hidden;
+}
+
+.app_grid {
+  display: grid;
+  grid-template-columns: 15% 15% 15% 52%;
+  /* background-color: #2196F3; */
+  height: 98vh;
+  grid-column-gap: 10px;
+  grid-row-gap: 15px;
+  grid-template-rows: 10ex 10ex auto 10ex;
+}
+
+.app_grid > div {
+  background-color: rgba(155, 155, 155, 80);
+  color: rgba(255, 255, 255, 80);
+  // border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  // font-size: 30px;
+  overflow: auto
+
+}
+
+.folders, .tags, .notes {
+}
+
+.header, .navigation, .footer {
+  grid-column: span 4;
+  text-align: center;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <style>
+  .app_grid {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    /* background-color: #2196F3; */
+    height: 99vh;
+    grid-column-gap: 10px;
+    grid-row-gap: 15px;
+    grid-template-rows: 10ex 10ex auto 10ex;
+  }
+
+
+
+  .app_grid > div {
+    background-color: rgba(155, 155, 155, 80);
+    color: rgba(255, 255, 255, 80);
+    /* border: 1px solid rgba(0, 0, 0, 0.8); */
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+
+  }
+
+  .header, .navigation, .footer {
+    grid-column: span 4;
+  }
+
+  body
+  {
+    overflow: hidden;
+  }
+
+</style> -->
+<%= stylesheet_link_tag 'application' %>
+</head>
+<body>
+
+  <div class="app_grid">
+    <div class="header">Header</div>
+    <div class="navigation">Navigation</div>
+    <div class="folder_list">Folders</div>
+    <div class="tag_list">Tags<br/>Tags<br/>Tags</div>
+    <div class="note_list">Notes</div>
+    <div class="content_display">Content</div>
+    <div class="footer">Footer</div>
+  </div>
+
+</body>
+</html>

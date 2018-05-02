@@ -4,26 +4,39 @@ html
     = stylesheet_link_tag 'application'
     = javascript_include_tag "application"
     title United Notes
-    link rel="stylesheet" href="dist/themes/default/style.min.css"
   body
-    #header
-      h1 United Tags
 
-    #navigation
-      span viele bunte buttons
+    .app_grid
+      .header
+        h1 United Tags
 
-    .folders
-      h2 Folders
-      - @this = @tagroot
-      = render "folders/folder_tree_node"
+      .navigation
+        span viele bunte buttons
 
-    .tags
-      h2 Tags
-      = render "tags/tag_list"
+      .folder_list
+        h2 Folders
+        - @this = @tagroot
+        = render "folders/folder_tree_node"
 
-    .notes
-      h2 Notes
-      = render "notes/note_list"
+      .tag_list
+        h2 Tags
+        = render "tags/tag_list"
 
-    #footer
-      p viele kleine Füsse
+      .note_list
+        h2 Notes
+        = render "notes/note_list"
+
+      .content_display
+        p 1
+        p 2
+        p 3
+        p 4
+        p 5
+        p 6
+        p 7
+        p 8
+        p 9
+        p 10
+
+      .footer
+        p viele kleine Füsse
