@@ -1,5 +1,5 @@
 class NoteController < ActionController::Base
-  protect_from_forgery with: :exception
+  # protect_from_forgery with: :exception
 
   def index
     Location.read_all
@@ -12,5 +12,12 @@ class NoteController < ActionController::Base
     @note = Note.find(params[:id])
     render "notes/view"
   end
+
+  def display
+    selected = params[:selected]
+    @note = Note.find params[:selected].first.to_i
+    render "notes/view"
+  end
+
 
 end
