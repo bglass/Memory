@@ -23,10 +23,15 @@ module Boostread
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
+    # Remove the Rack::Lock middleware
+    # https://github.com/websocket-rails/websocket-rails/wiki/Installation-and-Setup
+    config.middleware.delete Rack::Lock
+
     config.notes = [
       ["Nexus",  "boostnote", "/home/boris/Nextcloud/Boostnote"],
       ["Mobile", "nextcloud", "/home/boris/Nextcloud/Notes"]
     ]
+
 
   end
 end

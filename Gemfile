@@ -38,6 +38,7 @@ gem 'coffee-script'
 gem 'psych'
 gem 'redcarpet'
 gem "jstree-rails-4"
+gem 'websocket-rails'
 
 
 group :development, :test do

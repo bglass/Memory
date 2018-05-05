@@ -21,3 +21,5 @@ if (jQuery) {
 } else {
     alert("jQuery is not loaded");
 }
+//= require websocket_rails/main
+

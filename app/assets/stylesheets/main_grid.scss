@@ -48,7 +48,8 @@ body {
 
 
 .folder_box, .tag_box, .note_box {
-  overflow: auto
+  overflow-x: hidden;
+  overflow-y: auto
 
 }
 
