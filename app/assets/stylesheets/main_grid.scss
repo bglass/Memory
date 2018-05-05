@@ -2,17 +2,20 @@ body {
   overflow: hidden;
 }
 
-.app_grid {
+.main_grid {
   display: grid;
-  grid-template-columns: auto auto auto auto;
-  background-color: #aaaaaa; 
+
+
+  grid-template-columns: 8% 12% 25% auto;
+  grid-template-rows: min-content min-content min-content auto min-content;
+
+  background-color: #aaaaaa;
   height: 98vh;
   grid-column-gap: 5px;
   grid-row-gap: 5px;
-  grid-template-rows: 10ex 10ex auto 10ex;
 }
 
-.app_grid > div {
+.main_grid > div {
   // background-color: rgba(155, 155, 155, 80);
   // color: rgba(255, 255, 255, 80);
   // border: 1px solid rgba(0, 0, 0, 0.8);
@@ -21,12 +24,35 @@ body {
 
 }
 
+
+.state_folder_set   { grid-row:  1;   grid-column: 1 / 4 }
+.state_folder_get   { grid-row:  1;   grid-column: 4     }
+.state_tag_set      { grid-row:  2;   grid-column: 1 / 4 }
+.state_tag_get      { grid-row:  2;   grid-column: 4     }
+.state_date_set     { grid-row:  3;   grid-column: 1 / 4 }
+.state_date_get     { grid-row:  3;   grid-column: 4     }
+
+.folder_box         { grid-row:  4;   grid-column: 1 }
+.tag_box            { grid-row:  4;   grid-column: 2 }
+.note_box           { grid-row:  4;   grid-column: 3 }
+.content_display    { grid-row:  4;   grid-column: 4 }
+
+.search_folder      { grid-row:  5;   grid-column: 1 }
+.search_tag         { grid-row:  5;   grid-column: 2 }
+.search_note        { grid-row:  5;   grid-column: 3 }
+.search_content     { grid-row:  5;   grid-column: 4 }
+
+.state_folder_set, .state_tag_set, .state_date_set {
+  text-align: right
+}
+
+
 .folder_box, .tag_box, .note_box {
   overflow: auto
 
 }
 
-.header, .navigation, .footer {
-  grid-column: span 4;
-  text-align: center;
-}
+// .header, .navigation, .footer {
+//   grid-column: span 4;
+//   text-align: center;
+// }

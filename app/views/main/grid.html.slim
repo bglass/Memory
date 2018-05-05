@@ -1,0 +1,41 @@
+doctype html
+html
+  head
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag "application"
+    title United Notes
+  body
+
+    .main_grid
+
+      .state_folder_set
+        | state_folder_set
+      .state_folder_get
+        | state_folder_get
+      .state_tag_set
+        | state_tag_set
+      .state_tag_get
+        | state_tag_get
+      .state_date_set
+        | state_date_set
+      .state_date_get
+        | state_date_get
+      .folder_box
+        h2 Folders
+        = render "folders/folder_tree"
+      .tag_box
+        h2 Tags
+        = render "tags/tag_tree"
+      .note_box
+        h2 Notes
+        = render "notes/note_list"
+      .content_display
+        | content_display
+      .search_folder
+        | search_folder
+      .search_tag
+        | search_tag
+      .search_note
+        | search_note
+      .search_content
+        | search_content

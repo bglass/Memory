@@ -6,7 +6,7 @@ class MainController < ActionController::Base
     @folders  = Folder.top
     @tags     = Tag.all
     @notes    = Note.all
-    render "main/view"
+    render "main/grid"
   end
 
 end
