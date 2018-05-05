@@ -1,4 +1,5 @@
 module ApplicationHelper
+
   def markdown(text)
     options = {
       filter_html:     true,
@@ -21,4 +22,5 @@ module ApplicationHelper
 
     markdown.render(text).html_safe
   end
+
 end
