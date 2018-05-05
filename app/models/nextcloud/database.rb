@@ -1,7 +1,6 @@
 class NextCloudDbBase < ActiveRecord::Base
   self.abstract_class = true
   establish_connection NEXTCLOUD_DB
-binding.pry
   def self.dump
     connection
     all.as_json

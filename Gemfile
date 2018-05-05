@@ -66,4 +66,5 @@ gem 'slim'
 gem 'pry'
 # gem 'psych'
 # gem 'redcarpet'
-# gem "jstree-rails-4"
+gem 'jquery-rails'
+# gem "jstree-rails"
