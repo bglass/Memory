@@ -16,8 +16,14 @@ class NoteController < ActionController::Base
   def display
     selected = params[:selected]
     @note = Note.find params[:selected].first.to_i
+binding.pry
+    # WebsocketRails[:channel_name].trigger(:event_name, "Hallo!")
+    DisplayChannel.broadcast_to(
+        "tags",
+        id: 15,
+        html: "Was soll das?"
+      )
 
-    WebsocketRails[:channel_name].trigger(:event_name, "Hallo!")
 
     render "notes/view"
   end
