@@ -8,4 +8,5 @@ App.tree = App.cable.subscriptions.create "TreeChannel",
 
   received: (data) ->
     console.log data
-    $(data.tag).tree("loadData", data.tree)
+    # $(data.tag).tree("loadData", data.tree)
+    App.Models.Tree.update(data.tag, data.tree)
