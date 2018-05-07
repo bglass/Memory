@@ -1,5 +1,6 @@
-class NoteController < ActionController::Base
+class NoteController < ApplicationController
   # protect_from_forgery with: :exception
+  # skip_before_action :verify_authenticity_token
 
   def index
     Location.read_all
@@ -13,20 +14,15 @@ class NoteController < ActionController::Base
     render "notes/view"
   end
 
-  def display
-    selected = params[:selected]
-    @note = Note.find params[:selected].first.to_i
-binding.pry
-    # WebsocketRails[:channel_name].trigger(:event_name, "Hallo!")
-    DisplayChannel.broadcast_to(
-        "tags",
-        id: 15,
-        html: "Was soll das?"
-      )
-
-
-    render "notes/view"
-  end
+  # def display
+  #
+  #   selected = params[:selected]
+  #   notes = Note.map selected
+  #   # note_selection_change(notes)  # update state_display
+  #
+  #   @note = notes.first   # TBD: display many
+  #   render "notes/view"
+  # end
 
 
 end

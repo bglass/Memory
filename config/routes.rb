@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   get 'note/:id'             => 'note#view'
   get '/'                    => 'main#view'
   get "/static/:page"        => 'static_pages#show'
-  post '/display'          => 'note#display'
+  # post '/display'            => 'note#display'
+  get 'talk'                 => 'zeits#talk'
 
-
-
+  mount ActionCable.server => '/cable'  # ???
 
 end

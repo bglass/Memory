@@ -1,7 +1,7 @@
 class NcFolder < Folder
 
   def path()     @path;                end
-  def name()     path.basename;        end
+  def name()     path.basename.to_s;   end
 
 
   def setup(dir)

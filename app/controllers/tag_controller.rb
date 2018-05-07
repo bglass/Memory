@@ -1,4 +1,4 @@
-class TagController < ActionController::Base
+class TagController < ApplicationController
   protect_from_forgery with: :exception
 
   def index

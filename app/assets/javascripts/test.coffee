@@ -5,5 +5,5 @@ else
 
 $ ->
   console.log "Coffee"
-  selected = [0]
-  $('.content_display').load("/display", {"selected": selected})
+  # selected = [0]
+  # $('.content_display').load("/display", {"selected": selected})

@@ -24,5 +24,31 @@ class Tag
     @@all << self
   end
 
+  def self.top
+    @@top ||= TopTag.new
+    @@top
+  end
+
+  def children
+    []
+  end
+
+  def id
+    66
+  end
+
+
+end
+
+class TopTag < Tag
+
+  def initialize
+  end
+
+  def name()  "Tags";   end
+
+  def children
+    @@all
+  end
 
 end
