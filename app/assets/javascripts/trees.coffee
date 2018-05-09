@@ -1,7 +1,11 @@
 class Tree
   constructor: (tag, url) ->
-    $(tag).jstree 'core': 'data':
-      'url': url
+    $(tag).jstree
+      'plugins': [ "wholerow" ]
+      'core':
+        "animation" : 0
+        'themes': 'icons': false
+        'data': 'url': url
       'data': (node) ->
         { 'id': node.id }
 
