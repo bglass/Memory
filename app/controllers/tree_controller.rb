@@ -11,7 +11,7 @@ class TreeController < ApplicationController
 
   def get_tree(node)
     {
-      name:       node.name,
+      text:       node.name,
       id:         node.id,
       children:   node.children.map {|c| get_tree(c) }
     }
