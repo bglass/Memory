@@ -1,21 +1,25 @@
-
 class Tree
-  this.update =(tag, data) ->
-    # $(tag).tree("loadData", data)
+  constructor: (@tag, @url) ->
+    @tree = $(@tag)
+    @tree.tree autoOpen: 1
+    @tree.tree('loadDataFromUrl', @url)
 
-  this.no_data = ->
-    return [{name: '...'}]
+
 
 $ ->
-  nodata = Tree.no_data()
 
-  $('.folder_tree').tree autoOpen: 1
-  $(   '.tag_tree').tree autoOpen: 1
-  $(  '.note_tree').tree autoOpen: 1
+  notes   = new Tree('.note_tree',   '/notes/')
+  folders = new Tree('.folder_tree', '/folders/')
+  tags    = new Tree('.tag_tree',    '/tags/')
 
-  $('.note_tree'  ).tree('loadDataFromUrl', '/notes/')
-  $('.tag_tree'   ).tree('loadDataFromUrl', '/tags/')
-  $('.folder_tree').tree('loadDataFromUrl', '/folders/')
+
+  # $('.folder_tree').tree autoOpen: 1
+  # $(   '.tag_tree').tree autoOpen: 1
+  # $(  '.note_tree').tree autoOpen: 1
+
+  # $('.note_tree'  ).tree('loadDataFromUrl', '/notes/')
+  # $('.tag_tree'   ).tree('loadDataFromUrl', '/tags/')
+  # $('.folder_tree').tree('loadDataFromUrl', '/folders/')
 
 
 
