@@ -12,7 +12,7 @@ class Location
   end
 
   def self.read_all
-
+# binding.pry
     Folder.reset
     Note.reset
     Tag.reset

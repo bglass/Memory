@@ -4,7 +4,7 @@ class Note
   def raw()         @note;    end    # for development purposes only
 
   def self.reset
-    @@all = []
+    @@all ||= []
   end
 
   def self.find(id)

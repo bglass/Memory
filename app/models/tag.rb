@@ -20,6 +20,7 @@ class Tag
   end
 
   def initialize(name)
+    @@all ||= []
     @name = name
     @@all << self
   end
@@ -33,8 +34,9 @@ class Tag
     []
   end
 
+
   def id
-    66
+    name
   end
 
 

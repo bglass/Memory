@@ -10,7 +10,7 @@ class Client
 
   def self.sync_tree(treeclass, htmltag)
     tree = (subtree treeclass.top)["children"]
-    ActionCable.server.broadcast('tree', {tag: htmltag, tree: tree})
+#    ActionCable.server.broadcast('tree', {tag: htmltag, tree: tree})
   end
 
 

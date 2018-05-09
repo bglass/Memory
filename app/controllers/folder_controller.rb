@@ -1,10 +1,5 @@
-class FolderController < ApplicationController
-  protect_from_forgery with: :exception
+class FolderController < TreeController
 
-  def index
-    Location.read_all
-    @folders = Folder.top
-    render "folders/index"
-  end
+  def top()    Folder.top;  end
 
 end

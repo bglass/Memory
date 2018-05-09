@@ -1,10 +1,5 @@
-class TagController < ApplicationController
-  protect_from_forgery with: :exception
+class TagController < TreeController
 
-  def index
-    Location.read_all
-    @tags = Tag.all
-    render "tags/index"
-  end
+  def top()    Tag.top;  end
 
 end
