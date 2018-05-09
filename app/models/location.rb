@@ -2,6 +2,8 @@ include CSON
 
 class Location
   attr_accessor :name, :path
+  @@done = false
+
 
   def self.locations
     Rails.configuration.notes
@@ -12,7 +14,9 @@ class Location
   end
 
   def self.read_all
-# binding.pry
+
+    return if @@done
+
     Folder.reset
     Note.reset
     Tag.reset
@@ -25,6 +29,9 @@ class Location
       plugin.new(name, path) if plugin
 
     end
+
+    @@done = true
+
   end
 
   def initialize(name,path)

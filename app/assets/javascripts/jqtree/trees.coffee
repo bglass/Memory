@@ -9,12 +9,9 @@ class Tree
 $ ->
   nodata = Tree.no_data()
 
-  $('.folder_tree').tree
-    data:     nodata
-    autoOpen: 0
-
-  $(   '.tag_tree').tree  data: nodata
-  $(  '.note_tree').tree data: nodata
+  $('.folder_tree').tree autoOpen: 1
+  $(   '.tag_tree').tree autoOpen: 1
+  $(  '.note_tree').tree autoOpen: 1
 
   $('.note_tree'  ).tree('loadDataFromUrl', '/notes/')
   $('.tag_tree'   ).tree('loadDataFromUrl', '/tags/')

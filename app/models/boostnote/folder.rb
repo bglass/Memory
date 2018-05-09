@@ -2,6 +2,7 @@ class BnFolder < Folder
   def key()      @folder["key"];       end
   def color()    @folder["color"];     end
   def name()     @folder["name"];      end
+  def path()     name;                 end
 
   def self.create(data)
     children_data = data.delete "folders"
@@ -14,7 +15,7 @@ class BnFolder < Folder
     end
     root
   end
-  
+
 end
 
 class BnRoot < BnFolder

@@ -5,21 +5,15 @@ class TreeController < ApplicationController
   def tree
     respond_to :json
     Location.read_all
-    binding.pry
-    render json: get_tree(top)
+    render json: [ get_tree(top) ]
   end
 
 
   def get_tree(node)
-    if node.children.any?
-      node.children.map {|c| get_tree c }
-    else
-      name_and_id(node)
-    end
+    {
+      name:       node.name,
+      id:         node.id,
+      children:   node.children.map {|c| get_tree(c) }
+    }
   end
-
-  def name_and_id(node)
-    {name: node.name, id: node.id}
-  end
-
 end

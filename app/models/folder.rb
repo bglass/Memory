@@ -1,6 +1,9 @@
 
 class Folder
-  attr_accessor :children, :id
+  attr_accessor :children
+
+  def id()  path;   end
+
 
   def initialize(data = {})
     @folder = data
@@ -27,4 +30,5 @@ end
 
 class TopFolder < Folder
   def name()  "Folders";   end
+  def path()  "/";         end
 end
