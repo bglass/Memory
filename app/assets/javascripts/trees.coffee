@@ -1,11 +1,6 @@
 class Tree
   constructor: (tag, url) ->
-    tree = $(tag)
-
-    load(tree, url)
-
-  load = (tree, url) ->
-    tree.jstree 'core': 'data':
+    $(tag).jstree 'core': 'data':
       'url': url
       'data': (node) ->
         { 'id': node.id }
