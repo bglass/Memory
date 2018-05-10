@@ -20,10 +20,6 @@ class Tree
       state = @unit.jstree().get_selected()
       window.evt.selected(@tag, state)
 
-  on_select_set: (unit) ->
-    @unit.on 'changed.jstree', (evt, data) =>
-      selected = @unit.jstree().get_selected()
-
 $ ->
 
   notes   = new Tree('.note_tree',   '/notes/')
