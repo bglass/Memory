@@ -1,4 +1,4 @@
-class @Content
+class Content
 
   constructor: (@tag, @url) ->
     @unit = $(@tag)
@@ -15,3 +15,6 @@ class @Content
 
   clear: ->
     @set("nothing to display")
+
+$ ->
+  @content = new Content(".content_display", '/display/')

@@ -14,17 +14,24 @@ class Tree
       'data': (node) ->
         { 'id': node.id }
 
-  on_select_update: (content)->
+  on_select_update: (unit)->
     @unit.on 'changed.jstree', (evt, data) =>
       selected = @unit.jstree().get_selected()
-      content.update(selected)
+      unit.update(selected)
+
+  on_select_set: (unit) ->
+    @unit.on 'changed.jstree', (evt, data) =>
+      selected = @unit.jstree().get_selected()
+      unit.set(selected.toString())
+
+
 
 $ ->
-  content = new Content(".content_display", '/display/')
-  content.clear()
 
   notes   = new Tree('.note_tree',   '/notes/')
   folders = new Tree('.folder_tree', '/folders/')
   tags    = new Tree('.tag_tree',    '/tags/')
 
-  notes.on_select_update(content)
+  notes.on_select_update @content
+  folders.on_select_set  @folder_line
+  tags.on_select_set     @tag_line
