@@ -3,6 +3,7 @@ class Tree
   constructor: (@tag, @url) ->
     @unit = $(@tag)
     @create_load_jstree()
+    @selection_handler()
 
   create_load_jstree: ->
     @unit.jstree
@@ -14,24 +15,17 @@ class Tree
       'data': (node) ->
         { 'id': node.id }
 
-  on_select_update: (unit)->
+  selection_handler: ->
     @unit.on 'changed.jstree', (evt, data) =>
-      selected = @unit.jstree().get_selected()
-      unit.update(selected)
+      state = @unit.jstree().get_selected()
+      window.evt.selected(@tag, state)
 
   on_select_set: (unit) ->
     @unit.on 'changed.jstree', (evt, data) =>
       selected = @unit.jstree().get_selected()
-      unit.set(selected.toString())
-
-
 
 $ ->
 
   notes   = new Tree('.note_tree',   '/notes/')
   folders = new Tree('.folder_tree', '/folders/')
   tags    = new Tree('.tag_tree',    '/tags/')
-
-  notes.on_select_update @content
-  folders.on_select_set  @folder_line
-  tags.on_select_set     @tag_line

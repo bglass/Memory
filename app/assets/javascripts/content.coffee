@@ -17,4 +17,4 @@ class Content
     @set("nothing to display")
 
 $ ->
-  @content = new Content(".content_display", '/display/')
+  window.content = new Content(".content_display", '/display/')

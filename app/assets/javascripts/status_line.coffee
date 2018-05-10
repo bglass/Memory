@@ -11,5 +11,5 @@ class StatusLine
     @set("don't know...")
 
 $ ->
-  @folder_line = new StatusLine(".state_folder_set")
-  @tag_line    = new StatusLine(".state_tag_set")
+  window.folder_line = new StatusLine(".state_folder_set")
+  window.tag_line    = new StatusLine(".state_tag_set")
