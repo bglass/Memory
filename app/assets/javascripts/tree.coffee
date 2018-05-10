@@ -16,7 +16,7 @@ class Tree
         { 'id': node.id }
 
   selection_handler: ->
-    @unit.on 'changed.jstree', (evt, data) =>
+    @unit.on 'changed.jstree', =>
       state = @unit.jstree().get_selected()
       window.evt.selected(@tag, state)
 
