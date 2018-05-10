@@ -8,10 +8,10 @@ class Event
         window.content.update(selection)
 
       when '.folder_tree'
-        window.folder_line.set selection.toString()
+        window.folder_line.set(selection.toString())
 
       when '.tag_tree'
-        window.tag_line.set selection.toString()
+        window.tag_line.set(selection.toString())
 
 
 
