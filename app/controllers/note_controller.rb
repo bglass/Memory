@@ -1,10 +1,9 @@
 class NoteController < TreeController
 
-  def top()    Note.top;  end
+  def top()           Note.top;         end
 
-  def initialize
-    super
-    fields << :tags
+  def data_fields()
+    [:tags, :path]
   end
 
   def view

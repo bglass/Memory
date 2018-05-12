@@ -1,17 +1,19 @@
 class Event
 
-  selected: (sender, selection)->
+  selected: (sender, selection, nodes)->
 
     switch sender
 
       when '.note_tree'
         window.content.update(selection)
+        window.folder_status.actual(nodes)
+        window.tag_status.actual(nodes)
 
       when '.folder_tree'
-        window.folder_line.set(selection.toString())
+        window.folder_status.wanted(selection)
 
       when '.tag_tree'
-        window.tag_line.set(selection.toString())
+        window.tag_status.wanted(selection)
 
 
 

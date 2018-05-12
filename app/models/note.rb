@@ -4,6 +4,7 @@ class Note
   def raw()         @note;    end    # for development purposes only
   def tags()        [];       end
   def text()        name;     end    # tree display
+  def path()        "n/a";    end
 
   def self.reset
     @@all ||= []

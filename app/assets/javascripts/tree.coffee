@@ -2,7 +2,7 @@ class Tree
 
   constructor: (@tag, @url) ->
     @unit = $(@tag)
-    @create_load_jstree()
+    @tree = @create_load_jstree()
     @selection_handler()
 
   create_load_jstree: ->
@@ -12,16 +12,19 @@ class Tree
         "animation" : 0
         'themes': 'icons': false
         'data': 'url': @url
-      'data': (node) ->
-        { 'id': node.id }
+    @unit.jstree(true)
 
   selection_handler: ->
-    @unit.on 'changed.jstree', =>
-      state = @unit.jstree().get_selected()
-      window.evt.selected(@tag, state)
+    @unit.on 'changed.jstree', (e, data) =>
+      nodes = @get_nodes data.selected
+      window.evt.selected(@tag, data.selected, nodes)
+
+  get_nodes: (selection) ->
+    selection.map (id) => @tree.get_node(id);
+
 
 $ ->
 
-  notes   = new Tree('.note_tree',   '/notes/')
-  folders = new Tree('.folder_tree', '/folders/')
-  tags    = new Tree('.tag_tree',    '/tags/')
+  window.note_tree   = new Tree('.note_tree',   '/notes/')
+  window.folder_tree = new Tree('.folder_tree', '/folders/')
+  window.tag_tree    = new Tree('.tag_tree',    '/tags/')
