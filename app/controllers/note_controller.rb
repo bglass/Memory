@@ -10,18 +10,4 @@ class NoteController < TreeController
     render "notes/view"
   end
 
-  # def display
-  #   selected = params[:selected]
-  #   @note = Note.find params[:selected].first.to_i
-  #
-  #   render "notes/view"
-  # end
-
-  def displayselect
-    selected = params[:selected]
-    @note = Note.find params[:selected].first.to_i
-    render partial: "notes/view"
-  end
-
-
 end
