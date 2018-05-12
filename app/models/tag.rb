@@ -2,6 +2,7 @@ class Tag
   attr_accessor :name
 
 ### to be reimplemented as tree!
+  def text()        name;     end    # tree display
 
 
   def self.all

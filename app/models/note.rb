@@ -2,6 +2,8 @@ class Note
 
   def self.all()    @@all;    end
   def raw()         @note;    end    # for development purposes only
+  def tags()        [];       end
+  def text()        name;     end    # tree display
 
   def self.reset
     @@all ||= []

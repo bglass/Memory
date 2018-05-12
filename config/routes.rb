@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'note/:id'             => 'note#view'
   get '/'                    => 'main#view'
   get "/static/:page"        => 'static_pages#show'
-  get '/display'            => 'note#displayselect'
+  get '/display'            => 'note#display'
 
   mount ActionCable.server => '/cable'  # ???
 

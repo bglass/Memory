@@ -3,6 +3,7 @@ class Folder
   attr_accessor :children
 
   def id()  path;   end
+  def text()        name;     end    # tree display
 
 
   def initialize(data = {})

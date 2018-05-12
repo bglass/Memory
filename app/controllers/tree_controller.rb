@@ -1,6 +1,13 @@
 class TreeController < ApplicationController
   protect_from_forgery with: :exception
 
+  attr_accessor :fields
+
+  def initialize
+    @fields = [:text, :id]
+  end
+
+
 
   def tree
     respond_to :json
@@ -10,10 +17,18 @@ class TreeController < ApplicationController
 
 
   def get_tree(node)
-    {
-      text:       node.name,
-      id:         node.id,
-      children:   node.children.map {|c| get_tree(c) }
-    }
+
+    # binding.pry
+    record = {}
+
+    fields.each do |f|
+      record[f] = node.public_send(f)
+      # binding.pry
+    end
+
+    record[:children] = node.children.map {|c| get_tree(c) }
+
+    record
+
   end
 end
