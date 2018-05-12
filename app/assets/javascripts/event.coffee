@@ -15,9 +15,6 @@ class Event
       when '.tag_tree'
         window.tag_status.wanted(selection)
 
-
-
-
 $ ->
 
   window.evt   = new Event
