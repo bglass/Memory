@@ -20,7 +20,7 @@ class Tree
   selection_handler: ->
     @unit.on 'changed.jstree', (e, data) =>
       nodes = @get_nodes data.selected
-      window.evt.selected(@tag, data.selected, nodes)
+      window.evt.selected(@tag, nodes)
 
   get_nodes: (selection) ->
     selection.map (id) => @tree.get_node(id);

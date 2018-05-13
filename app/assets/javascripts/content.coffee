@@ -4,8 +4,9 @@ class Content
     @unit = $(@tag)
     @clear()
 
-  update: (selection) ->
-    if selection.length
+  update: (nodes) ->
+    if nodes.length
+      selection = nodes.map (node) -> node.id
       $.get(@url, selected: selection, (content) => @set(content) )
     else
       @clear()

@@ -15,16 +15,15 @@ class Filter
 
 class @FolderFilter extends Filter
 
-  save: (selection) ->
-    records = window.folder.get_data(selection)
-    paths   = records.map (data) -> data.path
+  save: (nodes) ->
+    paths   = nodes.map (node) -> node.data.path
     window.folder.selected_paths = paths
     window.folder_set_line.set(paths)
 
 class @TagFilter    extends Filter
 
-  save: (selection) ->
-    names = window.tag.get_names(selection)
+  save: (nodes) ->
+    names = nodes.map (node) -> node.text
     window.tag.selected_names = names
     window.tag_set_line.set names
 
