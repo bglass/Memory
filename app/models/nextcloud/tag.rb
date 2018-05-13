@@ -12,8 +12,8 @@ class NcTag < Tag
   end
 
   def initialize(tag)
+    super(tag["name"])
     @tag = tag
-    @@all << self
   end
 
 end

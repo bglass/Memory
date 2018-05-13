@@ -1,8 +1,23 @@
-class Tag
-  attr_accessor :name
-
 ### to be reimplemented as tree!
+class Tag
+  attr_accessor :name, :id
+
+  def initialize(name)
+    @id = next_id
+    @name = name
+    @@all << self
+  end
+
+
+
+
   def text()        name;     end    # tree display
+
+
+
+  def next_id
+    @@last_id +=1
+  end
 
 
   def self.all
@@ -10,6 +25,7 @@ class Tag
   end
 
   def self.reset
+    @@last_id = -1
     @@all = []
   end
 
@@ -20,12 +36,6 @@ class Tag
 
   end
 
-  def initialize(name)
-    @@all ||= []
-    @name = name
-    @@all << self
-  end
-
   def self.top
     @@top ||= TopTag.new
     @@top
@@ -33,11 +43,6 @@ class Tag
 
   def children
     []
-  end
-
-
-  def id
-    name
   end
 
 

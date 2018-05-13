@@ -1,23 +1,25 @@
 
 class Folder
-  attr_accessor :children
+  attr_accessor :children, :id
 
-  def id()          path;   end
   def text()        name;     end    # tree display
 
 
   def initialize(meta = {})
+    @id = next_id
     @meta = meta
     @children = []
+  end
 
-    @id = 88
-
+  def next_id
+    @@last_id +=1
   end
 
   def self.top()    @@top;     end
   def color()       "#000000"; end
 
   def self.reset
+    @@last_id = -1
     @@top ||= TopFolder.new
   end
   def self.add_root(folder)
