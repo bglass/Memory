@@ -1,20 +1,34 @@
 class NcNote < Note
 
-  # attr_accessor :id, :title, :path
+  # attr_accessor :id, :title,
 
-  def initialize(node)
-    @path    = node
+  attr_accessor :relative_path, :root
+
+  def path
+    root.path + relative_path
+  end
+
+  def fs_path
+    root.fs_path + relative_path rescue binding.pry
+  end
+
+
+
+  def initialize(this_fs_path, root)
+    super()
+    @root          = root
+    @relative_path = this_fs_path.relative_path_from root.fs_path
     @title   = title_of content
   end
 
   def raw()       {};                   end   # development only
-  def content()   path.read;            end
+  def content()   fs_path.read;            end
   def name()      path.basename.to_s;   end
 
-  def self.create(node)
+  def self.create(node, root)
     case node.extname.downcase
     when ".md", ".txt"
-      NcNote.new(node)
+      NcNote.new(node, root)
     end
   end
 

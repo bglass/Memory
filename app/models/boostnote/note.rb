@@ -17,6 +17,7 @@ class BnNote < Note
   def name()      title;                end
 
   def path
+    # binding.pry
     "unknown"
   end
 

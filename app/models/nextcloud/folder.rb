@@ -10,10 +10,10 @@ class NcFolder < Folder
     root.fs_path + relative_path rescue binding.pry
   end
 
-  def setup(fs_path, root)
+  def setup(this_fs_path, root)
     @root          = root
-    @relative_path = fs_path.relative_path_from @root.fs_path
-    @name          = fs_path.basename.to_s
+    @relative_path = this_fs_path.relative_path_from @root.fs_path
+    @name          = this_fs_path.basename.to_s
     create_children
   end
 
@@ -26,7 +26,7 @@ class NcFolder < Folder
         child.setup(node, root)
         @children << child
       when node.file?
-        NcNote.create(node)
+        NcNote.create(node, root)
       end
     end
   end
