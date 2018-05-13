@@ -1,13 +1,11 @@
 class BnNote < Note
 
   def initialize(note)
+    super()
     @note = note
-    @note[:id] = @@all.size
-    @@all << self
     Tag.add_by_name @note["tags"]
   end
 
-  def id()        @note[:id];           end
   def date()      @note["createdAt"];   end
   def type()      @note["type"];        end
   def folder()    @note["folder"];      end
@@ -17,9 +15,15 @@ class BnNote < Note
   def deleted?()  @note["isTrashed"];   end
   def title()     @note["title"];       end
   def name()      title;                end
+
+  def path
+    "unknown"
+  end
+
+
 end
 
 
 class BnSnippet < BnNote
-    def content()   @note["snippets"].to_s;     end
+  def content()   @note["snippets"].to_s;     end
 end

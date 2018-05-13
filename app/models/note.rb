@@ -1,14 +1,22 @@
 class Note
 
+  attr_accessor :id, :title, :path
+
+
+  def initialize
+    @id = @@all.size
+    @@all << self
+  end
+
   def self.all()    @@all;    end
   def raw()         @note;    end    # for development purposes only
   def tags()        [];       end
   def text()        name;     end    # tree display
-  def path()        "n/a";    end
 
   def self.reset
-    @@all ||= []
-  end
+    @@all = []
+    @@top = TopNote.new
+end
 
   def self.find(id)
     @@all[id.to_i]
@@ -19,7 +27,7 @@ class Note
   end
 
   def self.top
-    @@top ||= TopNote.new
+    # @@top ||= TopNote.new
     @@top
   end
 
@@ -27,20 +35,22 @@ class Note
     []
   end
 
-
 end
 
 class TopNote < Note
 
-  @@top = TopNote.new
-
   def name()  "Notes";   end
+  def id()  "topnote"; end
+
+  def initialize
+    @id   = "top"
+    @@all = []
+  end
 
   def children
     @@all
   end
 
-  def id()  "topnote"; end
 
 
 end

@@ -1,6 +1,11 @@
 class NcNote < Note
 
-  attr_accessor :id, :title, :path
+  # attr_accessor :id, :title, :path
+
+  def initialize(node)
+    @path    = node
+    @title   = title_of content
+  end
 
   def raw()       {};                   end   # development only
   def content()   path.read;            end
@@ -19,11 +24,5 @@ class NcNote < Note
     headline.chomp
   end
 
-  def initialize(node)
-    @path    = node
-    @title   = title_of content
-    @id      = @@all.size
-    @@all << self
-  end
 
 end

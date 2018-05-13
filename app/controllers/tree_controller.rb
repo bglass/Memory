@@ -6,6 +6,7 @@ class TreeController < ApplicationController
   def tree
     respond_to :json
     Location.read_all
+    binding.pry
     render json: get_tree(top)[:children]
   end
 
