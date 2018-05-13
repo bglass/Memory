@@ -8,9 +8,19 @@ class Filter
   # window.tag_get_line.set(nodes[0].data["tags"])
   # window.folder_get_line.set(nodes[0].data["path"])
 
+  contains_all: (needed, have) ->
+    for item in needed
+      if not (item in have)
+        return false
+    return true
 
+  contains_one: (needed, have) ->
+    for item in needed
+      if item in have
+        return true
+    return false
 
-
+  subtract_tags:  (tags) ->
 
 
 class @FolderFilter extends Filter
@@ -29,22 +39,10 @@ class @TagFilter    extends Filter
 
 class @NoteFilter   extends Filter
 
-  contains_all: (tags) ->
-    for tag in window.tag.selected_names
-      if not (tag in tags)
-        return false
-    return true
-
-  contains_one: (tags) ->
-    for tag in window.tag.selected_names
-      if tag in tags
-        return true
-    return false
-
-  subtract_tags:  (tags) ->
-
-
 
   visible: (node) ->
-    # @contains_all(node.data.tags)
-    @contains_one(node.data.tags)
+    # @contains_all(
+    @contains_one(
+      window.tag.selected_names
+      node.data.tags
+      )
