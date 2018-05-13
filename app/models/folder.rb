@@ -2,12 +2,12 @@
 class Folder
   attr_accessor :children
 
-  def id()  path;   end
+  def id()          path;   end
   def text()        name;     end    # tree display
 
 
-  def initialize(data = {})
-    @folder = data
+  def initialize(meta = {})
+    @meta = meta
     @children = []
 
     @id = 88

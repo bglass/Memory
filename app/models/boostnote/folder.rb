@@ -1,7 +1,7 @@
 class BnFolder < Folder
-  def key()      @folder["key"];       end
-  def color()    @folder["color"];     end
-  def name()     @folder["name"];      end
+  def key()      @meta["key"];       end
+  def color()    @meta["color"];     end
+  def name()     @meta["name"];      end
   def path()     name;                 end
 
   def self.create(data)
@@ -21,7 +21,7 @@ end
 class BnRoot < BnFolder
 
   def name()
-    @folder["location"].name;
+    @meta["location"].name;
   end
 
 end
