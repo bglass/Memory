@@ -4,16 +4,18 @@ class Event
 
     switch sender
 
-      when '.note_tree'
-        window.content.update(selection)
-        window.folder_status.actual(nodes)
-        window.tag_status.actual(nodes)
-
       when '.folder_tree'
-        window.folder_status.wanted(selection)
+        window.folder.filter.set(selection)
+        window.tag.search()
+        window.note.search()
 
       when '.tag_tree'
-        window.tag_status.wanted(selection)
+        window.tag.filter.set(selection)
+        window.note.search()
+
+      when '.note_tree'
+        window.content.update(selection)
+
 
 $ ->
 

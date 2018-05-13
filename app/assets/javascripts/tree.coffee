@@ -1,13 +1,15 @@
 class Tree
 
-  constructor: (@tag, @url) ->
+  constructor: ->
     @unit = $(@tag)
     @tree = @create_load_jstree()
     @selection_handler()
 
   create_load_jstree: ->
     @unit.jstree
-      'plugins': [ "wholerow" ]
+      'plugins': [ "wholerow", "search" ]
+      # 'search': "show_only_matches": true
+      'search': search_callback: (str, node) => @filter.visible(node)
       'core':
         "animation" : 0
         'themes': 'icons': false
@@ -22,9 +24,37 @@ class Tree
   get_nodes: (selection) ->
     selection.map (id) => @tree.get_node(id);
 
+  search: ->
+    @tree.search("B")
+
+
+
+
+class Notes extends Tree
+
+  constructor: ->
+    @filter = new NoteFilter
+    @tag = '.note_tree'
+    @url = '/notes/'
+    super
+
+class Folders extends Tree
+
+  constructor: ->
+    @filter = new FolderFilter
+    @tag = '.folder_tree'
+    @url = '/folders/'
+    super
+
+class Tags extends Tree
+
+  constructor: ->
+    @filter  = new TagFilter
+    @tag = '.tag_tree'
+    @url = '/tags/'
+    super
 
 $ ->
-
-  window.note_tree   = new Tree('.note_tree',   '/notes/')
-  window.folder_tree = new Tree('.folder_tree', '/folders/')
-  window.tag_tree    = new Tree('.tag_tree',    '/tags/')
+  window.note       = new Notes
+  window.folder     = new Folders
+  window.tag        = new Tags
