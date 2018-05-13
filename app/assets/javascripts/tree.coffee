@@ -8,8 +8,9 @@ class Tree
   create_load_jstree: ->
     @unit.jstree
       'plugins': [ "wholerow", "search" ]
-      # 'search': "show_only_matches": true
-      'search': search_callback: (str, node) => @filter.visible(node)
+      'search':
+        "show_only_matches": true
+        "search_callback": (str, node) => @filter.visible(node)
       'core':
         "animation" : 0
         'themes': 'icons': false
@@ -23,6 +24,13 @@ class Tree
 
   get_nodes: (selection) ->
     selection.map (id) => @tree.get_node(id);
+
+  get_names: (selection) ->
+    @get_nodes(selection).map (node) -> node.text
+
+  get_data: (selection) ->
+    @get_nodes(selection).map (node) -> node.data
+
 
   search: ->
     @tree.search("B")
