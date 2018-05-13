@@ -9,11 +9,7 @@ class Tag
   end
 
 
-
-
   def text()        name;     end    # tree display
-
-
 
   def next_id
     @@last_id +=1
@@ -25,7 +21,7 @@ class Tag
   end
 
   def self.reset
-    @@last_id = -1
+    @@last_id = 0
     @@all = []
   end
 

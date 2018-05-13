@@ -19,7 +19,7 @@ class Folder
   def color()       "#000000"; end
 
   def self.reset
-    @@last_id = -1
+    @@last_id = 0
     @@top ||= TopFolder.new
   end
   def self.add_root(folder)
