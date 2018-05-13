@@ -1,8 +1,18 @@
 class BnFolder < Folder
+
+  attr_accessor :root
+
+
   def key()      @meta["key"];       end
   def color()    @meta["color"];     end
   def name()     @meta["name"];      end
-  def path()     name;                 end
+
+  def path
+    @meta["parent"].path + name
+  end
+
+
+
 
   def self.create(data)
     children_data = data.delete "folders"
@@ -24,4 +34,7 @@ class BnRoot < BnFolder
     @meta["location"].name;
   end
 
+  def path
+    Pathname(name)
+  end
 end
