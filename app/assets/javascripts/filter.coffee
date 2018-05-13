@@ -39,10 +39,9 @@ class @TagFilter    extends Filter
 
 class @NoteFilter   extends Filter
 
-
   visible: (node) ->
     # @contains_all(
     @contains_one(
       window.tag.selected_names
       node.data.tags
-      )
+    )

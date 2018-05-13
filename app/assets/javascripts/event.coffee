@@ -14,7 +14,7 @@ class Event
         window.note.search()
 
       when '.note_tree'
-        window.content.update(nodes)
+        window.book.update(nodes)
 
 
 $ ->
