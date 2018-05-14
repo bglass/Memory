@@ -16,17 +16,8 @@ class BnNote < Note
   def deleted?()  @note["isTrashed"];   end
   def title()     @note["title"];       end
   def name()      title;                end
-
+  def path()      folder;               end
   
-
-
-
-  def path
-    # binding.pry
-    "unknown"
-  end
-
-
 end
 
 

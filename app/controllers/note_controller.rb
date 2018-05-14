@@ -11,21 +11,6 @@ class NoteController < TreeController
     @note = Note.find(params[:id])
     render "notes/view"
   end
-
-  def display
-    Location.read_all
-    selected = params[:selected]
-    @note = Note.find params[:selected].first.to_i
-    render partial: "notes/view"
-  end
-
-  def bookx
-    Location.read_all
-    @notes = Note.map params[:selected]
-    binding.pry
-    render partial: "notes/book"
-  end
-
   def book
     respond_to :json
     Location.read_all
@@ -35,7 +20,7 @@ class NoteController < TreeController
       {
         date:     note.date,
         tags:     note.tags,
-        folder:   note.folder,
+        path:     note.path,
         html:     note.html
       }
     end
@@ -43,9 +28,3 @@ class NoteController < TreeController
   end
 
 end
-
-
-# respond_to :json
-# Location.read_all
-# # x = get_tree top; binding.pry
-# render json: get_tree(top)[:children]
