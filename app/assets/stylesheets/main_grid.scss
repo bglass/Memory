@@ -45,6 +45,7 @@ $sl_height: 30px;   // height of status lines
   // border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 10px;
   // grid-row-gap: 0px;
+  overflow-x: auto;
 }
 
 .meta {
@@ -77,15 +78,10 @@ $sl_height: 30px;   // height of status lines
 }
 
 .state_folder_set, .state_tag_set, .state_date_set {
-  text-align: right
+  text-align: center;
 }
 
 .folder_box, .tag_box, .note_box {
   overflow-x: hidden;
   overflow-y: auto
 }
-
-// .header, .navigation, .footer {
-//   grid-column: span 4;
-//   text-align: center;
-// }
