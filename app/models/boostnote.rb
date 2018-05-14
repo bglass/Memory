@@ -18,9 +18,10 @@ class Boostnote < Location
 
   def read_notes(path)
     Note
-    files = Dir.glob(path + "notes/*")
+    files = Pathname.glob(path / "notes/*.cson")
     files.each do |file|
       note = CSON.load_file file
+      note["type"] rescue binding.pry
       case note["type"]
       when "MARKDOWN_NOTE"
         BnNote.new(note)

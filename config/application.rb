@@ -18,6 +18,7 @@ module Memory
 
     config.notes = [
       ["Nexus",  "boostnote", "~/Nextcloud/Boostnote"],
+      ["Drain",  "boostnote", "~/briefcase"],
       ["Mobile", "nextcloud", "~/Nextcloud/Notes"]
     ]
 

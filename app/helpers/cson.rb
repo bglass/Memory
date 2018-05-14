@@ -33,6 +33,7 @@ module CSON
       hashed[Regexp.last_match[1]] = remove_indent Regexp.last_match[2]
       ""
     end
-    hashed.merge YAML.load data
+    extract = YAML.load data
+    hashed.merge extract if extract
   end
 end
