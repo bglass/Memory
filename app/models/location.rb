@@ -10,7 +10,7 @@ class Location
   end
 
   def self.class_of(name)
-      name.downcase.camelcase.constantize
+    name.downcase.camelcase.constantize
   end
 
   def self.read_all
@@ -24,9 +24,13 @@ class Location
     locations.each do |data|
       (name, type, path) = data
 
-      path = Pathname(path).expand_path
       plugin = class_of type
-      plugin.new(name, path) if plugin
+
+      path = Pathname(path).expand_path
+
+      if path.directory?
+        plugin.new(name, path) if plugin
+      end
 
     end
 
