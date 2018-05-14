@@ -2,10 +2,18 @@ class BnFolder < Folder
 
   attr_accessor :root
 
+  def initialize(meta)
+    super
+    @@bn_folder ||= {}
+    @@bn_folder[key] = self
+  end
 
-  def key()      @meta["key"];       end
-  def color()    @meta["color"];     end
-  def name()     @meta["name"];      end
+
+  def self.find_by_key(key)   @@bn_folder[key];   end
+
+  def key()                   @meta["key"];       end
+  def color()                 @meta["color"];     end
+  def name()                  @meta["name"];      end
 
   def path
     @meta["parent"].path + name
@@ -38,5 +46,5 @@ class BnRoot < BnFolder
     Pathname(name)
   end
 
-  
+
 end

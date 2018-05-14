@@ -16,8 +16,11 @@ class BnNote < Note
   def deleted?()  @note["isTrashed"];   end
   def title()     @note["title"];       end
   def name()      title;                end
-  def path()      folder;               end
-  
+
+  def path()
+    BnFolder.find_by_key(folder).path
+  end
+
 end
 
 
