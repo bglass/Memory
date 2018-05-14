@@ -2,12 +2,14 @@ body {
   overflow: hidden;
 }
 
+
+$sl_height: 30px;   // height of status lines
+
 .main_grid {
   display: grid;
 
-
   grid-template-columns: 15% 15% 20% auto;
-  grid-template-rows: min-content min-content min-content auto min-content;
+  grid-template-rows: $sl_height $sl_height $sl_height auto min-content;
 
   background-color: #aaaaaa;
   height: 98vh;
@@ -18,7 +20,7 @@ body {
 .main_grid > div {
   // background-color: rgba(155, 155, 155, 80);
   // color: rgba(255, 255, 255, 80);
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  // border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 10px;
   // font-size: 30px;
 
@@ -44,7 +46,7 @@ body {
 
 .book {
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: scroll;
 }
 
 .state_folder_set, .state_tag_set, .state_date_set {
