@@ -3,6 +3,7 @@ class BnNote < Note
   def initialize(note)
     super()
     @note = note
+
     Tag.add_by_name @note["tags"]
   end
 
@@ -15,6 +16,10 @@ class BnNote < Note
   def deleted?()  @note["isTrashed"];   end
   def title()     @note["title"];       end
   def name()      title;                end
+
+  
+
+
 
   def path
     # binding.pry

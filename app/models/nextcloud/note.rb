@@ -22,8 +22,10 @@ class NcNote < Note
   end
 
   def raw()       {};                   end   # development only
-  def content()   fs_path.read;            end
+  def content()   fs_path.read;         end
   def name()      path.basename.to_s;   end
+  def date()      fs_path.ctime;        end
+
 
   def self.create(node, root)
     case node.extname.downcase

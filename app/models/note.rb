@@ -35,6 +35,9 @@ end
     []
   end
 
+  def markdown()  Markdown.new content; end
+  def html()      markdown.to_html;     end
+
 end
 
 class TopNote < Note
@@ -50,7 +53,6 @@ class TopNote < Note
   def children
     @@all
   end
-
 
 
 end

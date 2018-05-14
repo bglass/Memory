@@ -2,7 +2,7 @@ class NoteController < TreeController
 
   def top()           Note.top;         end
 
-  def data_fields()
+  def data_fields
     [:tags, :path]
   end
 
@@ -19,10 +19,33 @@ class NoteController < TreeController
     render partial: "notes/view"
   end
 
-  def book
+  def bookx
     Location.read_all
     @notes = Note.map params[:selected]
+    binding.pry
     render partial: "notes/book"
   end
 
+  def book
+    respond_to :json
+    Location.read_all
+    @notes = Note.map params[:selected]
+
+    collection = @notes.map do |note|
+      {
+        date:     note.date,
+        tags:     note.tags,
+        folder:   note.folder,
+        html:     note.html
+      }
+    end
+    render json: collection
+  end
+
 end
+
+
+# respond_to :json
+# Location.read_all
+# # x = get_tree top; binding.pry
+# render json: get_tree(top)[:children]
