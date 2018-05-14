@@ -83,5 +83,20 @@ $sl_height: 30px;   // height of status lines
 
 .folder_box, .tag_box, .note_box {
   overflow-x: hidden;
-  overflow-y: auto
+  overflow-y: auto;
+  position : relative;
 }
+
+// .note_box:after {
+//   background-image: linear-gradient(to right,
+//                   #aaaaaa00 90%,
+//                    #aaaaaaff 100%);
+//   content  : "";
+//   position : absolute;
+//   z-index  : 1;
+//   top:     0;
+//   left:    0;
+//   bottom:   0;
+//   right:  0;
+//   pointer-events   : none;
+// }
