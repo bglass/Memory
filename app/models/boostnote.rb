@@ -9,7 +9,7 @@ class Boostnote < Location
   end
 
   def read_folders(path)
-    file = File.read(path + "boostnote.json")
+    file = (path / "boostnote.json").read
     data = JSON.parse(file)
     data["location"] = self
     root = BnRoot.create(data)
