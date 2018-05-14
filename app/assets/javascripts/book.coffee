@@ -10,7 +10,8 @@ class Book
     $.get(@url, selected: selection, (collection) =>
       for article in collection
         @unit.append("<div class='article'></div>")
-        new Article(".article", article)
+        $(".article").last().append(article.html)
+
         @unit.append("<hr/>")
     )
 
