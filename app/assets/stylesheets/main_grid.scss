@@ -13,19 +13,46 @@ $sl_height: 30px;   // height of status lines
 
   background-color: #aaaaaa;
   height: 98vh;
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
+  // grid-column-gap: 5px;
+  // grid-row-gap: 5px;
 }
 
 .main_grid > div {
   // background-color: rgba(155, 155, 155, 80);
   // color: rgba(255, 255, 255, 80);
   // border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 10px;
+  // padding: 10px;
   // font-size: 30px;
 
 }
 
+.book {
+  // padding: 0px;
+  // grid-row-gap: 0px;
+}
+
+.article_frame  {
+  // background-color: #cccccc;
+  // border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 8px;
+  // grid-row-gap: 0px;
+}
+
+
+
+.article  {
+  background-color: #eeeeee;
+  // border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  // grid-row-gap: 0px;
+}
+
+.meta {
+  // border: 1px solid rgba(0, 0, 0, 0.8);
+  height: $sl_height ;
+  padding: 0px;
+  // grid-row-gap: 0px;
+}
 
 .state_folder_set   { grid-row:  1;   grid-column: 1 / 4 }
 // .state_folder_get   { grid-row:  1;   grid-column: 4     }
