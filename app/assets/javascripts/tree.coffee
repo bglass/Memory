@@ -41,7 +41,7 @@ class Tree
 class Notes extends Tree
 
   constructor: ->
-    @filter = new NoteFilter
+    @filter = new NoteFilter(this)
     @tag = '.note_tree'
     @url = '/notes/'
     super
@@ -49,7 +49,7 @@ class Notes extends Tree
 class Folders extends Tree
 
   constructor: ->
-    @filter = new FolderFilter
+    @filter = new FolderFilter(this)
     @tag = '.folder_tree'
     @url = '/folders/'
     super
@@ -57,7 +57,7 @@ class Folders extends Tree
 class Tags extends Tree
 
   constructor: ->
-    @filter  = new TagFilter
+    @filter  = new TagFilter(this)
     @tag = '.tag_tree'
     @url = '/tags/'
     super
