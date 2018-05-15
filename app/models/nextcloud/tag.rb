@@ -6,8 +6,10 @@ class NcTag < Tag
 
 
   def self.read
-    NcTagTable.dump.each do |tag|
-      NcTag.new(tag)
+    NcDbTag.dump.each do |tag|
+      x = NcTag.new(tag)
+      binding.pry
+      # NcDbTag.all[3].nc_db_note_tag
     end
   end
 

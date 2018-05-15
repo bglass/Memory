@@ -8,10 +8,12 @@ class NextCloudDbBase < ActiveRecord::Base
 
 end
 
-class NcNoteTagLinkTable < NextCloudDbBase
+class NcDbNoteTag < NextCloudDbBase
+  belongs_to :nc_db_tag, class_name: 'NcDbTag'
   self.table_name = "noteTagLink"
 end
 
-class NcTagTable < NextCloudDbBase
+class NcDbTag < NextCloudDbBase
+  has_many :nc_db_note_tag, class_name: 'NcDbNoteTag', foreign_key: 'tag_id'
   self.table_name = "tag"
 end

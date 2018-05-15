@@ -1,7 +1,5 @@
 class NcNote < Note
 
-  # attr_accessor :id, :title,
-
   attr_accessor :relative_path, :root
 
   def path

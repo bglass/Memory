@@ -11,6 +11,7 @@ class NoteController < TreeController
     @note = Note.find(params[:id])
     render "notes/view"
   end
+  
   def book
     respond_to :json
     Location.read_all
