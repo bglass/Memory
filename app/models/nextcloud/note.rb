@@ -2,16 +2,6 @@ class NcNote < Note
 
   attr_accessor :relative_path, :root
 
-  def path
-    root.path + relative_path
-  end
-
-  def fs_path
-    root.fs_path + relative_path rescue binding.pry
-  end
-
-
-
   def initialize(this_fs_path, root)
     super()
     @root          = root
@@ -23,6 +13,30 @@ class NcNote < Note
   def content()   fs_path.read;         end
   def name()      path.basename.to_s;   end
   def date()      fs_path.ctime;        end
+
+  def path
+    root.path + relative_path
+  end
+
+
+  def tags
+    link = NcDbNoteTag.where("note_file_name = '#{nc_note_file_name}'")
+    link.map{|l| l.nc_db_tag.name}
+  end
+
+  private
+
+  def fs_path
+    root.fs_path + relative_path rescue binding.pry
+  end
+
+  def nc_note_file_name
+    relative_path.basename relative_path.extname
+  end
+
+  def nc_note_sub_folder_path
+    relative_path.dirname
+  end
 
 
   def self.create(node, root)
@@ -37,6 +51,5 @@ class NcNote < Note
     headline.sub! /^#*\s*/, ""
     headline.chomp
   end
-
 
 end
