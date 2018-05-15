@@ -9,7 +9,7 @@ class Tree
     @unit.jstree
       'plugins': [ "wholerow", "search" ]
       'search':
-        # "show_only_matches": true
+        "show_only_matches": true
         "search_callback": (str, node) => @filter.visible(node)
       'core':
         "animation" : 0
