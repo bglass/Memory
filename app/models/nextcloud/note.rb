@@ -1,18 +1,19 @@
 class NcNote < Note
 
-  attr_accessor :relative_path, :root
+  attr_accessor :relative_path, :root, :filename
 
   def initialize(this_fs_path, root)
     super()
     @root          = root
-    @relative_path = this_fs_path.relative_path_from root.fs_path
+    @relative_path = this_fs_path.dirname.relative_path_from root.fs_path
+    @filename      = this_fs_path.basename
     @title   = title_of content
   end
 
-  def raw()       {};                   end   # development only
-  def content()   fs_path.read;         end
-  def name()      path.basename.to_s;   end
-  def date()      fs_path.ctime;        end
+  def raw()       {};                         end   # development only
+  def content()   (fs_path/filename).read;    end
+  def name()      title_of content;           end
+  def date()      fs_path.ctime;              end
 
   def path
     root.path + relative_path
@@ -31,11 +32,13 @@ class NcNote < Note
   end
 
   def nc_note_file_name
-    relative_path.basename relative_path.extname
+    # relative_path.basename relative_path.extname
+    # binding.pry
+    filename.basename filename.extname
   end
 
   def nc_note_sub_folder_path
-    relative_path.dirname
+    relative_path
   end
 
 
