@@ -1,12 +1,7 @@
 class Filter
 
-  visible: (node) ->
-    /U/.test node.text
-
-
-
-  # window.tag_get_line.set(nodes[0].data["tags"])
-  # window.folder_get_line.set(nodes[0].data["path"])
+  # visible: (node) ->
+  #   /U/.test node.text
 
   contains_all: (needed, have) ->
     return true if not needed.length
@@ -31,13 +26,10 @@ class Filter
 
   subtract_tags:  (tags) ->
 
-
-
 class @FolderFilter extends Filter
 
   constructor: (parent)->
     parent.selected_paths = []
-
 
   save: (nodes) ->
     paths   = nodes.map (node) -> node.data.path
@@ -48,14 +40,42 @@ class @TagFilter    extends Filter
 
   constructor: (parent) ->
     parent.selected_names = []
+    @used_by_notes = []
+
+  visible: (tag) ->
+    tag.text in @in_use()
 
   save: (nodes) ->
     names = nodes.map (node) -> node.text
     window.tag.selected_names = names
     window.tag_set_line.set names
 
+  reset: ->
+    @save([])
+    @used_by_notes = {}
+
+  append_in_use: (tags)->
+    for tag in tags
+      @used_by_notes[tag] = null
+
+  in_use: ->
+    tags = []
+    for tag, x of @used_by_notes
+      tags.push tag
+    tags
+
 class @NoteFilter   extends Filter
 
   visible: (node) ->
-    # @contains_all(
-    @contains_one(window.tag.selected_names, node.data.tags) and @starts_with_one(window.folder.selected_paths, node.data.path)
+
+    wanted_tags     = window.tag.selected_names
+    wanted_folders  = window.folder.selected_paths
+    actual_tags     = node.data.tags
+    actual_folder   = node.data.path
+
+    tag_match    = @contains_one(wanted_tags, actual_tags)
+    folder_match = @starts_with_one(wanted_folders, actual_folder)
+    visible = tag_match and folder_match
+
+    window.tag.filter.append_in_use(actual_tags) if visible
+    visible

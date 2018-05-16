@@ -6,8 +6,9 @@ class Event
 
       when '.folder_tree'
         window.folder.filter.save(nodes)
-        window.tag.search()
+        window.tag.filter.reset()
         window.note.search()
+        window.tag.search()
 
       when '.tag_tree'
         window.tag.filter.save(nodes)

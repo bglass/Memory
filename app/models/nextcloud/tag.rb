@@ -7,6 +7,7 @@ class NcTag < Tag
 
     def self.read
       NcDbTag.dump.each do |tag|
+        NcTag.new(tag)
       end
     end
 
