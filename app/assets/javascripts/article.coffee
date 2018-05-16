@@ -1,13 +1,28 @@
 class @Article
 
-  constructor: (@book, record) ->
-    @render_article(record)
+  constructor: (@book, @data) ->
+    @folder()
+    @tags()
+    @date()
+    @content()
 
-  render_article: (article)->
+  folder: ->
     @book.append """
-    <div class='meta'>Folder: #{article.path}</div>
-    <div class='meta'>Tags: #{article.tags}</div>
-    <div class='meta'>Date: #{article.date}</div>
+    <div class='meta'>Folder: #{@data.path}</div>
+    """
+
+  tags: ->
+    @book.append """
+    <div class='meta'>Tags: #{@data.tags}</div>
+    """
+
+  date: ->
+    @book.append """
+    <div class='meta'>Date: #{@data.date}</div>
+    """
+
+  content: ->
+    @book.append """
     <div class=article_frame>
-    <div class='article'>#{article.html}</div></div>
+    <div class='article'>#{@data.html}</div></div>
     """
