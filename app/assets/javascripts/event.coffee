@@ -7,15 +7,20 @@ class Event
       when '.folder_tree'
         window.folder.filter.save(nodes)
         window.tag.filter.reset()
-        window.note.search()
+        window.tag.tree.deselect_all()
+        # window.note.search()
         window.tag.search()
 
       when '.tag_tree'
         window.tag.filter.save(nodes)
+        window.note.tree.deselect_all()
         window.note.search()
 
       when '.note_tree'
-        window.book.update(nodes)
+        if nodes.length
+          window.book.update(nodes)
+        else
+          window.book.clear()
 
 
 $ ->
