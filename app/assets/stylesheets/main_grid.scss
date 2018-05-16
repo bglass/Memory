@@ -17,13 +17,24 @@ $sl_height: 30px;   // height of status lines
   // grid-row-gap: 5px;
 }
 
+// .main_grid {
+//   background: linear-gradient(to right,
+//                     #333333 5%,
+//                      #aaaaaa 15%);
+// }
+// .folder_box {
+//     // background-color: #000000;
+//     color: #eeeeee;
+// }
+
+
+
 .main_grid > div {
   // background-color: rgba(155, 155, 155, 80);
   // color: rgba(255, 255, 255, 80);
   // border: 1px solid rgba(0, 0, 0, 0.8);
   // padding: 10px;
   // font-size: 30px;
-
 }
 
 .book {
@@ -71,6 +82,10 @@ $sl_height: 30px;   // height of status lines
 .search_tag         { grid-row:  5;   grid-column: 2 }
 .search_note        { grid-row:  5;   grid-column: 3 }
 .search_content     { grid-row:  5;   grid-column: 4 }
+
+
+
+
 
 .book {
   overflow-x: hidden;
