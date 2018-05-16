@@ -59,10 +59,12 @@ class @TagFilter    extends Filter
   visible: (tag) ->
     tag.text in @in_use()
 
+
+
   save: (nodes) ->
     names = nodes.map (node) -> node.text
     window.tag.selected_names = names
-    window.tag_set_line.set names
+    window.tag_display.set names
 
   reset: ->
     @save([])
