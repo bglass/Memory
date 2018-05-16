@@ -3,6 +3,10 @@ class Filter
   # visible: (node) ->
   #   /U/.test node.text
 
+  sort: (a, b) ->
+    return  1 if a.text.toLowerCase() > b.text.toLowerCase()
+    return -1
+
   contains_all: (needed, have) ->
     return true if not needed.length
     for item in needed
@@ -65,6 +69,12 @@ class @TagFilter    extends Filter
     tags
 
 class @NoteFilter   extends Filter
+
+  sort: (a, b) ->
+    return  1 if a.data.date < b.data.date
+    return -1
+
+
 
   visible: (node) ->
 

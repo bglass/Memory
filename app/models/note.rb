@@ -54,5 +54,8 @@ class TopNote < Note
     @@all
   end
 
+  def date
+    nil
+  end
 
 end

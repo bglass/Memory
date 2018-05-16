@@ -5,12 +5,19 @@ class Tree
     @tree = @create_load_jstree()
     @selection_handler()
 
+  sort: (a, b) ->
+    @filter.sort(
+      @tree.get_node(a),
+      @tree.get_node(b)
+    )
+
   create_load_jstree: ->
     @unit.jstree
-      'plugins': [ "wholerow", "search" ]
+      'plugins': [ "wholerow", "search", "sort" ]
       'search':
         "show_only_matches": true
         "search_callback": (str, node) => @filter.visible(node)
+      "sort": (a, b) => @sort(a,b)
       'core':
         "animation" : 0
         'themes': 'icons': false
@@ -36,8 +43,6 @@ class Tree
     @tree.search("B")
 
 
-
-
 class Notes extends Tree
 
   constructor: ->
@@ -53,6 +58,7 @@ class Folders extends Tree
     @tag = '.folder_tree'
     @url = '/folders/'
     super
+
 
 class Tags extends Tree
 
