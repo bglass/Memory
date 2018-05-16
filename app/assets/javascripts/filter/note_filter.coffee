@@ -12,7 +12,6 @@ class @NoteFilter   extends Filter
     wanted_folders  = window.folder.selected_paths
     actual_tags     = node.data.tags
     actual_folder   = node.data.path
-    console.log wanted_tags, actual_tags
     tag_match    = @contains_one(wanted_tags, actual_tags)
     folder_match = @starts_with_one(wanted_folders, actual_folder)
     visible = tag_match and folder_match
