@@ -23,6 +23,9 @@ class Event
           window.book.clear()
 
 
+  key: (sender, key) ->
+    console.log sender, key
+
 $ ->
 
   window.evt   = new Event

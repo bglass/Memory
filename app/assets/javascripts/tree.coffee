@@ -29,6 +29,10 @@ class Tree
       nodes = @get_nodes data.selected
       window.evt.selected(@tag, nodes)
 
+    @unit.on 'keydown.jstree', '.jstree-anchor', (e) =>
+      window.evt.key(@tag, e.which)
+
+
   get_nodes: (selection) ->
     selection.map (id) => @tree.get_node(id);
 
