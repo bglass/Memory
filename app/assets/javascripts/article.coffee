@@ -26,9 +26,11 @@ class @Article
     """
 
   tags: ->
-    @book.append """
-    <div class='meta'>Tags: #{@data.tags}</div>
-    """
+    out = "<div class='meta'><div class='extra_tags'>"
+    for tag in window.tag.filter.extra_tags(@data.tags)
+      out += "<div class='tag'>"+tag+"</div>"
+    out += "</div></div>"
+    @book.append out
 
   date: ->
     date = @data.date.slice(0,10)

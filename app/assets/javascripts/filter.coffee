@@ -80,6 +80,12 @@ class @TagFilter    extends Filter
       tags.push tag
     tags
 
+  extra_tags: (tags) ->
+    extra = []
+    for tag in tags
+      extra.push tag if tag not in window.tag.selected_names
+    extra
+
 class @NoteFilter   extends Filter
 
   sort: (a, b) ->

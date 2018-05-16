@@ -1,5 +1,12 @@
 .state_tag_set {
   display: flex;
-  flex-direction: row-reverse;
   overflow: hidden;
+  flex-wrap: nowrap;
+  flex-direction: row-reverse;
+}
+.extra_tags{
+  display: flex;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  flex-direction: row;
 }
