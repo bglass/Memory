@@ -1,4 +1,4 @@
-class Filter
+class @Filter
 
   # visible: (node) ->
   #   /U/.test node.text
