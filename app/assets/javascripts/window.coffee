@@ -27,9 +27,6 @@ $ ->
   window.folder.filter.display = new StatusLine
     tag: ".state_folder_set"
 
-  window.tag_set_line    = new StatusLine
-    tag: ".state_tag_set"
-
   window.date_set_line    = new StatusLine
     tag: ".state_date_set"
 
