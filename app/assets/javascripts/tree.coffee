@@ -5,7 +5,6 @@ class @Tree
     @tree = @create_load_jstree()
     @selection_handler()
 
-
   sort: (a, b) ->
     @filter.sort(
       @tree.get_node(a),
