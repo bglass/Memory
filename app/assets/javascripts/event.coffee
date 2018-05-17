@@ -1,29 +1,29 @@
 class @Event
 
-  constructor: ({@window}) ->
-    
+  constructor: ({@global}) ->
+
 
   selected: (sender, nodes)->
 
     switch sender
 
       when '.folder_tree'
-        @window.folder.filter.save(nodes)
-        @window.tag.filter.reset()
-        @window.tag.tree.deselect_all()
-        # @window.note.search()
-        @window.tag.search()
+        @global.folder.filter.save(nodes)
+        @global.tag.filter.reset()
+        @global.tag.tree.deselect_all()
+        # @global.note.search()
+        @global.tag.search()
 
       when '.tag_tree'
-        @window.tag.filter.save(nodes)
-        @window.note.tree.deselect_all()
-        @window.note.search()
+        @global.tag.filter.save(nodes)
+        @global.note.tree.deselect_all()
+        @global.note.search()
 
       when '.note_tree'
         if nodes.length
-          @window.book.update(nodes)
+          @global.book.update(nodes)
         else
-          @window.book.clear()
+          @global.book.clear()
 
 
   key: (sender, key) ->

@@ -1,6 +1,6 @@
 class @Book
 
-  constructor: ({@tag, @url, @window}) ->
+  constructor: ({@tag, @url, @global}) ->
     @unit = $(@tag)
     @clear()
 
@@ -12,7 +12,7 @@ class @Book
         new Article
           book: @unit
           data: record
-          window: @window
+          global: @global
     )
 
   set: (content) ->
