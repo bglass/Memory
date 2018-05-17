@@ -4,12 +4,10 @@ class @NoteFilter   extends Filter
     return  1 if a.data.date < b.data.date
     return -1
 
-
-
   visible: (node) ->
 
-    wanted_tags     = window.tag.selected_names
-    wanted_folders  = window.folder.selected_paths
+    wanted_tags     = window.tag.filter.selected_names
+    wanted_folders  = window.folder.filter.selected_paths
     actual_tags     = node.data.tags
     actual_folder   = node.data.path
     tag_match    = @contains_one(wanted_tags, actual_tags)

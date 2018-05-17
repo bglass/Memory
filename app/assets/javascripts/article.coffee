@@ -9,7 +9,7 @@ class @Article
   relative_path: ->
 
 
-    selected_folders = window.folder.selected_paths
+    selected_folders = window.folder.filter.selected_paths
 
     if selected_folders.length == 1
       re = RegExp "^#{selected_folders[0]}/?"

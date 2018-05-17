@@ -1,9 +1,10 @@
-class Tree
+class @Tree
 
-  constructor: ->
+  constructor: ({@filter, @tag, @url}) ->
     @unit = $(@tag)
     @tree = @create_load_jstree()
     @selection_handler()
+
 
   sort: (a, b) ->
     @filter.sort(
@@ -45,34 +46,3 @@ class Tree
 
   search: ->
     @tree.search("B")
-
-
-class Notes extends Tree
-
-  constructor: ->
-    @filter = new NoteFilter(this)
-    @tag = '.note_tree'
-    @url = '/notes/'
-    super
-
-class Folders extends Tree
-
-  constructor: ->
-    @filter = new FolderFilter(this)
-    @tag = '.folder_tree'
-    @url = '/folders/'
-    super
-
-
-class Tags extends Tree
-
-  constructor: ->
-    @filter  = new TagFilter(this)
-    @tag = '.tag_tree'
-    @url = '/tags/'
-    super
-
-$ ->
-  window.note       = new Notes
-  window.folder     = new Folders
-  window.tag        = new Tags

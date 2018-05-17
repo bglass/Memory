@@ -1,7 +1,7 @@
 class @FolderFilter extends Filter
 
-  constructor: (parent)->
-    parent.selected_paths = []
+  constructor: ->
+    @selected_paths = []
 
   paths_to_string: (paths) ->
     return "" if not paths
@@ -15,5 +15,5 @@ class @FolderFilter extends Filter
 
   save: (nodes) ->
     paths   = nodes.map (node) -> node.data.path
-    window.folder.selected_paths = paths
+    @selected_paths = paths
     window.folder_set_line.set(@paths_to_string paths)
