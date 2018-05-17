@@ -10,7 +10,7 @@ class @TagFilter    extends Filter
   save: (nodes) ->
     names = nodes.map (node) -> node.text
     @selected_names = names
-    window.tag_display.set names
+    @display.set names
 
   reset: ->
     @save([])
@@ -29,5 +29,5 @@ class @TagFilter    extends Filter
   extra_tags: (tags) ->
     extra = []
     for tag in tags
-      extra.push tag if tag not in window.tag.filter.selected_names
+      extra.push tag if tag not in @selected_names
     extra

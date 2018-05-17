@@ -21,10 +21,10 @@ $ ->
     tag: '.tag_tree'
     url: '/tags/'
 
-  window.tag_display = new TagBox
+  window.tag.filter.display = new TagBox
     tag: ".state_tag_set"
 
-  window.folder_set_line = new StatusLine
+  window.folder.filter.display = new StatusLine
     tag: ".state_folder_set"
 
   window.tag_set_line    = new StatusLine

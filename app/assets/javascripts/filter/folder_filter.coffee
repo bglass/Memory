@@ -16,4 +16,4 @@ class @FolderFilter extends Filter
   save: (nodes) ->
     paths   = nodes.map (node) -> node.data.path
     @selected_paths = paths
-    window.folder_set_line.set(@paths_to_string paths)
+    @display.set(@paths_to_string paths)
