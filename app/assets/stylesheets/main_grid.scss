@@ -77,10 +77,10 @@ $sl_height: 30px;   // height of status lines
 .note_box           { grid-row:  4;   grid-column: 3 }
 .book               { grid-row:  1/5; grid-column: 4 }
 
-.search_folder      { grid-row:  5;   grid-column: 1 }
-.search_tag         { grid-row:  5;   grid-column: 2 }
-.search_note        { grid-row:  5;   grid-column: 3 }
-.search_content     { grid-row:  5;   grid-column: 4 }
+.folder_search      { grid-row:  5;   grid-column: 1 }
+.tag_search         { grid-row:  5;   grid-column: 2 }
+.note_search        { grid-row:  5;   grid-column: 3 }
+.book_search        { grid-row:  5;   grid-column: 4 }
 
 
 

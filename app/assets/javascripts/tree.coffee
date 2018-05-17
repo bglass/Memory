@@ -43,5 +43,7 @@ class @Tree
     @get_nodes(selection).map (node) -> node.data
 
 
-  search: ->
-    @tree.search("B")
+  search: =>
+    console.log @tag
+    console.log "HALLO"
+    # @tree.search("B")

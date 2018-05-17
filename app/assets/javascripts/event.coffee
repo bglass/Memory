@@ -25,6 +25,18 @@ class @Event
         else
           @global.book.clear()
 
+  input: (sender, value) ->
+
+    switch sender
+
+      when '.folder_search'
+        console.log value
+      when '.tag_search'
+        4
+      when '.note_search'
+        4
+      when '.book_search'
+        3
 
   key: (sender, key) ->
     console.log sender, key
