@@ -1,6 +1,6 @@
-class Book
+class @Book
 
-  constructor: (@tag, @url) ->
+  constructor: ({@tag, @url, @window}) ->
     @unit = $(@tag)
     @clear()
 
@@ -9,7 +9,10 @@ class Book
     selection = ( nodes.map (node) -> node.id )
     $.get(@url, selected: selection, (collection) =>
       for record in collection
-        new Article(@unit, record)
+        new Article
+          book: @unit
+          data: record
+          window: @window
     )
 
   set: (content) ->
@@ -17,6 +20,3 @@ class Book
 
   clear: ->
     @unit.empty()
-
-$ ->
-  window.book = new Book(".book", '/book/')

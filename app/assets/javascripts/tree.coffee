@@ -1,6 +1,6 @@
 class @Tree
 
-  constructor: ({@filter, @tag, @url}) ->
+  constructor: ({@filter, @tag, @url, @event}) ->
     @unit = $(@tag)
     @tree = @create_load_jstree()
     @selection_handler()
@@ -27,10 +27,10 @@ class @Tree
   selection_handler: ->
     @unit.on 'changed.jstree', (e, data) =>
       nodes = @get_nodes data.selected
-      window.evt.selected(@tag, nodes)
+      @event.selected(@tag, nodes)
 
     @unit.on 'keydown.jstree', '.jstree-anchor', (e) =>
-      window.evt.key(@tag, e.which)
+      @event.key(@tag, e.which)
 
 
   get_nodes: (selection) ->

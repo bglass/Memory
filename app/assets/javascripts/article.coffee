@@ -1,6 +1,7 @@
 class @Article
 
-  constructor: (@book, @data) ->
+  constructor: ({@book, @data, @window}) ->
+    window.data = @data
     @folder()
     @tags()
     @date()
@@ -8,8 +9,7 @@ class @Article
 
   relative_path: ->
 
-
-    selected_folders = window.folder.filter.selected_paths
+    selected_folders = @window.folder.filter.selected_paths
 
     if selected_folders.length == 1
       re = RegExp "^#{selected_folders[0]}/?"
