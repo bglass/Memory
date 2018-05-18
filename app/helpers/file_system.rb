@@ -1,6 +1,6 @@
 module FileSystem
 
-  def child_file_paths
+  def child_files
     child_node_paths.select do |n|
       n.file?
     end

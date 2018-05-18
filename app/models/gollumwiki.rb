@@ -1,5 +1,5 @@
 require 'gollumwiki/folder'
-# require 'gollumwiki/note'
+require 'gollumwiki/note'
 # require 'gollumwiki/tag'
 # require 'gollumwiki/database'
 
@@ -13,7 +13,10 @@ class Gollumwiki < Location
     @meta[:fs_path] = @meta[:path]
     @meta[:path]    = Pathname @meta[:name]
 
-    Folder.add_root GwRoot.new(@meta)
+    root = GwRoot.new(@meta)
+    root.find_notes
+    Folder.add_root root
+
   end
 
   private
@@ -21,6 +24,9 @@ class Gollumwiki < Location
   def fs_path
     @meta[:fs_path]
   end
+
+
+
 
 
 end

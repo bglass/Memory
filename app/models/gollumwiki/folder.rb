@@ -15,6 +15,10 @@ class GwFolder < Folder
     end
   end
 
+  def find_notes
+    child_files.each { |f| GwNote.new(f, self)}
+  end
+
   private
 
   def root()       @meta[:root];     end
