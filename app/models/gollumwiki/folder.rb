@@ -6,11 +6,7 @@ class GwFolder < Folder
   def fs_path()    @meta[:fs_path];  end
 
   def path
-    if self == root
-      Pathname name
-    else
-      root.path + (fs_path.relative_path_from root.fs_path)
-    end
+    root.path + (fs_path.relative_path_from root.fs_path) rescue binding.pry
   end
 
   def children
@@ -19,13 +15,12 @@ class GwFolder < Folder
     end
   end
 
-  def set_as_root
-    @meta[:root] = self
-  end
-
   private
 
   def root()       @meta[:root];     end
+end
 
-
+class GwRoot < GwFolder
+  def path()   Pathname name;   end
+  def root()   self;            end
 end

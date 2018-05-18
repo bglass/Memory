@@ -13,10 +13,7 @@ class Gollumwiki < Location
     @meta[:fs_path] = @meta[:path]
     @meta[:path]    = Pathname @meta[:name]
 
-    root = GwFolder.new(@meta)
-    root.set_as_root
-
-    Folder.add_root root
+    Folder.add_root GwRoot.new(@meta)
   end
 
   private
