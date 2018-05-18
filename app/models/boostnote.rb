@@ -3,12 +3,12 @@ require 'boostnote/note'
 
 class Boostnote < Location
 
-  def read(path)
-    read_folders(path)
-    read_notes(path)
+  def read # (path)
+    read_folders # (path)
+    read_notes # (path)
   end
 
-  def read_folders(path)
+  def read_folders # (path)
     file = (path / "boostnote.json").read
     data = JSON.parse(file)
     data["location"] = self
@@ -16,7 +16,7 @@ class Boostnote < Location
     Folder.add_root root
   end
 
-  def read_notes(path)
+  def read_notes # (path)
     Note
     files = Pathname.glob(path / "notes/*.cson")
     files.each do |file|

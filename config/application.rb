@@ -17,9 +17,10 @@ module Memory
     # the framework and any gems in your application.
 
     config.notes = [
-      ["Nexus",  "boostnote", "~/Nextcloud/Boostnote"],
-      ["Drain",  "boostnote", "~/briefcase"],
-      ["Mobile", "nextcloud", "~/Nextcloud/Notes"]
+      ["Gollum", "gollumwiki", "~/work/rails/experiments/gollum/gollumdata"],
+      ["Nexus",  "boostnote",  "~/Nextcloud/Boostnote"],
+      ["Drain",  "boostnote",  "~/briefcase"],
+      ["Mobile", "nextcloud",  "~/Nextcloud/Notes"]
     ]
 
 

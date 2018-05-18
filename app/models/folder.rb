@@ -31,7 +31,7 @@ class Folder
 
 end
 
-class TopFolder < Folder
+class TopFolder < Folder  # Parent of all root folders
   def name()  "Folders";   end
   def path()  "/";         end
 end
