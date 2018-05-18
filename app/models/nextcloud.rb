@@ -4,7 +4,7 @@ require 'nextcloud/tag'
 require 'nextcloud/database'
 
 class Nextcloud < Location
-  def read(path)
+  def read # (path)
     root = NcRoot.new
     root.setup(self)
     Folder.add_root root

@@ -4,6 +4,14 @@ class Location
   attr_accessor :name, :path
   @@done = false
 
+  def initialize(meta)
+    @meta = meta
+    read # (path)
+  end
+
+  def path()    @meta[:path];   end
+  def name()    @meta[:name];   end
+
 
   def self.locations
     Rails.configuration.notes
@@ -27,21 +35,14 @@ class Location
       plugin = class_of type
 
       path = Pathname(path).expand_path
-
       if path.directory?
-        plugin.new(name, path) if plugin
+        plugin.new(name: name, path: path) if plugin
       end
 
     end
 
     @@done = true
 
-  end
-
-  def initialize(name,path)
-    @name = name
-    @path = path
-    read(path)
   end
 
 end
