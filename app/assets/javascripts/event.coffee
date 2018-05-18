@@ -1,6 +1,6 @@
 class @Event
 
-  constructor: ({@global}) ->
+  constructor: ({@context}) ->
 
 
   selected: (sender, nodes)->
@@ -8,35 +8,32 @@ class @Event
     switch sender
 
       when '.folder_tree'
-        @global.folder.filter.save(nodes)
-        @global.tag.filter.reset()
-        @global.tag.tree.deselect_all()
-        # @global.note.search()
-        @global.tag.search()
+        @context.folder.filter.save(nodes)
+        @context.tag.filter.reset()
+        @context.tag.tree.deselect_all()
+        @context.note.search()
+        @context.tag.search()
 
       when '.tag_tree'
-        @global.tag.filter.save(nodes)
-        @global.note.tree.deselect_all()
-        @global.note.search()
+        @context.tag.filter.save(nodes)
+        @context.note.tree.deselect_all()
+        @context.note.search()
 
       when '.note_tree'
         if nodes.length
-          @global.book.update(nodes)
+          @context.book.update(nodes)
         else
-          @global.book.clear()
+          @context.book.clear()
 
   input: (sender, value) ->
 
     switch sender
 
-      when '.folder_search'
-        console.log value
-      when '.tag_search'
-        4
       when '.note_search'
-        4
-      when '.book_search'
-        3
+        window.note.search()
+      # when '.folder_search'
+      # when '.tag_search'
+      # when '.book_search'
 
   key: (sender, key) ->
     console.log sender, key

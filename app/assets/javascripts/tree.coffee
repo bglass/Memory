@@ -44,6 +44,4 @@ class @Tree
 
 
   search: =>
-    console.log @tag
-    console.log "HALLO"
-    # @tree.search("B")
+    @tree.search("B")

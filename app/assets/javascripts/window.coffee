@@ -1,10 +1,10 @@
 $ ->
 
   event = new Event
-    global: window
+    context: window
 
   window.book = new Book
-    global: window
+    context: window
     tag:  ".book"
     url:  "/book/"
 
@@ -30,8 +30,8 @@ $ ->
   #   call:  window.tag.search
   #   tag: '.tag_search'
 
-  window.note.input   = new Search
-    call:  window.note.search
+  window.note.filter.input   = new Search
+    call:  event.input
     tag: '.note_search'
   #
   # window.folder.input = new Search
