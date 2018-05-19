@@ -1,11 +1,12 @@
 class GwNote < Note
 
-  attr_accessor :fs_path
+  attr_accessor :fs_path, :page
 
   def initialize(fs_path, parent_folder)
     super()
     @folder   = parent_folder
     @filename = fs_path.basename
+    @page  = Page.find_or_initialize_by_name name
   end
 
   def path
@@ -24,6 +25,7 @@ class GwNote < Note
     "n/a"
   end
 
-  def content()   (@folder.fs_path/filename).read;    end
+
+  def content()   page.preview;    end
 
 end
