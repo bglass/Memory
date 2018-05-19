@@ -5,8 +5,9 @@ $ ->
 
   window.book = new Book
     context: window
-    tag:  ".book"
-    url:  "/book/"
+    event:   event
+    tag:     ".book"
+    url:     "/book/"
 
   window.note = new Tree
     event:  event

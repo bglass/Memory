@@ -13,7 +13,7 @@ class GwNote < Note
   end
 
   def path
-    folder.path
+    folder.path/name
   end
 
   def wiki
@@ -36,7 +36,7 @@ class GwNote < Note
   def markdown()  binding.pry;    end
 
 
-  def html(format = :markdown)      
+  def html(format = :markdown)
     wiki.preview_page(page.name, page.text_data, format).formatted_data.html_safe
   end
 

@@ -21,7 +21,7 @@ class @Event
 
       when '.note_tree'
         if nodes.length
-          @context.book.update(nodes)
+          @context.book.update_by_ids(nodes)
         else
           @context.book.clear()
 
@@ -37,3 +37,6 @@ class @Event
 
   key: (sender, key) ->
     console.log sender, key
+
+  wiki_link: (path) ->
+    @context.book.update_by_path([path])

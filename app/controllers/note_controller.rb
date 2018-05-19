@@ -15,7 +15,15 @@ class NoteController < TreeController
   def book
     respond_to :json
     Location.read_all
-    @notes = Note.map params[:selected]
+
+    if selected = params[:selected]
+      @notes = Note.map selected
+
+    elsif paths = params[:paths]
+      @notes = Note.find_by_paths paths
+
+    else @notes = []
+    end
 
     collection = @notes.map do |note|
       {

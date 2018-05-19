@@ -18,6 +18,15 @@ class Note
     @@top = TopNote.new
 end
 
+  def self.find_by_paths paths
+    paths.map do |p|
+      @@all.find do |n|
+        n.path.to_s == p
+      end
+    end
+  end
+
+
   def self.find(id)
     @@all[id.to_i]
   end
