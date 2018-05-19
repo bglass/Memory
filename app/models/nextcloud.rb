@@ -1,7 +1,7 @@
-require 'nextcloud/folder'
-require 'nextcloud/note'
-require 'nextcloud/tag'
-require 'nextcloud/database'
+require 'nextcloud/nc_folder'
+require 'nextcloud/nc_note'
+require 'nextcloud/nc_tag'
+require 'nextcloud/nc_database'
 
 class Nextcloud < Location
   def read # (path)

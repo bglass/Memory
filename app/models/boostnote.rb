@@ -1,5 +1,5 @@
-require 'boostnote/folder'
-require 'boostnote/note'
+require 'boostnote/bn_folder'
+require 'boostnote/bn_note'
 
 class Boostnote < Location
 

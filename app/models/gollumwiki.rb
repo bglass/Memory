@@ -1,12 +1,9 @@
-require 'gollumwiki/folder'
-require 'gollumwiki/note'
-# require 'gollumwiki/tag'
-# require 'gollumwiki/database'
+require 'gollumwiki/gw_folder'
+require 'gollumwiki/gw_note'
+require 'gollumwiki/gw_page'
+
 
 class Gollumwiki < Location
-
-
-
 
 
   def read

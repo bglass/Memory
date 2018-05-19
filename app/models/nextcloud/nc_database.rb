@@ -1,4 +1,4 @@
-class NextCloudDbBase < ActiveRecord::Base
+class NcDatabase < ActiveRecord::Base
   self.abstract_class = true
   establish_connection NEXTCLOUD_DB
 
@@ -8,12 +8,12 @@ class NextCloudDbBase < ActiveRecord::Base
   end
 end
 
-class NcDbNoteTag < NextCloudDbBase
+class NcDbNoteTag < NcDatabase
   belongs_to :nc_db_tag, foreign_key: 'tag_id'
   self.table_name = "noteTagLink"
 end
 
-class NcDbTag < NextCloudDbBase
+class NcDbTag < NcDatabase
   has_many :nc_db_note_tag, foreign_key: 'tag_id'
   self.table_name = "tag"
 end
