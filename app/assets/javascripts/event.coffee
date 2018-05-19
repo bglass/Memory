@@ -47,7 +47,8 @@ class @Event
     # console.log sender, key
 
   wiki_link: (path) ->
-    @save_state()
+    @snap_state()
+    console.log path
     @main.book.update_by_path([path])
 
 
@@ -61,3 +62,11 @@ class @Event
     if notes = e.state["note"]
       # console.log "Loading Notes", notes
       @main.note.select_nodes_by_filenames notes
+
+  # private helpers
+
+  snap_state: ->
+    @state.add "folder", @main.folder.filter.selected_paths
+    @state.add "tag",    @main.tag.filter.selected_names
+    @state.add "note",   @main.note.filter.selected_notes
+    @state.save_state()

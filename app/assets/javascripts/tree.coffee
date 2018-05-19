@@ -68,7 +68,6 @@ class @Tree
     for i, item of @model()
       if item.data and item.data.filename
         lookup[item.data.path + "/" + item.data.filename] = item.id
-    console.log fnames, lookup
     fnames.map (f) -> lookup[f]
 
   find_by_paths: (paths)->

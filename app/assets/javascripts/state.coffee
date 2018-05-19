@@ -7,7 +7,7 @@ class @State
     @data[k] ||= v
 
   save_state: ->
-    label = $.now()
+    label = "" #$.now()
     history.pushState(@data, "", label)
     @data = {}
 
