@@ -1,58 +1,42 @@
+$sl_height: 30px;   // height of status lines
+
 body {
   overflow: hidden;
 }
 
-$sl_height: 30px;   // height of status lines
 
 .main_grid {
   display: grid;
 
   grid-template-columns: 15% 15% 20% auto;
-  grid-template-rows: $sl_height $sl_height $sl_height auto min-content;
 
-  background-color: #aaaaaa;
+  grid-template-rows: $sl_height $sl_height $sl_height $sl_height
+                      auto min-content;
+
   height: 98vh;
   // grid-column-gap: 5px;
   // grid-row-gap: 5px;
 }
 
-// .main_grid {
-//   background: linear-gradient(to right,
-//                     #333333 5%,
-//                      #aaaaaa 15%);
-// }
-// .folder_box {
-//     // background-color: #000000;
-//     color: #eeeeee;
-// }
+.state_folder_set   { grid-row:  1;   grid-column: 1 / 4 }
+.state_tag_set      { grid-row:  2;   grid-column: 1 / 4 }
+.state_date_set     { grid-row:  3;   grid-column: 1 / 4 }
 
+.folder_menu         { grid-row:  4;   grid-column: 1 }
+.tag_menu            { grid-row:  4;   grid-column: 2 }
+.note_menu           { grid-row:  4;   grid-column: 3 }
 
+.folder_box         { grid-row:  5;   grid-column: 1 }
+.tag_box            { grid-row:  5;   grid-column: 2 }
+.note_box           { grid-row:  5;   grid-column: 3 }
+.book               { grid-row:  1/6; grid-column: 4 }
 
-.main_grid > div {
-  // background-color: rgba(155, 155, 155, 80);
-  // color: rgba(255, 255, 255, 80);
-  // border: 1px solid rgba(0, 0, 0, 0.8);
-  // padding: 10px;
-  // font-size: 30px;
-}
-
-.book {
-  // padding: 0px;
-  // grid-row-gap: 0px;
-}
-
-.article_frame  {
-  // background-color: #cccccc;
-  // border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 8px;
-  // grid-row-gap: 0px;
-}
-
-
+.folder_search      { grid-row:  6;   grid-column: 1 }
+.tag_search         { grid-row:  6;   grid-column: 2 }
+.note_search        { grid-row:  6;   grid-column: 3 }
+.book_search        { grid-row:  6;   grid-column: 4 }
 
 .article  {
-  background-color: #eeeeee;
-  // border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 10px;
   // grid-row-gap: 0px;
   overflow-x: auto;
@@ -64,27 +48,6 @@ $sl_height: 30px;   // height of status lines
   padding: 0px;
   // grid-row-gap: 0px;
 }
-
-.state_folder_set   { grid-row:  1;   grid-column: 1 / 4 }
-// .state_folder_get   { grid-row:  1;   grid-column: 4     }
-.state_tag_set      { grid-row:  2;   grid-column: 1 / 4 }
-// .state_tag_get      { grid-row:  2;   grid-column: 4     }
-.state_date_set     { grid-row:  3;   grid-column: 1 / 4 }
-// .state_date_get     { grid-row:  3;   grid-column: 4     }
-
-.folder_box         { grid-row:  4;   grid-column: 1 }
-.tag_box            { grid-row:  4;   grid-column: 2 }
-.note_box           { grid-row:  4;   grid-column: 3 }
-.book               { grid-row:  1/5; grid-column: 4 }
-
-.folder_search      { grid-row:  5;   grid-column: 1 }
-.tag_search         { grid-row:  5;   grid-column: 2 }
-.note_search        { grid-row:  5;   grid-column: 3 }
-.book_search        { grid-row:  5;   grid-column: 4 }
-
-
-
-
 
 .book {
   overflow-x: hidden;
@@ -100,17 +63,3 @@ $sl_height: 30px;   // height of status lines
   overflow-y: auto;
   position : relative;
 }
-
-// .note_box:after {
-//   background-image: linear-gradient(to right,
-//                   #aaaaaa00 90%,
-//                    #aaaaaaff 100%);
-//   content  : "";
-//   position : absolute;
-//   z-index  : 1;
-//   top:     0;
-//   left:    0;
-//   bottom:   0;
-//   right:  0;
-//   pointer-events   : none;
-// }

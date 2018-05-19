@@ -1,10 +1,13 @@
 .main_grid
   .state_folder_set
-  - # .state_folder_get
   .state_tag_set
-  - # .state_tag_get
   .state_date_set
-  - # .state_date_get
+  .folder_menu
+    = render partial: 'folder_buttons'
+  .tag_menu
+    p ts
+  .note_menu
+    p ns
   .folder_box
     .folders
   .tag_box

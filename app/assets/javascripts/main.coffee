@@ -1,27 +1,13 @@
 class @Main
 
-
-  event_controller: ->
-    @event = new Event(main: @)
-
-  make_book: (arg) ->
-    @book = new Book merge arg, main: @, event: @event
-
-  tree: (arg) ->
-    new Tree merge arg, event: @event
-
-  input:  (arg) ->
-    new Search merge arg, call: @event.input
-
-  tagbox:  (arg) ->
-    new TagBox arg
-
-  statusline: (arg) ->
-    new StatusLine arg
-
-  notefilter: ->
-    new NoteFilter main: @
-
+  event_controller: -> @event = new Event(main: @)
+  make_book:  (arg) -> @book  = new Book   merge arg, main: @, event: @event
+  tree:       (arg) ->          new Tree   merge arg, event: @event
+  input:      (arg) ->          new Search merge arg, call: @event.input
+  tagbox:     (arg) ->          new TagBox       arg
+  statusline: (arg) ->          new StatusLine   arg
+  menubox:    (arg) ->          new MenuBox      arg
+  notefilter:       ->          new NoteFilter main: @
 
   tap = (o, fn) -> fn(o); o
   merge = (xs...) ->
@@ -69,8 +55,11 @@ class @Main
     @folder.filter.display = @statusline
       tag: ".state_folder_set"
 
-    main.date_set_line    = @statusline
+    @date_set_line    = @statusline
       tag: ".state_date_set"
+
+    @folder.menu = @menubox
+      tag: ".folder_menu"
 
 $ ->
   window.main = new Main

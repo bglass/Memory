@@ -1,0 +1,12 @@
+.note_menu, .tag_menu, .folder_menu {
+  display: flex;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
+button {
+  width: 25px;
+  height: 25px;
+  font-size: x-small
+}

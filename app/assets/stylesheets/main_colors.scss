@@ -1,0 +1,44 @@
+.main_grid {
+  background-color: #aaaaaa;
+}
+// .main_grid {
+//   background: linear-gradient(to right,
+//                     #333333 5%,
+//                      #aaaaaa 15%);
+// }
+// .folder_box {
+//     // background-color: #000000;
+//     color: #eeeeee;
+// }
+.main_grid > div {
+  // background-color: rgba(155, 155, 155, 80);
+  // color: rgba(255, 255, 255, 80);
+  // border: 1px solid rgba(0, 0, 0, 0.8);
+  // padding: 10px;
+  // font-size: 30px;
+}
+
+.article_frame  {
+  // background-color: #cccccc;
+  // border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 8px;
+  // grid-row-gap: 0px;
+}
+
+.article  {
+  background-color: #eeeeee;
+}
+
+// .note_box:after {
+//   background-image: linear-gradient(to right,
+//                   #aaaaaa00 90%,
+//                    #aaaaaaff 100%);
+//   content  : "";
+//   position : absolute;
+//   z-index  : 1;
+//   top:     0;
+//   left:    0;
+//   bottom:   0;
+//   right:  0;
+//   pointer-events   : none;
+// }
