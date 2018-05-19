@@ -1,29 +1,30 @@
 class @Event
 
-  constructor: ({@context}) ->
-
+  constructor: ({@main}) ->
 
   selected: (sender, nodes)->
 
     switch sender
 
-      when '.folder_tree'
-        @context.folder.filter.save(nodes)
-        @context.tag.filter.reset()
-        @context.tag.tree.deselect_all()
-        @context.note.search()
-        @context.tag.search()
+      when '.folders'
+        @save_state()
+        @main.folder.filter.save(nodes)
+        @main.tag.filter.reset()
+        @main.tag.tree.deselect_all()
+        @main.note.search()
+        @main.tag.search()
 
-      when '.tag_tree'
-        @context.tag.filter.save(nodes)
-        @context.note.tree.deselect_all()
-        @context.note.search()
+      when '.tags'
+        @main.tag.filter.save(nodes)
+        @main.note.tree.deselect_all()
+        @main.note.search()
 
-      when '.note_tree'
+      when '.notes'
+        @main.note.filter.save(nodes)
         if nodes.length
-          @context.book.update_by_ids(nodes)
+          @main.book.update_by_ids(nodes)
         else
-          @context.book.clear()
+          @main.book.clear()
 
   input: (sender, value) ->
 
@@ -36,7 +37,23 @@ class @Event
       # when '.book_search'
 
   key: (sender, key) ->
-    console.log sender, key
+    # console.log sender, key
 
   wiki_link: (path) ->
-    @context.book.update_by_path([path])
+    @save_state()
+    @main.book.update_by_path([path])
+
+  save_state: ->
+      state =
+        folder:     @main.folder.filter.selected_paths
+        tag:        @main.tag.filter.selected_names
+        note:       @main.note.filter.selected_notes
+      label = $.now()
+      history.pushState(state, "", label)
+      # console.log "SAVED", state
+
+  pop_state: (e) =>
+    @main.folder.select_nodes_by_paths e.state["folder"]
+
+    # @main.tag.select_nodes    e.state["tag"]
+    # @main.note.select_nodes   e.state["note"]

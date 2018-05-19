@@ -1,6 +1,6 @@
 class @Book
 
-  constructor: ({@tag, @url, @context, @event}) ->
+  constructor: ({@tag, @url, @main, @event}) ->
     @unit = $(@tag)
     @clear()
 
@@ -22,7 +22,7 @@ class @Book
       new Article
         book: @unit
         data: record
-        context: @context
+        main: @main
     @link_handler()
 
   set: (content) ->

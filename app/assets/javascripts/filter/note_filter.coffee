@@ -1,5 +1,8 @@
 class @NoteFilter   extends Filter
 
+  constructor: ({@main}) ->
+    @selected_notes = []
+
   sort: (a, b) ->
     return  1 if a.data.date < b.data.date
     return -1
@@ -8,8 +11,8 @@ class @NoteFilter   extends Filter
     text.match RegExp re, 'i'
 
   visible: (node) ->
-    wanted_tags     = window.tag.filter.selected_names
-    wanted_folders  = window.folder.filter.selected_paths
+    wanted_tags     = @main.tag.filter.selected_names
+    wanted_folders  = @main.folder.filter.selected_paths
     wanted_string   = @input.value()
 
     actual_tags     = node.data.tags
@@ -22,5 +25,9 @@ class @NoteFilter   extends Filter
 
     visible = tag_match and folder_match and  search_match
 
-    window.tag.filter.append_in_use(actual_tags) if visible
+    @main.tag.filter.append_in_use(actual_tags) if visible
     visible
+
+  save: (nodes) ->
+    notes = nodes.map (node) -> node.data.path
+    @selected_notes = notes
