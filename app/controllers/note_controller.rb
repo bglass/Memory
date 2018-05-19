@@ -3,7 +3,7 @@ class NoteController < TreeController
   def top()           Note.top;         end
 
   def data_fields
-    [:tags, :path, :date]
+    [:tags, :path, :date, :filename]
   end
 
   def view

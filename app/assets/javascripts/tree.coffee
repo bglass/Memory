@@ -50,6 +50,9 @@ class @Tree
   search: =>
     @tree.search("B")
 
+  select_nodes_by_filenames: (fnames) ->
+    @select_nodes @find_by_filenames fnames
+
   select_nodes_by_paths: (paths) ->
     @select_nodes @find_by_paths paths
 
@@ -60,6 +63,14 @@ class @Tree
     @tree.deselect_all(true)
     @tree.select_node ids
 
+  find_by_filenames: (fnames)->
+    lookup = {}
+    for i, item of @model()
+      if item.data and item.data.filename
+        lookup[item.data.path + "/" + item.data.filename] = item.id
+    console.log fnames, lookup
+    fnames.map (f) -> lookup[f]
+
   find_by_paths: (paths)->
     lookup = {}
     for i, item of @model()
@@ -67,9 +78,9 @@ class @Tree
         lookup[item.data.path] = item.id
     paths.map (p) -> lookup[p]
 
-  find_by_names: (names) ->
+  find_by_text: (texts) ->
     lookup = {}
     for i, item of @model()
       if item.text
         lookup[item.text] = item.id
-    names.map (n) -> lookup[n]
+    texts.map (t) -> lookup[t]

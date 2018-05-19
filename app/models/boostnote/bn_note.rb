@@ -17,6 +17,10 @@ class BnNote < Note
   def title()     @note["title"];       end
   def name()      title;                end
 
+  def filename
+    @note[:fs_filename].basename
+  end
+
   def path()
     BnFolder.find_by_key(folder).path
   end

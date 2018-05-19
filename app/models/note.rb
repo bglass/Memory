@@ -67,4 +67,8 @@ class TopNote < Note
     nil
   end
 
+  def filename
+    nil
+  end
+
 end

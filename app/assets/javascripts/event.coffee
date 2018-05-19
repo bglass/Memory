@@ -59,5 +59,5 @@ class @Event
       @main.tag.select_nodes_by_names tags
 
     if notes = e.state["note"]
-      console.log "Loading Notes", notes
-      @main.note.select_nodes_by_paths notes
+      # console.log "Loading Notes", notes
+      @main.note.select_nodes_by_filenames notes

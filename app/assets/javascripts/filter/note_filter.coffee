@@ -29,5 +29,5 @@ class @NoteFilter   extends Filter
     visible
 
   save: (nodes) ->
-    notes = nodes.map (node) -> node.data.path
+    notes = nodes.map (node) -> node.data.path + "/" + node.data.filename
     @selected_notes = notes

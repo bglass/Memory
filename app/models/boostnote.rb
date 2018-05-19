@@ -21,6 +21,7 @@ class Boostnote < Location
     files = Pathname.glob(path / "notes/*.cson")
     files.each do |file|
       note = CSON.load_file file
+      note[:fs_filename] = file
       note["type"] rescue binding.pry
       case note["type"]
       when "MARKDOWN_NOTE"
