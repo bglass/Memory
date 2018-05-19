@@ -18,13 +18,13 @@ class @Event
 
       when '.tags'
         names = @main.tag.filter.save(nodes)
-        @state.add tag: names
+        @state.add "tag", names
         @main.note.tree.deselect_all()
         @main.note.search()
 
       when '.notes'
         notes = @main.note.filter.save(nodes)
-        @state.add note: notes
+        @state.add "note", notes
         if nodes.length
           @main.book.update_by_ids(nodes)
         else
@@ -52,8 +52,12 @@ class @Event
 
 
   pop_state: (e) =>
-    console.log e.state["folder"]
-    @main.folder.select_nodes_by_paths e.state["folder"]
+    if folders = e.state["folder"]
+      @main.folder.select_nodes_by_paths folders
 
-    # @main.tag.select_nodes    e.state["tag"]
-    # @main.note.select_nodes   e.state["note"]
+    if tags = e.state["tag"]
+      @main.tag.select_nodes_by_names tags
+
+    if notes = e.state["note"]
+      console.log "Loading Notes", notes
+      @main.note.select_nodes_by_paths notes

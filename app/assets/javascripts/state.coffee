@@ -12,5 +12,5 @@ class @State
     @data = {}
 
   save_initial_state: ->
-    @data = folder: [], tag: [], note: []
     @save_state()
+    @data = {}

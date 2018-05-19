@@ -45,19 +45,31 @@ class @Tree
   model: ->
     @tree._model.data
 
-  find_by_paths: (paths)->
-    lookup = {}
-    for i, item of @model()
-      if item.data and item.data.path
-        # console.log i, item
-        lookup[item.data.path] = item.id
-    # console.log paths, lookup
-    paths.map (p) -> lookup[p]
+
 
   search: =>
     @tree.search("B")
 
   select_nodes_by_paths: (paths) ->
-    ids = @find_by_paths paths
-    @tree.deselect_all()
+    @select_nodes @find_by_paths paths
+
+  select_nodes_by_names: (names) ->
+    @select_nodes @find_by_names names
+
+  select_nodes: (ids) ->
+    @tree.deselect_all(true)
     @tree.select_node ids
+
+  find_by_paths: (paths)->
+    lookup = {}
+    for i, item of @model()
+      if item.data and item.data.path
+        lookup[item.data.path] = item.id
+    paths.map (p) -> lookup[p]
+
+  find_by_names: (names) ->
+    lookup = {}
+    for i, item of @model()
+      if item.text
+        lookup[item.text] = item.id
+    names.map (n) -> lookup[n]
