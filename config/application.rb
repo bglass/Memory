@@ -25,6 +25,7 @@ module Memory
       ["Mobile", "nextcloud",  "~/Nextcloud/Notes"]
     ]
 
+    Rails.configuration.autoload_paths << Rails.root.join('lib')
 
   end
 end
