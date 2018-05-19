@@ -9,8 +9,8 @@ class @TagFilter    extends Filter
 
   save: (nodes) ->
     names = nodes.map (node) -> node.text
-    @selected_names = names
     @display.set names
+    @selected_names = names
 
   reset: ->
     @save([])

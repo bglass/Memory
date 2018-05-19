@@ -66,5 +66,4 @@ class @Main
 $ ->
   window.main = new Main
   window.main.connect_elements()
-  window.main.event.save_state()
   window.onpopstate = main.event.pop_state

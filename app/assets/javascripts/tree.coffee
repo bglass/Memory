@@ -51,6 +51,7 @@ class @Tree
       if item.data and item.data.path
         # console.log i, item
         lookup[item.data.path] = item.id
+    # console.log paths, lookup
     paths.map (p) -> lookup[p]
 
   search: =>

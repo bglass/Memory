@@ -1,30 +1,37 @@
 class @Event
 
   constructor: ({@main}) ->
+    @state = new State
+    @state.save_initial_state()
 
   selected: (sender, nodes)->
 
     switch sender
 
       when '.folders'
-        @save_state()
-        @main.folder.filter.save(nodes)
+        paths = @main.folder.filter.save(nodes)
+        @state.add "folder", paths
         @main.tag.filter.reset()
         @main.tag.tree.deselect_all()
         @main.note.search()
         @main.tag.search()
 
       when '.tags'
-        @main.tag.filter.save(nodes)
+        names = @main.tag.filter.save(nodes)
+        @state.add tag: names
         @main.note.tree.deselect_all()
         @main.note.search()
 
       when '.notes'
-        @main.note.filter.save(nodes)
+        notes = @main.note.filter.save(nodes)
+        @state.add note: notes
         if nodes.length
           @main.book.update_by_ids(nodes)
         else
           @main.book.clear()
+
+        @state.save_state()
+
 
   input: (sender, value) ->
 
@@ -43,16 +50,9 @@ class @Event
     @save_state()
     @main.book.update_by_path([path])
 
-  save_state: ->
-      state =
-        folder:     @main.folder.filter.selected_paths
-        tag:        @main.tag.filter.selected_names
-        note:       @main.note.filter.selected_notes
-      label = $.now()
-      history.pushState(state, "", label)
-      # console.log "SAVED", state
 
   pop_state: (e) =>
+    console.log e.state["folder"]
     @main.folder.select_nodes_by_paths e.state["folder"]
 
     # @main.tag.select_nodes    e.state["tag"]
