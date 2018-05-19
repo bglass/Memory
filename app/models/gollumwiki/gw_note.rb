@@ -1,16 +1,23 @@
+require 'active_support/core_ext/string/output_safety'
+
 class GwNote < Note
 
-  attr_accessor :fs_path, :page
+  attr_accessor :fs_path, :page, :folder
 
   def initialize(fs_path, parent_folder)
     super()
     @folder   = parent_folder
     @filename = fs_path.basename
-    @page  = GwPage.find_or_initialize_by_name name
+    @page     = @folder.root.wiki.page name.to_s
+    # binding.pry
   end
 
   def path
-    @folder.path
+    folder.path
+  end
+
+  def wiki
+    folder.root.wiki
   end
 
   def name
@@ -26,10 +33,11 @@ class GwNote < Note
   end
 
   def content()   binding.pry;    end
-  def markdown()  binding.pry; end
+  def markdown()  binding.pry;    end
 
-  # def content()   page.preview;    end
-  # def markdown()  Markdown.new content; end
-  def html()      page.preview;     end
+
+  def html(format = :markdown)      
+    wiki.preview_page(page.name, page.text_data, format).formatted_data.html_safe
+  end
 
 end

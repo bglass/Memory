@@ -1,6 +1,6 @@
 require 'gollumwiki/gw_folder'
 require 'gollumwiki/gw_note'
-require 'gollumwiki/gw_page'
+# require 'gollumwiki/gw_page'
 
 
 class Gollumwiki < Location
@@ -10,9 +10,7 @@ class Gollumwiki < Location
     @meta[:fs_path] = @meta[:path]
     @meta[:path]    = Pathname @meta[:name]
 
-    root = GwRoot.new(@meta)
-    root.find_notes
-    Folder.add_root root
+    Folder.add_root GwRoot.new(@meta)
 
   end
 

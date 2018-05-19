@@ -15,8 +15,20 @@ class @Book
           context: @context
     )
 
+    @link_handler()
+
   set: (content) ->
     @unit.empty().append(content)
 
   clear: ->
     @unit.empty()
+
+  link_handler: ->
+
+    window.setTimeout (->
+      $('.article a.internal').click (e) ->
+        e.preventDefault()
+        href = $(@).attr('href')
+        console.log @
+    ), 100      # Minimum value needed: 14 (ms)
+                # How to wait without static delay?

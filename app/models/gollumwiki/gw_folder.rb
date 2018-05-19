@@ -25,6 +25,18 @@ class GwFolder < Folder
 end
 
 class GwRoot < GwFolder
+
+  attr_accessor :wiki
+
+  def initialize(meta)
+    super
+    @wiki = Gollum::Wiki.new(fs_path, base_path: name)
+
+    find_notes
+  end
+
+
+
   def path()   Pathname name;   end
   def root()   self;            end
 end
