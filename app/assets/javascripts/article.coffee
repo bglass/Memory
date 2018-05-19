@@ -30,7 +30,7 @@ class @Article
   content: ->
     @book.append """
     <div class=article_frame>
-    <div class='article'>#{@data.html}</div></div>
+    <div class='article' data-file='#{@data.path}/#{@data.filename}'>#{@data.html}</div></div>
     """
 
 

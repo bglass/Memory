@@ -23,7 +23,7 @@ class @Book
         book: @unit
         data: record
         main: @main
-    @link_handler()
+    @event_handler()
 
   set: (content) ->
     @unit.empty().append(content)
@@ -31,11 +31,15 @@ class @Book
   clear: ->
     @unit.empty()
 
-  link_handler: ->
+  event_handler: ->
 
     window.setTimeout (=>
       $('.article a.internal').click (e) =>
         e.preventDefault()
         @event.wiki_link( e.target.pathname.slice(1) )
+
+      $('.article').dblclick (e) =>
+        @event.edit_article(e)
+
     ), 100      # Minimum value needed: 14 (ms)
                 # How to wait without static delay?

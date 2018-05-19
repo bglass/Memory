@@ -30,10 +30,26 @@ class NoteController < TreeController
         date:     note.date,
         tags:     note.tags,
         path:     note.path,
+        filename: note.filename,
         html:     note.html
       }
     end
     render json: collection
   end
+
+  def editor
+    respond_to :json
+    Location.read_all
+    @note = Note.find_by_path params[:path]
+
+    field = [:tags, :path, :date, :filename, :markdown]
+
+    collection = {}
+    field.each {|f| collection[f] = @note.send f}
+    render json: collection
+  end
+
+
+
 
 end

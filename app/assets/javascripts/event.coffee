@@ -74,3 +74,8 @@ class @Event
     @state.add "tag",    @main.tag.filter.selected_names
     @state.add "note",   @main.note.filter.selected_notes
     @state.save_state()
+
+  edit_article: (e)->
+    unit = $(e.currentTarget)
+    file = e.currentTarget.dataset.file
+    new Editor unit, file

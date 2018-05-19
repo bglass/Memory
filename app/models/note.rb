@@ -20,9 +20,13 @@ end
 
   def self.find_by_paths paths
     paths.map do |p|
-      @@all.find do |n|
-        n.path.to_s == p
-      end
+      find_by_path p
+    end
+  end
+
+  def self.find_by_path path
+    @@all.find do |n|
+      (n.path/n.filename).to_s == path
     end
   end
 
