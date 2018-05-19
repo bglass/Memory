@@ -4,9 +4,6 @@ class @TagFilter    extends Filter
     @selected_names = []
     @used_by_notes = []
 
-  visible: (tag) ->
-    tag.text in @in_use()
-
   save: (nodes) ->
     names = nodes.map (node) -> node.text
     @display.set names
@@ -31,3 +28,12 @@ class @TagFilter    extends Filter
     for tag in tags
       extra.push tag if tag not in @selected_names
     extra
+
+  visible: (node) ->
+    wanted_string   = @input.value()
+    actual_text     = node.text
+    search_match = @regular_match(wanted_string, actual_text)
+
+    in_use = node.text in @in_use()
+
+    in_use and search_match

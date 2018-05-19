@@ -17,3 +17,9 @@ class @FolderFilter extends Filter
     paths   = nodes.map (node) -> node.data.path
     @display.set(@paths_to_string paths)
     @selected_paths = paths
+
+  visible: (node) ->
+    wanted_string   = @input.value()
+    actual_text     = node.text
+
+    @regular_match(wanted_string, actual_text)

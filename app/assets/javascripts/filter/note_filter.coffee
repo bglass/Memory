@@ -7,9 +7,6 @@ class @NoteFilter   extends Filter
     return  1 if a.data.date < b.data.date
     return -1
 
-  regular_match: (re, text) ->
-    text.match RegExp re, 'i'
-
   visible: (node) ->
     wanted_tags     = @main.tag.filter.selected_names
     wanted_folders  = @main.folder.filter.selected_paths

@@ -29,3 +29,12 @@ class @Filter
     return false
 
   subtract_tags:  (tags) ->
+
+  get_regexp: (re) ->
+    @regexp ?= RegExp ""
+    try         regexp = RegExp re, 'i'
+    catch then  regexp = @regexp
+    @regexp = regexp
+
+  regular_match: (re, text) ->
+    text.match @get_regexp(re)

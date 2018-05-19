@@ -54,6 +54,15 @@ class @Main
     @note.filter.input = @input
       tag: '.note_search'
 
+    @tag.filter.input = @input
+      tag: '.tag_search'
+
+    @folder.filter.input = @input
+      tag: '.folder_search'
+
+    # @book.filter.input = @input
+    #   tag: '.book_search'
+
     @tag.filter.display = @tagbox
       tag: ".state_tag_set"
 

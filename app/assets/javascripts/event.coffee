@@ -38,17 +38,22 @@ class @Event
     switch sender
 
       when '.note_search'
-        window.note.search()
-      # when '.folder_search'
-      # when '.tag_search'
-      # when '.book_search'
+        @main.note.search()
+
+      when '.folder_search'
+        @main.folder.search()
+
+      when '.tag_search'
+        @main.tag.search()
+
+      when '.book_search'
+        @main.book.search()
 
   key: (sender, key) ->
     # console.log sender, key
 
   wiki_link: (path) ->
     @snap_state()
-    console.log path
     @main.book.update_by_path([path])
 
 
@@ -60,7 +65,6 @@ class @Event
       @main.tag.select_nodes_by_names tags
 
     if notes = e.state["note"]
-      # console.log "Loading Notes", notes
       @main.note.select_nodes_by_filenames notes
 
   # private helpers
