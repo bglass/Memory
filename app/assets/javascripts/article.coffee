@@ -1,6 +1,6 @@
 class @Article
 
-  constructor: ({@book, @data, @global}) ->
+  constructor: ({@book, @data, @context}) ->
     @folder()
     @tags()
     @date()
@@ -16,7 +16,7 @@ class @Article
 
   tags: ->
     out = "<div class='meta'><div class='extra_tags'>"
-    for tag in @global.tag.filter.extra_tags(@data.tags)
+    for tag in @context.tag.filter.extra_tags(@data.tags)
       out += "<div class='tag'>"+tag+"</div>"
     out += "</div></div>"
     @book.append out
@@ -36,7 +36,7 @@ class @Article
 
   relative_path: ->
 
-    selected_folders = @global.folder.filter.selected_paths
+    selected_folders = @context.folder.filter.selected_paths
 
     if selected_folders.length == 1
       re = RegExp "^#{selected_folders[0]}/?"
