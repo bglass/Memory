@@ -1,4 +1,4 @@
-class Page < GollumRails::Page
+class GwPage < GollumRails::Page
 
   # callbacks:
   #

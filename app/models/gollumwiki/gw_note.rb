@@ -6,7 +6,7 @@ class GwNote < Note
     super()
     @folder   = parent_folder
     @filename = fs_path.basename
-    @page  = Page.find_or_initialize_by_name name
+    @page  = GwPage.find_or_initialize_by_name name
   end
 
   def path
@@ -25,7 +25,11 @@ class GwNote < Note
     "n/a"
   end
 
+  def content()   binding.pry;    end
+  def markdown()  binding.pry; end
 
-  def content()   page.preview;    end
+  # def content()   page.preview;    end
+  # def markdown()  Markdown.new content; end
+  def html()      page.preview;     end
 
 end
