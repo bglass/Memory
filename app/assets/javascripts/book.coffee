@@ -12,6 +12,7 @@ class @Book
     @update paths: paths
 
   update: (selector) ->
+    console.log @url, selector
     $.get(@url, selector, (collection) =>
       @update_articles(collection)
     )

@@ -20,11 +20,7 @@ class @Article
   page: ->
     div
       class: "box"
-      contents: [ @folder()
-                  @extra_tags()
-                  @date()
-                  @content()
-                ]
+      contents: [@folder(), @extra_tags(), @date(), @content()]
 
   folder: ->
     div
@@ -46,7 +42,6 @@ class @Article
     out = []
     for tag in tags
       out.push @tag(tag)
-    out
 
   tag: (tag)->
     div

@@ -76,6 +76,5 @@ class @Event
     @state.save_state()
 
   edit_article: (e)->
-    unit = $(e.currentTarget)
-    file = e.currentTarget.dataset.file
-    new Editor unit, file
+    target = $(e.currentTarget)[0]
+    new Editor unit: target

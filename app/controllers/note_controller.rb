@@ -27,6 +27,7 @@ class NoteController < TreeController
 
     collection = @notes.map do |note|
       {
+        id:       note.id,
         date:     note.date,
         tags:     note.tags,
         path:     note.path,
