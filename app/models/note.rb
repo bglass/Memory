@@ -26,11 +26,11 @@ end
 
   def self.find_by_paths paths
     paths.map do |p|
-      find_by_path p
+      find_by_resource p
     end
   end
 
-  def self.find_by_path path
+  def self.find_by_resource path
     @@all.find do |n|
       (n.path/n.resource_name).to_s == path
     end

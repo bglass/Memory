@@ -25,8 +25,8 @@ class NoteController < TreeController
     else @notes = []
     end
 
-    fields = [:id, :date, :tags, :path, :filename, :html]
-    
+    fields = [:id, :date, :tags, :path, :resource_name, :html]
+
     collection = collect(items: @notes, fields: fields)
 
     render json: collection
@@ -35,8 +35,7 @@ class NoteController < TreeController
   def editor
     respond_to :json
     Location.read_all
-    @note = Note.find_by_path params[:path]
-
+    @note = Note.find_by_resource params[:resource]
     collection = collect items: [@note], fields: [:tags, :path, :date, :filename, :markdown]
     render json: collection.first
   end

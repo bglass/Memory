@@ -1,10 +1,10 @@
 class @Editor
 
   constructor: ({@unit}) ->
-    file = @unit.dataset.file
-    console.log file, @unit.id
-    $.get(/editor/, path: file, (data) =>
+    resource = @unit.dataset.resource
+    id = "t"+@unit.id
+    $.get(/editor/, resource: resource, (data) =>
       md = data["markdown"]
-      $(@unit).empty().append "<textarea>#{md}</textarea>"
-      # ed = new SimpleMDE element: unit[0]
+      $(@unit).empty().append "<textarea id='#{id}'>#{md}</textarea>"
+      ed = new SimpleMDE element: $("##{id}")[0]
     )

@@ -77,4 +77,5 @@ class @Event
 
   edit_article: (e)->
     target = $(e.currentTarget)[0]
+    console.log "Event", e, target
     new Editor unit: target

@@ -5,10 +5,11 @@ class @Article
 
   # private
 
-  div = ({@class, id, contents}) ->
+  div = ({@class, id, contents, resource}) ->
     attributes = ""
-    attributes += " class='#{@class}'" if @class
-    attributes += " id='#{@id}'"       if id
+    attributes += " class='#{@class}'"           if @class
+    attributes += " id='#{id}'"                  if id
+    attributes += " data-resource='#{resource}'" if resource
 
     content = ""
     for c in contents
@@ -59,7 +60,8 @@ class @Article
       contents: [
         div
           class: "article"
-          file:  "#{@data.path}/#{@data.filename}"
+          id:    @data.id
+          resource:  "#{@data.path}/#{@data.resource_name}"
           contents: [@data.html]
       ]
 
