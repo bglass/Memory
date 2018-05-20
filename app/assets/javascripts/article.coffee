@@ -69,7 +69,6 @@ class @Article
 
     if selected_folders.length == 1
       re = RegExp "^#{selected_folders[0]}/?"
-      console.log @data
       @data.path.replace re, ""
     else
       @data.path
