@@ -25,6 +25,10 @@ class NcNote < Note
     link.map{|l| l.nc_db_tag.name}
   end
 
+  def resource
+    path/filename
+  end
+
   private
 
   def fs_path

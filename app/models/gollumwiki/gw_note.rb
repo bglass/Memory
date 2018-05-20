@@ -1,3 +1,4 @@
+include FileSystem
 require 'active_support/core_ext/string/output_safety'
 
 class GwNote < Note
@@ -8,24 +9,19 @@ class GwNote < Note
     super()
     @folder   = parent_folder
     @filename = fs_path.basename
-    @page     = @folder.root.wiki.page name.to_s
-    # binding.pry
-  end
-
-  def path
-    folder.path
-  end
-
-  def wiki
-    folder.root.wiki
+    @page     = @folder.root.wiki.page name.to_s rescue binding.pry
   end
 
   def name
-    filename.basename filename.extname
+    stem
   end
 
   def filename
     @filename
+  end
+
+  def wiki
+    folder.root.wiki
   end
 
   def date

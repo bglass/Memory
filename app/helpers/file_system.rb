@@ -15,8 +15,27 @@ module FileSystem
   def child_node_paths
     fs_path.children.map {|p| p}
   end
+
   def dotfile?(fname)
     fname.basename.to_s[0] == '.'
   end
+
+  def stem
+    filename.basename extension
+  end
+
+  def extension
+    filename.extname
+  end
+
+  def resource
+    folder.path/filename
+  end
+
+  def path
+    folder.path
+  end
+
+
 
 end

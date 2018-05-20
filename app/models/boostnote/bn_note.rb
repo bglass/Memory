@@ -3,7 +3,6 @@ class BnNote < Note
   def initialize(note)
     super()
     @note = note
-
     Tag.add_by_name @note["tags"]
   end
 
@@ -21,8 +20,12 @@ class BnNote < Note
     @note[:fs_filename].basename
   end
 
-  def path()
+  def path
     BnFolder.find_by_key(folder).path
+  end
+
+  def resource
+    path/filename
   end
 
 end
