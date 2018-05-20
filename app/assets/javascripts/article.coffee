@@ -1,38 +1,72 @@
 class @Article
 
   constructor: ({@book, @data, @main}) ->
-    @folder()
-    @tags()
-    @date()
-    @content()
+    console.log @page()
+    @book.append @page()
 
   # private
 
-  folder: ->
-    folder = @relative_path()
-    @book.append """
-    <div class='meta'>#{folder}</div>
-    """
+  div = ({@class, id, contents}) ->
+    attributes = ""
+    attributes += " class='#{@class}'" if @class
+    attributes += " id='#{@id}'"       if id
 
-  tags: ->
-    out = "<div class='meta'><div class='extra_tags'>"
-    for tag in @main.tag.filter.extra_tags(@data.tags)
-      out += "<div class='tag'>"+tag+"</div>"
-    out += "</div></div>"
-    @book.append out
+    content = ""
+    for c in contents
+      content += c
+
+    "<div#{attributes}>#{content}</div>"
+
+  page: ->
+    div
+      class: "box"
+      contents: [ @folder()
+                  @extra_tags()
+                  @date()
+                  @content()
+                ]
+
+  folder: ->
+    div
+      class: "meta"
+      contents: [@relative_path()]
+
+  extra_tags: ->
+    tags = @main.tag.filter.extra_tags(@data.tags)
+
+    div
+      class: "meta"
+      contents: [
+        div
+          class: "extra_tags"
+          contents: @tags(tags)
+        ]
+
+  tags: (tags) ->
+    out = []
+    for tag in tags
+      out.push @tag(tag)
+    out
+
+  tag: (tag)->
+    div
+      class: "tag"
+      contents: [tag]
 
   date: ->
-    date = @data.date.slice(0,10)
-    @book.append """
-    <div class='meta'>#{date}</div>
-    """
+    div
+      class: "meta"
+      contents: [@data.date.slice(0,10)]
 
   content: ->
-    @book.append """
-    <div class=article_frame>
-    <div class='article' data-file='#{@data.path}/#{@data.filename}'>#{@data.html}</div></div>
-    """
-
+    div
+      class: "article_frame"
+      contents: [
+        div
+          class: "article"
+          file:  "#{@data.path}/#{@data.filename}"
+          contents: [@data.html]
+      ]
 
   relative_path: ->
 
