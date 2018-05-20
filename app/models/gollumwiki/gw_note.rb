@@ -12,8 +12,12 @@ class GwNote < Note
     @page     = @folder.root.wiki.page name.to_s rescue binding.pry
   end
 
-  def name
+  def resource_name
     stem
+  end
+
+  def name
+    stem.to_s
   end
 
   def filename

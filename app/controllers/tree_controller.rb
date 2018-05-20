@@ -6,7 +6,7 @@ class TreeController < ApplicationController
   def tree
     respond_to :json
     Location.read_all
-    # x = get_tree top; binding.pry
+    puts get_tree(top)[:children]
     render json: get_tree(top)[:children]
   end
 
@@ -21,7 +21,6 @@ class TreeController < ApplicationController
       data[f] = node.public_send(f)
     end
     record[:data] = data
-
     record
 
   end

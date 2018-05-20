@@ -1,7 +1,6 @@
 class @Article
 
   constructor: ({@book, @data, @main}) ->
-    console.log @page()
     @book.append @page()
 
   # private
@@ -42,6 +41,7 @@ class @Article
     out = []
     for tag in tags
       out.push @tag(tag)
+    out
 
   tag: (tag)->
     div
@@ -69,6 +69,7 @@ class @Article
 
     if selected_folders.length == 1
       re = RegExp "^#{selected_folders[0]}/?"
+      console.log @data
       @data.path.replace re, ""
     else
       @data.path

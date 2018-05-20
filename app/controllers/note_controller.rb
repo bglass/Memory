@@ -25,16 +25,10 @@ class NoteController < TreeController
     else @notes = []
     end
 
-    collection = @notes.map do |note|
-      {
-        id:       note.id,
-        date:     note.date,
-        tags:     note.tags,
-        path:     note.path,
-        filename: note.filename,
-        html:     note.html
-      }
-    end
+    fields = [:id, :date, :tags, :path, :filename, :html]
+    
+    collection = collect(items: @notes, fields: fields)
+
     render json: collection
   end
 
@@ -43,14 +37,22 @@ class NoteController < TreeController
     Location.read_all
     @note = Note.find_by_path params[:path]
 
-    field = [:tags, :path, :date, :filename, :markdown]
-
-    collection = {}
-    field.each {|f| collection[f] = @note.send f}
-    render json: collection
+    collection = collect items: [@note], fields: [:tags, :path, :date, :filename, :markdown]
+    render json: collection.first
   end
 
+  private
 
-
+  def collect(items:, fields:)
+    collection = []
+    items.each do |item|
+      record = {}
+      fields.each do |f|
+        record[f] = item.send(f)
+      end
+      collection.push record
+    end
+    collection
+  end
 
 end

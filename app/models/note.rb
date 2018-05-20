@@ -1,6 +1,6 @@
 class Note
 
-  attr_accessor :id, :title, :path
+  attr_accessor :id, :title
 
 
   def initialize
@@ -18,6 +18,12 @@ class Note
     @@top = TopNote.new
 end
 
+  def resource_name
+    filename
+  end
+
+
+
   def self.find_by_paths paths
     paths.map do |p|
       find_by_path p
@@ -26,10 +32,9 @@ end
 
   def self.find_by_path path
     @@all.find do |n|
-      (n.path/n.filename).to_s == path
+      (n.path/n.resource_name).to_s == path
     end
   end
-
 
   def self.find(id)
     @@all[id.to_i]
@@ -72,6 +77,10 @@ class TopNote < Note
   end
 
   def filename
+    nil
+  end
+
+  def path
     nil
   end
 
