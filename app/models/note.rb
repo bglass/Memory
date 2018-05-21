@@ -55,6 +55,7 @@ end
 
   def markdown()  Markdown.new content; end
   def html()      markdown.to_html;     end
+  def source()    content;              end
 
 end
 

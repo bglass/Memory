@@ -36,7 +36,7 @@ class NoteController < TreeController
     respond_to :json
     Location.read_all
     @note = Note.find_by_resource params[:resource]
-    collection = collect items: [@note], fields: [:tags, :path, :date, :filename, :markdown]
+    collection = collect items: [@note], fields: [:tags, :path, :date, :filename, :source]
     render json: collection.first
   end
 

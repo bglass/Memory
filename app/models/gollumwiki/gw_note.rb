@@ -32,8 +32,8 @@ class GwNote < Note
     "n/a"
   end
 
-  def content()   binding.pry;    end
-  def markdown()  page.text_data;    end
+  def content()   page.text_data;    end
+  def markdown()  content;           end
 
 
   def html(format = :markdown)

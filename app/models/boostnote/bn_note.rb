@@ -28,6 +28,8 @@ class BnNote < Note
     path/filename
   end
 
+
+
 end
 
 

@@ -4,7 +4,7 @@ class @Editor
     resource = @unit.dataset.resource
     id = "t"+@unit.id
     $.get(/editor/, resource: resource, (data) =>
-      md = data["markdown"]
-      $(@unit).empty().append "<textarea id='#{id}'>#{md}</textarea>"
+      src = data["source"]
+      $(@unit).empty().append "<textarea id='#{id}'>#{src}</textarea>"
       ed = new SimpleMDE element: $("##{id}")[0]
     )

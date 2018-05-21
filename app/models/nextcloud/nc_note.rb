@@ -45,6 +45,8 @@ class NcNote < Note
     relative_path
   end
 
+    
+
 
   def self.create(node, root)
     case node.extname.downcase
