@@ -13,6 +13,10 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*
+<<<<<<< HEAD
+!/log/.keep
+/tmp
+=======
 /tmp/*
 !/log/.keep
 !/tmp/.keep
@@ -35,3 +39,4 @@
 /node_modules
 yarn-debug.log*
 .yarn-integrity
+>>>>>>> memory-relm/master
