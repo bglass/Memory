@@ -1,0 +1,8 @@
+doctype html
+html
+  head
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag "application"
+  body
+  h1 = @folders.name
+  = render "folders/folder_tree"
