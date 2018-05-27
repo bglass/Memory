@@ -38,7 +38,7 @@ viewGridLayout model =
             , cell_at 0 3 1 1 <| Tree.view model.folders
             , cell_at 1 3 1 1 <| Tree.view model.tags
             , cell_at 2 3 1 1 <| Tree.view model.notes
-            , cell_at 3 0 1 4 view_book
+            , cell_at 3 0 1 4 (text model.errmsg)
             , cell_at 0 4 1 1 view_re_folder
             , cell_at 1 4 1 1 view_re_tag
             , cell_at 2 4 1 1 view_re_note

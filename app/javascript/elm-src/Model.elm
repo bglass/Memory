@@ -7,13 +7,17 @@ type alias Model =
   , book    : List Article
   , search  : Search
   , config  : Config
+  , errmsg  : String
   }
 
 -- main elements
 
+type Children = Empty | List Folder
+
 type alias Folder =
   { name     : String
-  , resource : Path
+  , key      : Path
+  , children : Children
   }
 
 type alias Tag =

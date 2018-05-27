@@ -1,5 +1,5 @@
 module Subscriptions exposing (..)
-import Model exposing (..)
 
+none : a -> Sub msg
 none model =
   Sub.none

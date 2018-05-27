@@ -1,14 +1,20 @@
-module Init  exposing (dummy, mdl)
+module Init  exposing (dummy, load)
 import Model exposing (..)
+import Data.Server
+
+load =
+  (mdl, Data.Server.get "/folders/")
 
 dummy =
   (mdl, Cmd.none)
 
-mdl = Model f t n b s c
+mdl = Model f t n b s c err
 
-f = [ Folder "F1" "P1"
-    , Folder "F2" "P2"
-    , Folder "F3" "P3"
+err = "  ."
+
+f = [ Folder "F1" "P1" Empty 
+    , Folder "F2" "P2" Empty
+    , Folder "F3" "P3" Empty
     ]
 
 t = [ Tag "T1" "P1"

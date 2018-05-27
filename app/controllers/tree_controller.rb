@@ -13,7 +13,7 @@ class TreeController < ApplicationController
 
   def get_tree(node)
 
-    record = { text: node.name, id: node.id }
+    record = { text: node.name, id: node.id.to_s }
     record[:children] = node.children.map {|c| get_tree(c) }
 
     data = {}
