@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   get '/display'             => 'note#display'
   get '/book'                => 'note#book'
   get '/editor/'             => 'note#editor'
+  get "/elm"                 => 'main#elm'
 
 end
