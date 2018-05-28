@@ -1,6 +1,6 @@
 module View.Tree exposing (view)
 
-import Html
+import Html exposing (Html)
 import Element exposing (..)
 import Treeview as T
 
@@ -11,22 +11,34 @@ import Update exposing (..)
 import Data.TreeDummy1 as D
 
 
-view records =
-  html (treeview (nodes records) )
 
-treeview data =
-  Html.div []
-    [ Html.map TMsg (T.view config data)
-    ]
+view : a -> Element style variation Msg
+view top =
+  -- html (treeview (nodes top.children) )
+  text (toString top)
 
-config : T.Config
-config = T.default D.styles
-
-names records =
-  List.map .name records
-
-nodes records =
-  List.map node records
-
-node record =
-  T.node record.name record.name "folder" True Nothing
+-- treeview : T.Model -> Html Msg
+-- treeview data =
+--   Html.div []
+--     [ Html.map TMsg (T.view config data)
+--     ]
+--
+-- config : T.Config
+-- config = T.default D.styles
+--
+-- names : List a -> List String
+-- names records =
+--   List.map .name records
+--
+-- nodes : List a -> List T.Node
+-- nodes records =
+--   List.map node records
+--
+-- node : a -> T.Node
+-- node record =
+--   T.node
+--     record.name
+--     record.name
+--     "folder"
+--     True
+--     Nothing

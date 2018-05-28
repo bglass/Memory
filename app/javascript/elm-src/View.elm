@@ -2,27 +2,32 @@ module View exposing (main_grid)
 -- packages:
 import Element exposing (..)
 import Element.Attributes exposing (..)
+
 -- src:
 import View.Style exposing (..)
 
 import View.Tree as Tree
-
 import Model exposing (Model)
 
+import Html exposing (Html)
+import Update exposing (Msg)
 
+main_grid : Model -> Html Msg
 main_grid model =
-    Element.viewport stylesheet <|
-        column None
-            []
-            [ el None [ ] <|
-                column Main
-                    [ ]
-                    (List.concat
-                        [ viewGridLayout model
-                        ]
-                    )
+  Element.viewport stylesheet <|
+    column None
+      []
+      [ el None [ ] <|
+        column Main
+          [ ]
+          (List.concat
+            [ viewGridLayout model
             ]
+          ),
+              text model.errmsg
+      ]
 
+viewGridLayout : Model -> List (Element Styles variation Msg)
 viewGridLayout model =
     [ Element.grid Container
         [ spacing 1, height (px 600) ]
@@ -39,9 +44,9 @@ viewGridLayout model =
             , cell_at 0 1 3 1 view_tag
             , cell_at 0 2 3 1 view_folder
             , cell_at 0 3 1 1 <| Tree.view model.folders
-            , cell_at 1 3 1 1 <| Tree.view model.tags
-            , cell_at 2 3 1 1 <| Tree.view model.notes
-            , cell_at 3 0 1 4 (text model.errmsg)
+            -- , cell_at 1 3 1 1 <| Tree.view model.tags
+            -- , cell_at 2 3 1 1 <| Tree.view model.notes
+            , cell_at 3 0 1 4 view_book
             , cell_at 0 4 1 1 view_re_folder
             , cell_at 1 4 1 1 view_re_tag
             , cell_at 2 4 1 1 view_re_note
