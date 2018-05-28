@@ -11,14 +11,25 @@ class MainController < ApplicationController
   end
 
   def elm
-    # Location.read_all
-    # @folders  = Folder.top
-    # @tags     = Tag.all
-    # @notes    = Note.all
-    #
-    # render "main/grid"
 
     render "main/elm"
   end
+
+  def model
+    respond_to :json
+
+    Location.read_all
+
+    model = {
+      folders:  Folder.top,
+      tags:     Tag.all,
+      notes:    Note.all,
+      book:     "",
+      search:   "",
+      config:   "",
+      errmsg:   "ok"
+    }
+binding.pry
+    render json: model
 
 end

@@ -7,6 +7,9 @@ import View.Style exposing (..)
 
 import View.Tree as Tree
 
+import Model exposing (Model)
+
+
 main_grid model =
     Element.viewport stylesheet <|
         column None

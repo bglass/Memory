@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   get '/book'                => 'note#book'
   get '/editor/'             => 'note#editor'
   get "/elm"                 => 'main#elm'
+  get "/model"               => 'main#model'
 
 end

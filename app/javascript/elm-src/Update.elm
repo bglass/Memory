@@ -9,7 +9,7 @@ import Data.Decode as DD
 type Msg
   = NoOp
   | TMsg T.Msg
-  | FolderUpdate (Result Http.Error String)
+  | ModelUpdate (Result Http.Error String)
 
 -- type Msg
 --   = Change String
@@ -28,17 +28,19 @@ update msg model =
     TMsg _ ->
       ( model, Cmd.none )
 
-    FolderUpdate (Ok data) ->
-      ({model | folders = DD.folders data }, Cmd.none)
+    ModelUpdate (Ok data) ->
+      let
+        result = DD.model data
+      in
+        case result of
+          Ok decoded ->
+            ( decoded, Cmd.none )
+          Err error ->
+            ( {model | errmsg = format_err error}, Cmd.none )
+    ModelUpdate (Err error) ->
+      ( {model | errmsg = format_err error}, Cmd.none )
 
-    FolderUpdate (Err error) ->
-      ({model | errmsg = toString error}, Cmd.none )
 
-
-      --
-      --
-      --
-      --
-      -- -- let personAddress = person.address in { person | address = { personAddress | city = "Madrid" } }
-      -- let mdl = { model | search  = { model.search   | re_book = error } }
-      -- in (mdl, Cmd.none)
+format_err : a -> String
+format_err error =
+  "(EE) " ++ (toString error)

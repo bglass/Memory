@@ -4,31 +4,32 @@ type alias Model =
   { folders : List Folder
   , tags    : List Tag
   , notes   : List Note
-  , book    : List Article
-  , search  : Search
-  , config  : Config
+  , book    : String    -- List Article
+  , search  : String    -- Search
+  , config  : String    -- Config
   , errmsg  : String
   }
 
 -- main elements
 
-type Children = Empty | List Folder
 
-type alias Folder =
+type Folder = Folder
   { name     : String
-  , key      : Path
-  , children : Children
+  , key      : String
+  , children : List Folder
   }
 
-type alias Tag =
+type Tag = Tag
   { name     : String
-  , resource : Path
+  , resource : String
+  , children : List Tag
   }
 
-type alias Note =
+type Note = Note
   { name     : String
-  , resource : Path
-  , date     : Date
+  , resource : String
+  , date     : String
+  , children : List Note
   }
 
 type alias Article =
@@ -44,7 +45,8 @@ type alias Search =
   }
 
 type alias Config =
-  { locations : List Location
+  {
+    locations : List Location
   }
 
 type alias Location =
@@ -59,3 +61,31 @@ type alias Path     = String
 type alias Date     = String
 type alias Markdown = String
 type alias Regex    = String
+
+-- constructors
+
+folder : String -> String -> List Folder -> Folder
+folder name key children =
+  Folder
+    { name      = name
+    , key       = key
+    , children  = children
+    }
+
+
+tag : String -> String -> List Tag -> Tag
+tag name resource children =
+  Tag
+    { name      = name
+    , resource  = resource
+    , children  = children
+    }
+
+note : String -> String -> String -> List Note -> Note
+note name resource date children =
+  Note
+    { name      = name
+    , resource  = resource
+    , date      = date
+    , children  = children
+    }
