@@ -14,12 +14,12 @@ update msg model =
   case msg of
     NoOp ->
       ( model, Cmd.none )
-    FolderMsg fmsg ->
-      ( { model | folder = Tree.update fmsg model.folder }, Cmd.none )
-    TagMsg fmsg ->
-      ( { model | folder = Tree.update fmsg model.tag },    Cmd.none )
-    NoteMsg fmsg ->
-      ( { model | folder = Tree.update fmsg model.note },   Cmd.none )
+    FolderMsg sub ->
+      ( { model | folder = Tree.update sub model.folder }, Cmd.none )
+    TagMsg sub ->
+      ( { model | tag = Tree.update sub model.tag },       Cmd.none )
+    NoteMsg sub ->
+      ( { model | note = Tree.update sub model.note },     Cmd.none )
 
     ModelUpdate (Ok data) ->
       let
@@ -32,6 +32,9 @@ update msg model =
             ( {model | errmsg = format_err error}, Cmd.none )
     ModelUpdate (Err error) ->
       ( {model | errmsg = format_err error}, Cmd.none )
+
+
+
 
 decoder : JD.Decoder Model
 decoder =
