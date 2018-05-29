@@ -1,9 +1,12 @@
 module Model exposing (..)
 
+import Tree.Folder as TF
+-- import TreeView as T
+
 type alias Model =
-  { folder  : Folder
-  , tag     : Tag
-  , note    : Note
+  { folder  : TF.Node
+  -- , tag     : Tag
+  -- , note    : Note
   , book    : String    -- List Article
   , search  : String    -- Search
   , config  : String    -- Config
@@ -13,12 +16,6 @@ type alias Model =
 -- main elements
 
 
-type Folder = Folder
-  { name     : String
-  , key      : String
-  , options  : Options
-  , children : List Folder
-  }
 
 type Tag = Tag
   { name     : String
@@ -64,36 +61,7 @@ type alias Date     = String
 type alias Markdown = String
 type alias Regex    = String
 
--- Treeview package
 
-type alias Options =
-  { style: StyleName
-  , selectable: Selectable
-  , opened: Opened
-  , disabled: Disabled
-  , visible: Visible
-  , checked : Checked
-  }
-
-defaultOptions = Options "None" True True False True False
-
-type alias StyleName = String
-type alias Opened = Bool
-type alias Visible = Bool
-type alias Checked = Bool
-type alias Disabled = Bool
-type alias Selectable = Bool
-
-
-
-folder : String -> String -> List Folder -> Folder
-folder name key children =
-  Folder
-    { name      = name
-    , key       = key
-    , options   = defaultOptions
-    , children  = children
-    }
 
 
 tag : String -> List Tag -> Tag

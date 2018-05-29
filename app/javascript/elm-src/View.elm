@@ -6,11 +6,11 @@ import Element.Attributes exposing (..)
 -- src:
 import View.Style exposing (..)
 
-import View.Tree as Tree
+import Tree.Folder as TF
 import Model exposing (Model)
 
 import Html exposing (Html)
-import Update exposing (Msg)
+import Msg exposing (Msg(..))
 
 main_grid : Model -> Html Msg
 main_grid model =
@@ -43,7 +43,7 @@ viewGridLayout model =
             [ cell_at 0 0 3 1 view_date
             , cell_at 0 1 3 1 view_tag
             , cell_at 0 2 3 1 view_folder
-            , cell_at 0 3 1 1 <| Tree.folders model.folder
+            , cell_at 0 3 1 1 <| TF.view model.folder
             -- , cell_at 1 3 1 1 <| Tree.view model.tags
             -- , cell_at 2 3 1 1 <| Tree.view model.notes
             , cell_at 3 0 1 4 view_book
@@ -55,6 +55,7 @@ viewGridLayout model =
         }
     ]
 
+cell_at : Int -> Int -> Int -> Int -> Element style variation msg -> OnGrid (Element style variation msg)
 cell_at x y w h content =
   cell
     { start = ( x, y )
@@ -63,29 +64,39 @@ cell_at x y w h content =
     , content = content
     }
 
+dummy_box : String -> Element Styles variation msg
 dummy_box atext =
   (el Box[] (text atext))
 
+view_date : Element Styles variation msg
 view_date =
   dummy_box "the date"
 
+view_tag : Element Styles variation msg
 view_tag =
   dummy_box "tags"
 
+view_folder : Element Styles variation msg
 view_folder =
   dummy_box "folder"
 
 
+view_book : Element Styles variation msg
 view_book =
   dummy_box "a book"
+
+view_re_folder : Element Styles variation msg
 view_re_folder =
   dummy_box "re folder"
 
+view_re_tag : Element Styles variation msg
 view_re_tag =
   dummy_box "re tag"
 
+view_re_note : Element Styles variation msg
 view_re_note =
   dummy_box "re note"
 
+view_re_book : Element Styles variation msg
 view_re_book =
   dummy_box "re book"

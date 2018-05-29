@@ -3,6 +3,7 @@ import Model
 import Update exposing (..)
 import View
 import Init
+import Msg exposing (Msg)
 import Subscriptions
 -- import Flags  exposing (..)
 
