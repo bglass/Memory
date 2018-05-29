@@ -14,8 +14,8 @@ update msg model =
   case msg of
     NoOp ->
       ( model, Cmd.none )
-    FolderMsg _ ->
-      ( model, Cmd.none )
+    FolderMsg fmsg ->
+      ( { model | folder = Tree.update fmsg model.folder }, Cmd.none )
 
     ModelUpdate (Ok data) ->
       let
@@ -32,7 +32,7 @@ update msg model =
 decoder : JD.Decoder Model
 decoder =
   JD.map5 Model
-    ( JD.field "folder"    (Tree.decoder)    )
+    ( JD.field "folder"    (JD.list Tree.decoder)    )
     -- ( JD.field "tag"       (TT.decoder)    )
     -- ( JD.field "note"      (TN.decoder)    )
     ( JD.field "book"      (JD.string)         )  --  (JD.list d_Article) )

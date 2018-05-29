@@ -9,6 +9,7 @@ load : ( Model, Cmd Msg )
 load =
   (mdl, get_model)
 
+get_model : Cmd Msg
 get_model =
   Http.send ModelUpdate (Http.getString  "/model/")
 
@@ -23,8 +24,8 @@ mdl = Model f b s c err
 err : String
 err = "  ."
 
-f : T.Node
-f = T.Node "F1" "P1" Tree.defaultOptions (Just [])
+f : List T.Node
+f = [T.Node "F1" "P1" Tree.defaultOptions (Just [])]
 
     -- ( JD.field "id"        JD.string )
     -- ( JD.field "name"      JD.string )

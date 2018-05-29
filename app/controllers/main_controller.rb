@@ -34,7 +34,7 @@ class MainController < ApplicationController
     data[:tag]     = subtree( Tag.top,    [:id, :name] )
     data[:note]    = subtree( Note.top,
             [:id, :date, :tags, :path, :resource_name, :name] )
-# binding.pry
+    data[:folder]  = data[:folder][:children]
     render json: data
   end
 

@@ -3,7 +3,7 @@ module Model exposing (..)
 import Tree
 
 type alias Model =
-  { folder  : Tree.Node
+  { folder  : List Tree.Node
   -- , tag     : Tag
   -- , note    : Note
   , book    : String    -- List Article
