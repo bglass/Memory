@@ -62,6 +62,16 @@ type alias Date     = String
 type alias Markdown = String
 type alias Regex    = String
 
+--
+-- getFolder (Folder record) getter =
+--   record |> getter
+--
+-- getNote (Note record) getter =
+--   record |> getter
+--
+-- getTag (Tag record) getter =
+--   record |> getter
+
 -- constructors
 
 folder : String -> String -> List Folder -> Folder

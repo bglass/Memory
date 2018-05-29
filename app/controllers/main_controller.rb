@@ -11,11 +11,8 @@ class MainController < ApplicationController
   end
 
   def elm
-
     render "main/elm"
   end
-
-
 
   def subtree(node, fields)
     record = {children: node.children.map {|c| subtree(c, fields) } }
@@ -40,12 +37,5 @@ class MainController < ApplicationController
 # binding.pry
     render json: data
   end
-
-
-
-
-
-
-
 
 end

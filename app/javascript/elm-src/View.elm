@@ -43,7 +43,7 @@ viewGridLayout model =
             [ cell_at 0 0 3 1 view_date
             , cell_at 0 1 3 1 view_tag
             , cell_at 0 2 3 1 view_folder
-            , cell_at 0 3 1 1 <| Tree.view model.folder
+            , cell_at 0 3 1 1 <| Tree.folders model.folder
             -- , cell_at 1 3 1 1 <| Tree.view model.tags
             -- , cell_at 2 3 1 1 <| Tree.view model.notes
             , cell_at 3 0 1 4 view_book

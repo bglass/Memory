@@ -1,4 +1,4 @@
-module View.Tree exposing (view)
+module View.Tree exposing (folders)
 
 import Html exposing (Html)
 import Element exposing (..)
@@ -12,33 +12,46 @@ import Data.TreeDummy1 as D
 
 
 
-view : a -> Element style variation Msg
-view top =
-  -- html (treeview (nodes top.children) )
-  text (toString top)
+folders : Folder -> Element style variation Msg
+folders top =
+  html (treeview
+    (f_children top)
+    -- [tNode top]
+  )
 
--- treeview : T.Model -> Html Msg
--- treeview data =
---   Html.div []
---     [ Html.map TMsg (T.view config data)
---     ]
---
--- config : T.Config
--- config = T.default D.styles
---
--- names : List a -> List String
--- names records =
---   List.map .name records
---
--- nodes : List a -> List T.Node
--- nodes records =
---   List.map node records
---
--- node : a -> T.Node
--- node record =
---   T.node
---     record.name
---     record.name
---     "folder"
---     True
---     Nothing
+
+treeview : T.Model -> Html Msg
+treeview data =
+  Html.div []
+    [ Html.map TMsg (T.view config data)
+    ]
+
+config : T.Config
+config = T.default D.styles
+
+tNodes : List Folder -> List T.Node
+tNodes records =
+  List.map tNode records
+
+tNode : Folder -> T.Node
+tNode record =
+  T.node
+    (f_name record)
+    (f_name record)
+    "folder"
+    True
+    (Just (f_children record))
+
+f_children : Folder -> List T.Node
+f_children item = tNodes (getFolder item .children)
+
+
+
+f_name     (Folder content) = content.name
+
+getFolder (Folder content) get_field =
+  content |> get_field
+getNote   (Note content) get_field =
+  content |> get_field
+getTag    (Tag content) get_field =
+  content |> get_field
