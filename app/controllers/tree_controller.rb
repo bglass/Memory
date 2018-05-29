@@ -1,10 +1,6 @@
 class TreeController < ApplicationController
   protect_from_forgery with: :exception
 
-  attr_accessor :data_fields
-
-  # def data_fields()   [];   end
-
   def tree
     respond_to :json
     Location.read_all
@@ -26,29 +22,5 @@ class TreeController < ApplicationController
     record
 
   end
-
-
-  def model
-    respond_to :json
-    Location.read_all
-
-    data = {book: "", search: "", config: "", errmsg: "ok"}
-
-    @data_fields   = [:id, :name, :path, :children]
-    data[:folders] = get_tree( Folder.top )
-
-    @data_fields   = [:id, :name, :children]
-    data[:tags]    = get_tree( Tag.top )
-
-    @data_fields   = [:id, :date, :tags, :path, :resource_name, :name]
-    data[:notes ]  = get_tree( Note.top )
-
-    binding.pry
-    render json: data
-  end
-
-
-
-
 
 end

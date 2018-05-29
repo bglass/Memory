@@ -15,4 +15,37 @@ class MainController < ApplicationController
     render "main/elm"
   end
 
+
+
+  def subtree(node, fields)
+    record = {children: node.children.map {|c| subtree(c, fields) } }
+    fields.each do |f|
+      record[f] = node.public_send(f) rescue binding.pry
+    end
+    record
+  end
+
+
+  def model
+    respond_to :json
+    Location.read_all
+
+    data = {book: "", search: "", config: "", errmsg: "ok"}
+
+    data[:folders] = subtree( Folder.top, [:id, :name, :path])
+    data[:tags]    = subtree( Tag.top,    [:id, :name] )
+    data[:notes ]  = subtree( Note.top,
+            [:id, :date, :tags, :path, :resource_name, :name] )
+
+    binding.pry
+    render json: data
+  end
+
+
+
+
+
+
+
+
 end
