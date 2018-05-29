@@ -16,6 +16,7 @@ type alias Model =
 type Folder = Folder
   { name     : String
   , key      : String
+  , options  : Options
   , children : List Folder
   }
 
@@ -55,6 +56,7 @@ type alias Location =
   , fs_path : Path
   }
 
+
 -- basic elements
 
 type alias Path     = String
@@ -62,23 +64,34 @@ type alias Date     = String
 type alias Markdown = String
 type alias Regex    = String
 
---
--- getFolder (Folder record) getter =
---   record |> getter
---
--- getNote (Note record) getter =
---   record |> getter
---
--- getTag (Tag record) getter =
---   record |> getter
+-- Treeview package
 
--- constructors
+type alias Options =
+  { style: StyleName
+  , selectable: Selectable
+  , opened: Opened
+  , disabled: Disabled
+  , visible: Visible
+  , checked : Checked
+  }
+
+defaultOptions = Options "None" True True False True False
+
+type alias StyleName = String
+type alias Opened = Bool
+type alias Visible = Bool
+type alias Checked = Bool
+type alias Disabled = Bool
+type alias Selectable = Bool
+
+
 
 folder : String -> String -> List Folder -> Folder
 folder name key children =
   Folder
     { name      = name
     , key       = key
+    , options   = defaultOptions
     , children  = children
     }
 

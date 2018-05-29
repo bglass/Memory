@@ -34,12 +34,12 @@ tNodes records =
 
 tNode : Folder -> T.Node
 tNode record =
-  T.node
-    (f_name record)
-    (f_name record)
-    "folder"
-    True
+  T.Node
+    (f_key     record)
+    (f_name    record)
+    (f_options record)
     (Just (f_children record))
+
 
 
 f_children : Folder -> List T.Node
@@ -47,3 +47,9 @@ f_children (Folder content) = tNodes content.children
 
 f_name : Folder -> String
 f_name     (Folder content) = content.name
+
+f_key : Folder -> String
+f_key     (Folder content) = content.name
+
+f_options : Folder -> Options
+f_options     (Folder content) = content.options
