@@ -1,13 +1,16 @@
 module Init  exposing (dummy, load)
 import Model exposing (..)
-import Data.Server
-import Msg exposing (Msg)
-import Tree.Folder as TF
+import Msg exposing (Msg(..))
+import Tree
 import Treeview as T
+import Http
 
 load : ( Model, Cmd Msg )
 load =
-  (mdl, Data.Server.get_model)
+  (mdl, get_model)
+
+get_model =
+  Http.send ModelUpdate (Http.getString  "/model/")
 
 dummy : ( Model, Cmd Msg )
 dummy =
@@ -21,7 +24,7 @@ err : String
 err = "  ."
 
 f : T.Node
-f = T.Node "F1" "P1" TF.defaultOptions (Just [])
+f = T.Node "F1" "P1" Tree.defaultOptions (Just [])
 
     -- ( JD.field "id"        JD.string )
     -- ( JD.field "name"      JD.string )

@@ -1,10 +1,9 @@
 module Model exposing (..)
 
-import Tree.Folder as TF
--- import TreeView as T
+import Tree
 
 type alias Model =
-  { folder  : TF.Node
+  { folder  : Tree.Node
   -- , tag     : Tag
   -- , note    : Note
   , book    : String    -- List Article

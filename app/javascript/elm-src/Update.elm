@@ -5,7 +5,7 @@ module Update exposing (..)
 import Model  exposing (..)
 import Msg exposing (..)
 import Json.Decode as JD
-import Tree.Folder as TF
+import Tree
 
 -- UPDATE
 
@@ -32,7 +32,7 @@ update msg model =
 decoder : JD.Decoder Model
 decoder =
   JD.map5 Model
-    ( JD.field "folder"    (TF.decoder)    )
+    ( JD.field "folder"    (Tree.decoder)    )
     -- ( JD.field "tag"       (TT.decoder)    )
     -- ( JD.field "note"      (TN.decoder)    )
     ( JD.field "book"      (JD.string)         )  --  (JD.list d_Article) )

@@ -1,4 +1,4 @@
-module Tree.Folder exposing (..)
+module Tree exposing (..)
 
 import Html exposing (Html)
 import Element exposing (Element)
