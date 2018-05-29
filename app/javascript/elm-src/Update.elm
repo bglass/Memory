@@ -16,6 +16,10 @@ update msg model =
       ( model, Cmd.none )
     FolderMsg fmsg ->
       ( { model | folder = Tree.update fmsg model.folder }, Cmd.none )
+    TagMsg fmsg ->
+      ( { model | folder = Tree.update fmsg model.tag },    Cmd.none )
+    NoteMsg fmsg ->
+      ( { model | folder = Tree.update fmsg model.note },   Cmd.none )
 
     ModelUpdate (Ok data) ->
       let
@@ -31,10 +35,10 @@ update msg model =
 
 decoder : JD.Decoder Model
 decoder =
-  JD.map5 Model
+  JD.map7 Model
     ( JD.field "folder"    (JD.list Tree.decoder)    )
-    -- ( JD.field "tag"       (TT.decoder)    )
-    -- ( JD.field "note"      (TN.decoder)    )
+    ( JD.field "tag"       (JD.list Tree.decoder)    )
+    ( JD.field "note"      (JD.list Tree.decoder)    )
     ( JD.field "book"      (JD.string)         )  --  (JD.list d_Article) )
     ( JD.field "search"    (JD.string)         )  --  (JD.list JD.string) )
     ( JD.field "config"    (JD.string)         )  --  (d_Config)          )

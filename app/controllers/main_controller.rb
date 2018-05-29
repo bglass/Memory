@@ -30,11 +30,11 @@ class MainController < ApplicationController
 
     data = {book: "", search: "", config: "", errmsg: "Model download ok"}
 
-    data[:folder]  = subtree( Folder.top, [:id, :name, :path])
-    data[:tag]     = subtree( Tag.top,    [:id, :name] )
+    data[:folder]  = subtree( Folder.top, [:id, :name, :path])[:children]
+    data[:tag]     = subtree( Tag.top,    [:id, :name] )[:children]
     data[:note]    = subtree( Note.top,
-            [:id, :date, :tags, :path, :resource_name, :name] )
-    data[:folder]  = data[:folder][:children]
+            [:id, :date, :tags, :path, :resource_name, :name] )[:children]
+
     render json: data
   end
 

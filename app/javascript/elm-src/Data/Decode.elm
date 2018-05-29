@@ -5,26 +5,23 @@ import Model exposing (..)
 
 
 
-
-decode : JD.Decoder a -> String -> Result String a
-decode decoder data =
-  JD.decodeString decoder data
-
-d_Tag : JD.Decoder Tag
-d_Tag =
-  JD.map2 tag
-    ( JD.field "name"      JD.string )
-    ( JD.field "children"  <|
-        JD.list (JD.lazy (\_ -> d_Tag ))
-    )
-
-
-d_Note : JD.Decoder Note
-d_Note =
-  JD.map4 note
-    ( JD.field "name"           JD.string )
-    ( JD.field "resource_name"  JD.string )
-    ( JD.field "date"           JD.string )
-    ( JD.field "children"  <|
-        JD.list (JD.lazy (\_ -> d_Note ))
-    )
+--
+--
+-- d_Tag : JD.Decoder Tag
+-- d_Tag =
+--   JD.map2 tag
+--     ( JD.field "name"      JD.string )
+--     ( JD.field "children"  <|
+--         JD.list (JD.lazy (\_ -> d_Tag ))
+--     )
+--
+--
+-- d_Note : JD.Decoder Note
+-- d_Note =
+--   JD.map4 note
+--     ( JD.field "name"           JD.string )
+--     ( JD.field "resource_name"  JD.string )
+--     ( JD.field "date"           JD.string )
+--     ( JD.field "children"  <|
+--         JD.list (JD.lazy (\_ -> d_Note ))
+--     )

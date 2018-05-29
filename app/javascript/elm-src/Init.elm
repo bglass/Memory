@@ -18,8 +18,7 @@ dummy =
   (mdl, Cmd.none)
 
 mdl : Model
--- mdl = Model f t n b s c err
-mdl = Model f b s c err
+mdl = Model f t n b s c err
 
 err : String
 err = "  ."
@@ -27,21 +26,12 @@ err = "  ."
 f : List T.Node
 f = [T.Node "F1" "P1" Tree.defaultOptions (Just [])]
 
-    -- ( JD.field "id"        JD.string )
-    -- ( JD.field "name"      JD.string )
-    -- ( JD.succeed      defaultOptions )
-    -- ( JD.field "children"  <|
-    --   JD.maybe (
-    --     JD.list (JD.lazy (\_ -> decoder )))
-    -- )
+t : List T.Node
+t = [T.Node "T1" "S1" Tree.defaultOptions (Just [])]
 
+n : List T.Node
+n = [T.Node "N1" "M1" Tree.defaultOptions (Just [])]
 
-
--- t : Tag
--- t = tag "T1" []
---
--- n : Note
--- n = note "N1" "P1" "D1" []
 
 b : String
 b = ""

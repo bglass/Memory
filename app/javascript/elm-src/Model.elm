@@ -4,8 +4,8 @@ import Tree
 
 type alias Model =
   { folder  : List Tree.Node
-  -- , tag     : Tag
-  -- , note    : Note
+  , tag     : List Tree.Node
+  , note    : List Tree.Node
   , book    : String    -- List Article
   , search  : String    -- Search
   , config  : String    -- Config
@@ -13,21 +13,6 @@ type alias Model =
   }
 
 -- main elements
-
-
-
-type Tag = Tag
-  { name     : String
-  -- , resource : String
-  , children : List Tag
-  }
-
-type Note = Note
-  { name     : String
-  , resource : String
-  , date     : String
-  , children : List Note
-  }
 
 type alias Article =
   { content  : Markdown
@@ -59,22 +44,3 @@ type alias Path     = String
 type alias Date     = String
 type alias Markdown = String
 type alias Regex    = String
-
-
-
-
-tag : String -> List Tag -> Tag
-tag name children =
-  Tag
-    { name      = name
-    , children  = children
-    }
-
-note : String -> String -> String -> List Note -> Note
-note name resource date children =
-  Note
-    { name      = name
-    , resource  = resource
-    , date      = date
-    , children  = children
-    }
