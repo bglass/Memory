@@ -74,15 +74,15 @@ class TopNote < Note
   end
 
   def date
-    nil
+    ""
   end
 
   def filename
-    nil
+    ""
   end
 
   def path
-    nil
+    ""
   end
 
 end

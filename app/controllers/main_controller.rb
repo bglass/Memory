@@ -22,6 +22,7 @@ class MainController < ApplicationController
     fields.each do |f|
       record[f] = node.public_send(f) rescue binding.pry
     end
+    record[:id] = record[:id].to_s
     record
   end
 
@@ -30,14 +31,13 @@ class MainController < ApplicationController
     respond_to :json
     Location.read_all
 
-    data = {book: "", search: "", config: "", errmsg: "ok"}
+    data = {book: "", search: "", config: "", errmsg: "Model download ok"}
 
-    data[:folders] = subtree( Folder.top, [:id, :name, :path])
-    data[:tags]    = subtree( Tag.top,    [:id, :name] )
-    data[:notes ]  = subtree( Note.top,
+    data[:folder]  = subtree( Folder.top, [:id, :name, :path])
+    data[:tag]     = subtree( Tag.top,    [:id, :name] )
+    data[:note]    = subtree( Note.top,
             [:id, :date, :tags, :path, :resource_name, :name] )
-
-    binding.pry
+# binding.pry
     render json: data
   end
 

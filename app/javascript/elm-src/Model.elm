@@ -1,9 +1,9 @@
 module Model exposing (..)
 
 type alias Model =
-  { folders : List Folder
-  , tags    : List Tag
-  , notes   : List Note
+  { folder  : Folder
+  , tag     : Tag
+  , note    : Note
   , book    : String    -- List Article
   , search  : String    -- Search
   , config  : String    -- Config
@@ -21,7 +21,7 @@ type Folder = Folder
 
 type Tag = Tag
   { name     : String
-  , resource : String
+  -- , resource : String
   , children : List Tag
   }
 
@@ -73,11 +73,10 @@ folder name key children =
     }
 
 
-tag : String -> String -> List Tag -> Tag
-tag name resource children =
+tag : String -> List Tag -> Tag
+tag name children =
   Tag
     { name      = name
-    , resource  = resource
     , children  = children
     }
 

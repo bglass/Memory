@@ -16,23 +16,14 @@ mdl = Model f t n b s c err
 
 err = "  ."
 
-f : List Folder
-f = [ folder "F1" "P1" []
-    , folder "F2" "P2" []
-    , folder "F3" "P3" []
-    ]
+f : Folder
+f = folder "F1" "P1" []
 
-t : List Tag
-t = [ tag "T1" "P1" []
-    , tag "T2" "P2" []
-    , tag "T3" "P3" []
-    ]
+t : Tag
+t = tag "T1" []
 
-n : List Note
-n = [ note "N1" "P1" "D1" []
-    , note "N2" "P2" "D2" []
-    , note "N3" "P3" "D3" []
-    ]
+n : Note
+n = note "N1" "P1" "D1" []
 
 b = ""
 -- b = [ Article "A1" "D1"
