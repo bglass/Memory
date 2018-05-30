@@ -23,8 +23,10 @@ mdl = Model f t n b s c err
 err : String
 err = "  ."
 
-f : List T.Node
-f = [T.Node "F1" "P1" Tree.defaultOptions (Just [])]
+
+
+f : Tree.Folder
+f = Tree.folder_init
 
 t : List T.Node
 t = [T.Node "T1" "S1" Tree.defaultOptions (Just [])]

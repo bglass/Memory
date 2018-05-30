@@ -15,7 +15,7 @@ update msg model =
     NoOp ->
       ( model, Cmd.none )
     FolderMsg sub ->
-      ( { model | folder = Tree.update sub model.folder }, Cmd.none )
+      ( { model | folder = Tree.folder_update sub model.folder }, Cmd.none )
     TagMsg sub ->
       ( { model | tag = Tree.update sub model.tag },       Cmd.none )
     NoteMsg sub ->
@@ -39,7 +39,7 @@ update msg model =
 decoder : JD.Decoder Model
 decoder =
   JD.map7 Model
-    ( JD.field "folder"    (JD.list Tree.decoder)    )
+    ( JD.field "folder"    (Tree.folderDecoder)    )
     ( JD.field "tag"       (JD.list Tree.decoder)    )
     ( JD.field "note"      (JD.list Tree.decoder)    )
     ( JD.field "book"      (JD.string)         )  --  (JD.list d_Article) )

@@ -29,6 +29,11 @@ class Folder
     @children << folder
   end
 
+  def note_ids
+    Note.all.select {|n| path == n.path }.map {|n| n.id.to_s}
+  end
+
+
 end
 
 class TopFolder < Folder  # Parent of all root folders

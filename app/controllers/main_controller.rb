@@ -23,19 +23,45 @@ class MainController < ApplicationController
     record
   end
 
+  def lookup(node, field)
+    data = { node.id.to_s => node.public_send(field) }
+    node.children.each do |c|
+      data.merge! lookup(c, field)
+    end
+    data
+  end
 
   def model
     respond_to :json
     Location.read_all
 
-    data = {book: "", search: "", config: "", errmsg: "Model download ok"}
 
-    data[:folder]  = subtree( Folder.top, [:id, :name, :path])[:children]
-    data[:tag]     = subtree( Tag.top,    [:id, :name] )[:children]
-    data[:note]    = subtree( Note.top,
-            [:id, :date, :tags, :path, :resource_name, :name] )[:children]
+
+    folder  = { tree:   subtree( Folder.top, [:id, :name])[:children],
+                path:   lookup(  Folder.top, :path),
+                notes:  lookup(  Folder.top, :note_ids)
+              }
+
+    tag     = subtree( Tag.top,    [:id, :name])[:children]
+    note    = subtree( Note.top,   [:id, :name])[:children]
+
+    data = {  book:     "",
+              search:   "",
+              config:   "",
+              errmsg:   "Model download ok",
+              folder:   folder,
+              tag:      tag,
+              note:     note
+            }
+
+
+
 
     render json: data
   end
 
 end
+# data[:folder]  = subtree( Folder.top, [:id, :name, :path])[:children]
+# data[:tag]     = subtree( Tag.top,    [:id, :name]       )[:children]
+# data[:note]    = subtree( Note.top,
+#         [:id, :date, :tags, :path, :resource_name, :name])[:children]
