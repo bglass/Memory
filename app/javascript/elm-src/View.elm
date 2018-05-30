@@ -44,8 +44,8 @@ viewGridLayout model =
             , cell_at 0 1 3 1 view_tag
             , cell_at 0 2 3 1 view_folder
             , cell_at 0 3 1 1 <| folder model
-            , cell_at 1 3 1 1 <| note model
-            , cell_at 2 3 1 1 <| tag model
+            , cell_at 1 3 1 1 <| tag    model
+            , cell_at 2 3 1 1 <| note   model
             , cell_at 3 0 1 4 view_book
             , cell_at 0 4 1 1 view_re_folder
             , cell_at 1 4 1 1 view_re_tag
