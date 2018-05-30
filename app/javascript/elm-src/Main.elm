@@ -62,11 +62,11 @@ update msg model =
     NoOp ->
       ( model, Cmd.none )
     FolderMsg sub ->
-      ( { model | folder = Tree.folder_update sub model.folder }, Cmd.none )
+      ( { model | folder = Tree.update sub model.folder }, Cmd.none )
     TagMsg sub ->
-      ( { model | tag = Tree.tag_update sub model.tag },       Cmd.none )
+      ( { model | tag = Tree.update sub model.tag },       Cmd.none )
     NoteMsg sub ->
-      ( { model | note = Tree.note_update sub model.note },     Cmd.none )
+      ( { model | note = Tree.update sub model.note },     Cmd.none )
 
     ModelUpdate (Ok data) ->
       let

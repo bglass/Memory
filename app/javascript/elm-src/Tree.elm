@@ -73,22 +73,13 @@ noteDefaults = {folderDefaults | style = "note"}
 
 -- UPDATE
 
-folder_update : T.Msg -> Folder -> Folder
-folder_update msg folder =
-  {folder | tree = update msg folder.tree}
+type alias HasTree a =
+  { a | tree : T.Model }
 
-tag_update : T.Msg -> Tag -> Tag
-tag_update msg tag =
-  {tag | tree = update msg tag.tree}
 
-note_update : T.Msg -> Note -> Note
-note_update msg note =
-  {note | tree = update msg note.tree}
-
-update : T.Msg -> T.Model -> T.Model
-update msg model =
-  T.update msg model
-  -- [T.Node "F1" "P1" defaultOptions (Just [])]
+update : T.Msg -> HasTree a -> HasTree a
+update msg data =
+  {data | tree = T.update msg data.tree}
 
 folderDecoder : JD.Decoder Folder
 folderDecoder =
