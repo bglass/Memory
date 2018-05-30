@@ -15,8 +15,18 @@ type alias Model = T.Model
 type alias Node  = T.Node
 
 -- INIT
+
+
+
 defaultOptions : T.Options
-defaultOptions = T.Options "None" True True False True False
+defaultOptions = -- T.Options -- "None" True True False True False
+  { style       = "powerpoint"
+  , selectable  = True
+  , opened      = False
+  , disabled    = False
+  , visible     = True
+  , checked     = False
+  }
 
 -- UPDATE
 
@@ -36,7 +46,6 @@ decoder =
         JD.list (JD.lazy (\_ -> decoder )))
     )
 
-
 -- VIEW
 
 view : T.Model -> (T.Msg -> msg) -> Element style variation msg
@@ -47,9 +56,16 @@ view top parentmsg =
     ]
   )
 
-style : T.Style
-style =
-  T.Style "folder" ("folder yellow", "folder-open yellow") ""
+styles : T.Styles
+styles =
+  [ T.Style "folder" ("folder yellow", "folder-open yellow") ""
+  , T.Style "archive" ("file-archive-o", "file-archive-o") ""
+  , T.Style "word" ("file-word-o", "file-word-o") "blue"
+  , T.Style "image" ("file-image-o", "file-image-o") ""
+  , T.Style "pdf" ("file-pdf-o", "file-pdf-o") "red"
+  , T.Style "powerpoint" ("file-powerpoint-o", "file-powerpoint-o") "orange"
+  , T.Style "excel" ("file-excel-o", "file-excel-o") "green"
+  ]
 
 config : T.Config
-config = T.default [style]
+config = T.default styles
