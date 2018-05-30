@@ -5,7 +5,7 @@ import Http exposing (Error)
 
 type Msg
   = NoOp
-  | TagMsg T.Msg
-  | NoteMsg T.Msg
-  | FolderMsg T.Msg
   | ModelUpdate (Result Http.Error String)
+  | FolderMsg T.Msg
+  | NoteMsg   T.Msg
+  | TagMsg    T.Msg

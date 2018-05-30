@@ -8,7 +8,7 @@ import Dict
 import Treeview as T
 -- import View.Tree.Style as VTS
 
-import Msg exposing (..)
+-- import Msg exposing (..)
 
 -- MODEL
 
@@ -37,8 +37,17 @@ styles =
   , T.Style "tag"    ("file-archive-o", "file-archive-o") ""
   ]
 
-config : T.Config
-config = T.default styles
+cfg_default : T.Config
+cfg_default = T.default styles
+
+cfg_checkbox =
+  { cfg_default | checkbox =
+    { enable = True, multiple = True, cascade = True}
+  }
+cfg_sort =
+  { cfg_checkbox | sort = T.Asc
+  }
+
 
 folder_init : Folder
 folder_init = Folder
@@ -73,13 +82,45 @@ noteDefaults = {folderDefaults | style = "note"}
 
 -- UPDATE
 
-type alias HasTree a =
-  { a | tree : T.Model }
-
+type alias HasTree a = { a | tree : T.Model }
 
 update : T.Msg -> HasTree a -> HasTree a
 update msg data =
-  {data | tree = T.update msg data.tree}
+  let
+    message = remap_TMsg msg
+  in
+    {data | tree = T.update message data.tree}
+
+remap_TMsg : T.Msg -> T.Msg
+remap_TMsg msg =
+  (case msg of
+    T.Toggle key ->
+      T.Toggle key
+
+    T.Select key ->    -- select->toggle
+      T.Toggle key
+
+    T.Search str ->
+      T.Search str
+
+    T.ToggleCheck m c k v->
+      T.ToggleCheck m c k v
+  )
+
+
+
+
+
+-- type Msg
+--   = Toggle Key
+--   | Select Key
+--   | Search String
+--   | ToggleCheck Bool Bool Key Bool   -- Multiple Cascade Key Value
+
+
+
+
+
 
 folderDecoder : JD.Decoder Folder
 folderDecoder =
@@ -115,23 +156,10 @@ decoder options =
 
 -- VIEW
 
-
-view_folder : Folder -> Element style variation Msg
-view_folder folder =
-  view folder.tree FolderMsg
-
-view_note : Note -> Element style variation Msg
-view_note note =
-  view note.tree NoteMsg
-
-view_tag : Tag -> Element style variation Msg
-view_tag tag =
-  view tag.tree TagMsg
-
-view : T.Model -> (T.Msg -> msg) -> Element style variation msg
-view top parentmsg =
+view : HasTree a -> (T.Msg -> msg) -> Element style variation msg
+view data parentmsg =
   Element.html
   ( Html.div []
-    [ Html.map parentmsg (T.view config top)
+    [ Html.map parentmsg (T.view cfg_checkbox data.tree)
     ]
   )

@@ -20,7 +20,6 @@ main = Html.program
   , subscriptions = Subscriptions.none
   }
 
-
 -- MODEL
 
 type alias Model =
@@ -53,32 +52,30 @@ request_data : Cmd Msg
 request_data =
   Http.send ModelUpdate (Http.getString  "/model/")
 
-
 -- UPDATE
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-    NoOp ->
-      ( model, Cmd.none )
+    NoOp -> ( model, Cmd.none )
+
     FolderMsg sub ->
       ( { model | folder = Tree.update sub model.folder }, Cmd.none )
-    TagMsg sub ->
-      ( { model | tag = Tree.update sub model.tag },       Cmd.none )
     NoteMsg sub ->
-      ( { model | note = Tree.update sub model.note },     Cmd.none )
+      ( { model | note   = Tree.update sub model.note },   Cmd.none )
+    TagMsg sub ->
+      ( { model | tag    = Tree.update sub model.tag },    Cmd.none )
 
+    ModelUpdate (Err error) ->
+      ( {model | errmsg = format_err error}, Cmd.none )
     ModelUpdate (Ok data) ->
-      let
-        result = JD.decodeString decoder data
+      let result = JD.decodeString decoder data
       in
         case result of
           Ok decoded ->
             ( decoded, Cmd.none )
           Err error ->
             ( {model | errmsg = format_err error}, Cmd.none )
-    ModelUpdate (Err error) ->
-      ( {model | errmsg = format_err error}, Cmd.none )
 
 decoder : JD.Decoder Model
 decoder =
@@ -95,7 +92,6 @@ format_err : a -> String
 format_err error =
   "(EE) " ++ (toString error)
 
-
 -- VIEW
 
 view : Model -> Html Msg
@@ -110,7 +106,7 @@ view model =
             [ viewGridLayout model
             ]
           ),
-              text model.errmsg
+          text model.errmsg
       ]
 
 viewGridLayout : Model -> List (Element Styles variation Msg)
@@ -129,9 +125,9 @@ viewGridLayout model =
             [ cell_at 0 0 3 1 view_date
             , cell_at 0 1 3 1 view_tag
             , cell_at 0 2 3 1 <| Display.folder   model.folder
-            , cell_at 0 3 1 1 <| Tree.view_folder model.folder
-            , cell_at 1 3 1 1 <| Tree.view_tag    model.tag
-            , cell_at 2 3 1 1 <| Tree.view_note   model.note
+            , cell_at 0 3 1 1 <| Tree.view model.folder FolderMsg
+            , cell_at 1 3 1 1 <| Tree.view model.tag    TagMsg
+            , cell_at 2 3 1 1 <| Tree.view model.note   NoteMsg
             , cell_at 3 0 1 4 view_book
             , cell_at 0 4 1 1 view_re_folder
             , cell_at 1 4 1 1 view_re_tag
