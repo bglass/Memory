@@ -1,4 +1,4 @@
-module Msg exposing (..)
+module Msg exposing (Msg(..))
 
 import Treeview as T exposing (Msg)
 import Http exposing (Error)

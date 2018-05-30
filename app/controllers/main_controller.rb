@@ -35,15 +35,16 @@ class MainController < ApplicationController
     respond_to :json
     Location.read_all
 
-
-
     folder  = { tree:   subtree( Folder.top, [:id, :name])[:children],
                 path:   lookup(  Folder.top, :path),
                 notes:  lookup(  Folder.top, :note_ids)
               }
 
-    tag     = subtree( Tag.top,    [:id, :name])[:children]
-    note    = subtree( Note.top,   [:id, :name])[:children]
+    tag     = { tree:   subtree( Tag.top,    [:id, :name])[:children]
+              }
+
+    note    = { tree:   subtree( Note.top,   [:id, :name])[:children]
+              }
 
     data = {  book:     "",
               search:   "",
@@ -54,14 +55,7 @@ class MainController < ApplicationController
               note:     note
             }
 
-
-
-
     render json: data
   end
 
 end
-# data[:folder]  = subtree( Folder.top, [:id, :name, :path])[:children]
-# data[:tag]     = subtree( Tag.top,    [:id, :name]       )[:children]
-# data[:note]    = subtree( Note.top,
-#         [:id, :date, :tags, :path, :resource_name, :name])[:children]
