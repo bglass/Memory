@@ -26,6 +26,7 @@ type alias Model =
   { folder  : Tree.Folder
   , tag     : Tree.Tag
   , note    : Tree.Note
+  , link    : Tree.Relations
   , book    : String    -- List Article
   , search  : String    -- Search
   , config  : String    -- Config
@@ -43,6 +44,7 @@ empty = Model
   Tree.folder_init
   Tree.tag_init
   Tree.note_init
+  Tree.link_init
   ""                -- book
   ""                -- search
   ""                -- config
@@ -79,10 +81,11 @@ update msg model =
 
 decoder : JD.Decoder Model
 decoder =
-  JD.map7 Model
+  JD.map8 Model
     ( JD.field "folder"    (Tree.folderDecoder)    )
     ( JD.field "tag"       (Tree.tagDecoder)    )
     ( JD.field "note"      (Tree.noteDecoder)    )
+    ( JD.field "link"      (Tree.relationsDecoder)    )
     ( JD.field "book"      (JD.string)         )  --  (JD.list d_Article) )
     ( JD.field "search"    (JD.string)         )  --  (JD.list JD.string) )
     ( JD.field "config"    (JD.string)         )  --  (d_Config)          )

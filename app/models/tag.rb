@@ -15,6 +15,10 @@ class Tag
     @@last_id +=1
   end
 
+  def self.find_by_path path   #  = by name   / path  is TBD
+    all.find {|t| t.name == path}
+  end
+
 
   def self.all
     @@all
@@ -40,6 +44,7 @@ class Tag
   def children
     []
   end
+
 
 
 end

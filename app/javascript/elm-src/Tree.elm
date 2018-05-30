@@ -28,6 +28,13 @@ type alias Tag =
   { tree  : T.Model
   }
 
+type alias Link = List String
+
+type alias Relations =
+  { note_folder : List Link
+  , note_tag    : List Link
+  }
+
 -- INIT
 
 styles : T.Styles
@@ -65,6 +72,9 @@ note_init : Note
 note_init = Note
               [T.Node "N1" "M1" noteDefaults (Just [])]
               Dict.empty
+
+link_init = Relations [] []
+
 
 folderDefaults : T.Options
 folderDefaults =
@@ -141,6 +151,20 @@ decoder options =
       JD.maybe (
         JD.list (JD.lazy (\_ -> (decoder options ))))
     )
+
+relationsDecoder : JD.Decoder Relations
+relationsDecoder =
+  JD.map2 Relations
+    ( JD.field "note_folder"  (JD.list linkDecoder) )
+    ( JD.field "note_tag"     (JD.list linkDecoder) )
+
+linkDecoder : JD.Decoder Link
+linkDecoder =
+  JD.list JD.string
+
+
+
+
 
 -- VIEW
 

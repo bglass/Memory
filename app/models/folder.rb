@@ -29,9 +29,17 @@ class Folder
     @children << folder
   end
 
-  def note_ids
-    Note.all.select {|n| path == n.path }.map {|n| n.id.to_s}
+  def self.find_by_path path
+    node = top
+    path.each_filename do |part|
+      node = node.children.find {|n| n.name == part} rescue binding.pry
+    end
+    node
   end
+
+  # def note_ids
+  #   Note.all.select {|n| path == n.path }.map {|n| n.id.to_s}
+  # end
 
 
 end

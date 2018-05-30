@@ -35,17 +35,17 @@ class MainController < ApplicationController
     respond_to :json
     Location.read_all
 
-    folder  = { tree:   subtree( Folder.top, [:id, :name])[:children],
-                path:   lookup(  Folder.top, :path),
-                notes:  lookup(  Folder.top, :note_ids)
-              }
 
+    folder  = { tree:   subtree( Folder.top, [:id, :name])[:children],
+                path:   lookup(  Folder.top, :path)
+              }
     tag     = { tree:   subtree( Tag.top,    [:id, :name])[:children],
               }
-
     note    = { tree:   subtree( Note.top,   [:id, :name])[:children],
-                path:   lookup(  Note.top, :path),
-                tags:   lookup(  Note.top, :tags)
+                path:   lookup(  Note.top, :path)
+              }
+    link    = { note_folder: Note.note_folder,
+                note_tag:    Note.note_tag
               }
 
     data = {  book:     "",
@@ -54,9 +54,9 @@ class MainController < ApplicationController
               errmsg:   "Model download ok",
               folder:   folder,
               tag:      tag,
-              note:     note
+              note:     note,
+              link:     link
             }
-
     render json: data
   end
 
