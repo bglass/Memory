@@ -43,9 +43,9 @@ viewGridLayout model =
             [ cell_at 0 0 3 1 view_date
             , cell_at 0 1 3 1 view_tag
             , cell_at 0 2 3 1 view_folder
-            , cell_at 0 3 1 1 <| Tree.view model.folder
-            , cell_at 1 3 1 1 <| Tree.view model.tag
-            , cell_at 2 3 1 1 <| Tree.view model.note
+            , cell_at 0 3 1 1 <| folder model
+            , cell_at 1 3 1 1 <| note model
+            , cell_at 2 3 1 1 <| tag model
             , cell_at 3 0 1 4 view_book
             , cell_at 0 4 1 1 view_re_folder
             , cell_at 1 4 1 1 view_re_tag
@@ -54,6 +54,12 @@ viewGridLayout model =
             ]
         }
     ]
+
+folder model = Tree.view model.folder FolderMsg
+note   model = Tree.view model.note   NoteMsg
+tag    model = Tree.view model.tag    TagMsg
+
+
 
 cell_at : Int -> Int -> Int -> Int -> Element style variation msg -> OnGrid (Element style variation msg)
 cell_at x y w h content =

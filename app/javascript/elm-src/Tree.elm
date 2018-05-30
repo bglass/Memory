@@ -23,6 +23,7 @@ defaultOptions = T.Options "None" True True False True False
 update : T.Msg -> T.Model -> T.Model
 update msg model =
   T.update msg model
+  -- [T.Node "F1" "P1" defaultOptions (Just [])]
 
 decoder : JD.Decoder T.Node
 decoder =
@@ -38,11 +39,11 @@ decoder =
 
 -- VIEW
 
-view : T.Model -> Element style variation Msg
-view top =
+view : T.Model -> (T.Msg -> msg) -> Element style variation msg
+view top parentmsg =
   Element.html
   ( Html.div []
-    [ Html.map FolderMsg (T.view config top)
+    [ Html.map parentmsg (T.view config top)
     ]
   )
 
