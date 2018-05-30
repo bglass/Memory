@@ -71,3 +71,4 @@ gem 'redcarpet'
 gem 'jquery-rails'
 gem 'gollum-lib'
 gem 'foreman'
+gem "font-awesome-rails"
