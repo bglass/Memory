@@ -40,10 +40,12 @@ class MainController < ApplicationController
                 notes:  lookup(  Folder.top, :note_ids)
               }
 
-    tag     = { tree:   subtree( Tag.top,    [:id, :name])[:children]
+    tag     = { tree:   subtree( Tag.top,    [:id, :name])[:children],
               }
 
-    note    = { tree:   subtree( Note.top,   [:id, :name])[:children]
+    note    = { tree:   subtree( Note.top,   [:id, :name])[:children],
+                path:   lookup(  Note.top, :path),
+                tags:   lookup(  Note.top, :tags)
               }
 
     data = {  book:     "",

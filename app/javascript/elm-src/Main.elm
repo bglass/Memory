@@ -123,11 +123,11 @@ viewGridLayout model =
             ]
         , cells =
             [ cell_at 0 0 3 1 view_date
-            , cell_at 0 1 3 1 view_tag
-            , cell_at 0 2 3 1 <| Display.folder   model.folder
-            , cell_at 0 3 1 1 <| Tree.view model.folder FolderMsg
-            , cell_at 1 3 1 1 <| Tree.view model.tag    TagMsg
-            , cell_at 2 3 1 1 <| Tree.view model.note   NoteMsg
+            , cell_at 0 1 3 1 <| Display.tag    model.tag
+            , cell_at 0 2 3 1 <| Display.folder model.folder
+            , cell_at 0 3 1 1 <| Tree.view      model.folder FolderMsg
+            , cell_at 1 3 1 1 <| Tree.view      model.tag    TagMsg
+            , cell_at 2 3 1 1 <| Tree.view      model.note   NoteMsg
             , cell_at 3 0 1 4 view_book
             , cell_at 0 4 1 1 view_re_folder
             , cell_at 1 4 1 1 view_re_tag
