@@ -36,22 +36,19 @@ class MainController < ApplicationController
     Location.read_all
 
 
-    folder  = { tree:   subtree( Folder.top, [:id, :name])[:children],
+    folder  = { tree:   subtree( Folder.top, [:id, :name]),
                 path:   lookup(  Folder.top, :path)
               }
-    tag     = { tree:   subtree( Tag.top,    [:id, :name])[:children],
+    tag     = { tree:   subtree( Tag.top,    [:id, :name])
               }
-    note    = { tree:   subtree( Note.top,   [:id, :name])[:children],
+    note    = { tree:   subtree( Note.top,   [:id, :name]),
                 path:   lookup(  Note.top, :path)
               }
     link    = { note_folder: Note.note_folder,
                 note_tag:    Note.note_tag
               }
 
-    data = {  book:     "",
-              search:   "",
-              config:   "",
-              errmsg:   "Model download ok",
+    data = {  errmsg:   "Model download ok",
               folder:   folder,
               tag:      tag,
               note:     note,
