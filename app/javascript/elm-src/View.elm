@@ -9,6 +9,8 @@ import View.Style exposing (..)
 import Msg   exposing  (Msg(..))
 import Model exposing  (..)
 
+import Node exposing (..)
+
 view : Model -> Html Msg
 view model =
   Element.viewport stylesheet <|
@@ -98,21 +100,3 @@ view_re_note =
 view_re_book : Element Styles variation msg
 view_re_book =
   dummy_box "re book"
-
-viewTree : Node -> Element Styles variation Msg
-viewTree node =
-  Element.html (viewNode node)
-
-viewNode : Node -> Html Msg
-viewNode node =
-  H.ul []
-  [ H.li []
-    ( [H.text node.name] ++ (node |> children |> List.map viewNode )
-    )
-  ]
-
-children : Node -> (List Node)
-children node =
-  case node.children of
-    Children  Nothing        -> []
-    Children (Just children) -> children

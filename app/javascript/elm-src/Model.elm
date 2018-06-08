@@ -1,6 +1,5 @@
 module Model exposing (..)
 
-
 type alias Model =
   { folder  : Folder
   , tag     : Tag
