@@ -12,11 +12,14 @@ viewTree node =
 
 viewNode : Node -> Html Msg
 viewNode node =
-  H.ul []
-  [ H.li []
-    ( [H.text node.name] ++ (node |> children |> List.map viewNode )
+  uli
+    ( [H.text node.name]
+        ++ (node |> children |> List.map viewNode )
     )
-  ]
+
+uli : List (Html msg) -> Html msg
+uli items = H.ul [][ H.li [] items ]
+
 
 children : Node -> (List Node)
 children node =
