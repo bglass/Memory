@@ -2,7 +2,7 @@ module View exposing (..)
 
 import Element exposing (..)
 import Element.Attributes exposing (..)
-import Html exposing (Html)
+import Html as H exposing (Html)
 
 import View.Style exposing (..)
 
@@ -40,9 +40,9 @@ viewGridLayout model =
             [ cell_at 0 0 3 1 view_date
             -- , cell_at 0 1 3 1 <| Display.tag    model.tag
             -- , cell_at 0 2 3 1 <| Display.folder model.folder
-            , cell_at 0 3 1 1 <| viewNode  model.folder.tree
-            , cell_at 1 3 1 1 <| viewNode  model.tag.tree
-            , cell_at 2 3 1 1 <| viewNode  model.note.tree
+            , cell_at 0 3 1 1 <| viewTree  model.folder.tree
+            , cell_at 1 3 1 1 <| viewTree  model.tag.tree
+            , cell_at 2 3 1 1 <| viewTree  model.note.tree
             , cell_at 3 0 1 4 view_book
             , cell_at 0 4 1 1 view_re_folder
             , cell_at 1 4 1 1 view_re_tag
@@ -99,6 +99,20 @@ view_re_book : Element Styles variation msg
 view_re_book =
   dummy_box "re book"
 
-viewNode : Node -> Element Styles variation msg
+viewTree : Node -> Element Styles variation Msg
+viewTree node =
+  Element.html (viewNode node)
+
+viewNode : Node -> Html Msg
 viewNode node =
-  text node.name
+  H.ul []
+  [ H.li []
+    ( [H.text node.name] ++ (node |> children |> List.map viewNode )
+    )
+  ]
+
+children : Node -> (List Node)
+children node =
+  case node.children of
+    Children  Nothing        -> []
+    Children (Just children) -> children
