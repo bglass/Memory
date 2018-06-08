@@ -99,13 +99,13 @@ nodeDecoder =
     ( JD.succeed           Init.defaultState )
     ( JD.succeed           Init.defaultStyle )
     -- ( JD.field "data"      payloadDecoder )
-    -- (JD.field "children" childrenDecoder)
-    ( JD.succeed           (Children []))
-
-childrenDecoder : JD.Decoder Children
-childrenDecoder =
-  JD.map Children
-    ( JD.list <| JD.lazy <| \_ -> nodeDecoder )
+    ( JD.field "children"
+      <| JD.map Children
+      <| JD.maybe
+      <| JD.list
+      <| JD.lazy
+      <| \_ -> nodeDecoder
+    )
 
 relationsDecoder : JD.Decoder Relations
 relationsDecoder =

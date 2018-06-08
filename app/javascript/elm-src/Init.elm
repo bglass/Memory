@@ -62,7 +62,7 @@ note_init = Note
                 )
 
 childless : Children
-childless = Children []
+childless = Children (Just [])
 
 link_init : Relations
 link_init = Relations [] []

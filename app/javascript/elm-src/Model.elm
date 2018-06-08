@@ -58,6 +58,9 @@ type alias State =
   , checkable   : Bool
 }
 
-type Children = Children (List Node)
+type Children = Children (Maybe (List Node))
+
+
+
 
 type alias Style = String -- TBD
