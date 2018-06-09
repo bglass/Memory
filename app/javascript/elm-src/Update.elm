@@ -78,10 +78,9 @@ format_err error =
 
 folderDecoder : JD.Decoder Folder
 folderDecoder =
-  -- JD.map2 Folder
-  JD.map Folder
+  JD.map2 Folder
     ( JD.field "tree"       nodeDecoder)
-    -- ( JD.field "path"       (JD.dict JD.string) )
+    ( JD.field "path"       (JD.dict JD.string) )
 
 tagDecoder : JD.Decoder Tag
 tagDecoder =
@@ -92,10 +91,9 @@ tagDecoder =
 
 noteDecoder : JD.Decoder Note
 noteDecoder =
-  -- JD.map2 Note
-  JD.map Note
+  JD.map2 Note
     ( JD.field "tree"       nodeDecoder)
-    -- ( JD.field "path"       (JD.dict JD.string) )
+    ( JD.field "path"       (JD.dict JD.string) )
 
 nodeDecoder : JD.Decoder Node
 nodeDecoder =

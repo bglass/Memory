@@ -1,4 +1,4 @@
-module Node exposing (view, update)
+module Node exposing (view, update, children)
 
 import Html as H exposing (Html)
 import Html.Attributes as HA
@@ -102,7 +102,7 @@ item tree node =
       [ Class.li
       , eventOpenClose tree node
       ]
-      [ H.i (icon node) []
+      [ H.span (icon node) []
       ]
   , H.div
       [ style node

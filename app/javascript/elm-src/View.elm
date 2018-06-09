@@ -10,6 +10,7 @@ import Msg   exposing  (Msg(..), Tree(..))
 import Model exposing  (..)
 
 import Node
+import Display
 
 view : Model -> Html Msg
 view model =
@@ -40,11 +41,11 @@ viewGridLayout model =
             ]
         , cells =
             [ cell_at 0 0 3 1 view_date
-            -- , cell_at 0 1 3 1 <| Display.tag    model.tag
-            -- , cell_at 0 2 3 1 <| Display.folder model.folder
-            , cell_at 0 3 1 1 <| viewTree FolderTree model.folder.tree
-            , cell_at 1 3 1 1 <| viewTree TagTree    model.tag.tree
-            , cell_at 2 3 1 1 <| viewTree NoteTree   model.note.tree
+            , cell_at 0 1 3 1 <| Display.tag          model.tag
+            , cell_at 0 2 3 1 <| Display.folder       model.folder
+            , cell_at 0 3 1 1 <| viewTree FolderTree  model.folder.tree
+            , cell_at 1 3 1 1 <| viewTree TagTree     model.tag.tree
+            , cell_at 2 3 1 1 <| viewTree NoteTree    model.note.tree
             , cell_at 3 0 1 4 view_book
             , cell_at 0 4 1 1 view_re_folder
             , cell_at 1 4 1 1 view_re_tag

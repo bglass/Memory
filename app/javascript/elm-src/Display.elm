@@ -1,61 +1,45 @@
 module Display exposing (..)
 
-import Element exposing (..)
-import Tree
-import Treeview as T
+import Element as E exposing (Element)
 import Dict
+import Node
+import Model exposing (..)
 
 -- VIEW
 
-tag : Tree.Tag -> Element style variation msg
+tag : Tag -> Element style variation msg
 tag t =
   selected_names t.tree
   |> toString
-  |> text
+  |> E.text
 
-folder : Tree.Folder -> Element style variation msg
+folder : Folder -> Element style variation msg
 folder f =
   selected_keys f.tree
   |> List.map ( flip Dict.get <| f.path)
   |> List.filterMap identity
   |> toString
-  |> text
+  |> E.text
 
-selected_names :  List T.Node -> List String
-selected_names nodes =
-  selected_nodes nodes
-  |> List.map T.nodeTitle
+selected_names :  Node -> List String
+selected_names node =
+  selected_nodes node
+  |> List.map .name
 
+selected_keys : Node -> List String
+selected_keys node =
+  selected_nodes node
+  |> List.map .key
 
-selected_keys : List T.Node -> List String
-selected_keys nodes =
-  selected_nodes nodes
-  |> List.map T.nodeKey
-
-selected_nodes : List T.Node -> List T.Node
-selected_nodes nodes =
-  List.map selected_subnodes nodes
-  |> List.concat
-
-selected_subnodes : T.Node -> List T.Node
-selected_subnodes node =
+selected_nodes : Node -> List Node
+selected_nodes node =
   let
     selected_children =
-      children node
-      |> List.map selected_subnodes
+      Node.children node
+      |> List.map selected_nodes
       |> List.concat
   in
-    if  node |> is_checked then
+    if  node.state.selected then
       (node) :: selected_children
     else
       selected_children
-
-children : T.Node -> List T.Node
-children node =
-  case T.nodeChildren node of
-    Nothing    ->   []
-    Just value ->   value
-
-is_checked : T.Node -> Bool
-is_checked (T.Node _ _ opt _) =
-    opt.checked

@@ -3,7 +3,7 @@ module Init exposing (..)
 import Model exposing (..)
 import Msg   exposing  (Msg(..))
 import Http
-
+import Dict
 
 load : ( Model, Cmd Msg )
 load =
@@ -48,18 +48,18 @@ request_data =
 
 folder_init : Folder
 folder_init = Folder
-                ( Node "K1" "N1" defaultState defaultStyle childless
-                )
+                ( Node "K1" "N1" defaultState defaultStyle childless )
+                Dict.empty
 
 tag_init : Tag
 tag_init  = Tag
-                ( Node "K1" "N1" defaultState defaultStyle childless
-                )
+              ( Node "K1" "N1" defaultState defaultStyle childless )
 
 note_init : Note
 note_init = Note
-                ( Node "K1" "N1" defaultState defaultStyle childless
-                )
+              ( Node "K1" "N1" defaultState defaultStyle childless )
+              Dict.empty
+
 
 childless : Children
 childless = Children (Just [])

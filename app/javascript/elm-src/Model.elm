@@ -1,5 +1,7 @@
 module Model exposing (..)
 
+import Dict
+
 type alias Model =
   { folder  : Folder
   , tag     : Tag
@@ -13,12 +15,12 @@ type alias Model =
 
 type alias Folder =
   { tree  : Node
-  -- , path  : Dict.Dict String String
+  , path  : Dict.Dict String String
   }
 
 type alias Note =
   { tree  : Node
-  -- , path  : Dict.Dict String String
+  , path  : Dict.Dict String String
   }
 
 type alias Tag =
