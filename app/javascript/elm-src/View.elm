@@ -1,8 +1,7 @@
 module View exposing (..)
 
-import Element exposing (..)
-import Element.Attributes exposing (..)
-import Html as H exposing (Html)
+import Html exposing (Html, div, text)
+import Html.Attributes exposing (class)
 
 import View.Style exposing (..)
 
@@ -12,118 +11,30 @@ import Model exposing  (..)
 import Node
 import Display
 
--- .main_grid
---   .state_folder_set
---   .state_tag_set
---   .state_date_set
---   .folder_menu
---     = render partial: 'folder_buttons'
---   .tag_menu
---     p ts
---   .note_menu
---     p ns
---   .folder_box
---     .folders
---   .tag_box
---     .tags
---   .note_box
---     .notes
---   .book
---   .folder_search
---   .tag_search
---   .note_search
---   .book_search
-
 view : Model -> Html Msg
 view model =
-  Element.viewport stylesheet <|
-    column None
-      []
-      [ el None [ ] <|
-        column Main
-          [ ]
-          (List.concat
-            [ viewGridLayout model
-            ]
-          ),
-          text model.errmsg
-      ]
+  div [class "main_grid"]
+  [ div [class "state_folder_set"]    [ Display.folder  model.folder ]
+  , div [class "state_tag_set"]       [ Display.tag     model.tag ]
+  , div [class "state_date_set"]      [ view_date ]
+  , div [class "folder_menu"]         [  ]
+  , div [class "tag_menu"]            [  ]
+  , div [class "note_menu"]           [  ]
+  , div [class "folder_box"]
+    [ div [class "folders"]           [ Node.view FolderTree model.folder.tree ] ]
+  , div [class "tag_box"]
+    [ div [class "tags"]           [ Node.view TagTree    model.tag.tree    ] ]
+  , div [class "note_box"]
+    [ div [class "notes"]           [ Node.view NoteTree   model.note.tree   ] ]
+  , div [class "book"]                [ view_book ]
+  , div [class "folder_search"]       [ view_re_folder ]
+  , div [class "tag_search"]          [ view_re_tag ]
+  , div [class "note_search"]         [ view_re_note ]
+  , div [class "book_search"]         [ text model.errmsg ]
+  ]
 
-viewGridLayout : Model -> List (Element Styles variation Msg)
-viewGridLayout model =
-    [ Element.grid Container
-        [ spacing 1, height (px 600) ]
-        { columns = [percent 20, percent 20, percent 20, fill]
-        , rows =
-            [ px 20
-            , px 20
-            , px 20
-            , fill
-            , px 20
-            ]
-        , cells =
-            [ cell_at 0 0 3 1 view_date
-            , cell_at 0 1 3 1 <| Element.html <| Display.tag          model.tag
-            , cell_at 0 2 3 1 <| Element.html <| Display.folder       model.folder
-            , cell_at 0 3 1 1 <| viewTree FolderTree  model.folder.tree
-            , cell_at 1 3 1 1 <| viewTree TagTree     model.tag.tree
-            , cell_at 2 3 1 1 <| viewTree NoteTree    model.note.tree
-            , cell_at 3 0 1 4 view_book
-            , cell_at 0 4 1 1 view_re_folder
-            , cell_at 1 4 1 1 view_re_tag
-            , cell_at 2 4 1 1 view_re_note
-            , cell_at 3 4 1 1 view_re_book
-            ]
-        }
-    ]
-
-viewTree : Tree -> Node -> Element Styles variation Msg
-viewTree tree node =
-  Element.html (Node.view tree node)
-
-
-cell_at : Int -> Int -> Int -> Int -> Element style variation msg -> OnGrid (Element style variation msg)
-cell_at x y w h content =
-  cell
-    { start = ( x, y )
-    , width = w
-    , height = h
-    , content = content
-    }
-
-dummy_box : String -> Element Styles variation msg
-dummy_box atext =
-  (el Box[] (text atext))
-
-view_date : Element Styles variation msg
-view_date =
-  dummy_box "the date"
-
-view_tag : Element Styles variation msg
-view_tag =
-  dummy_box "tags"
-
-view_folder : Element Styles variation msg
-view_folder =
-  dummy_box "folder"
-
-
-view_book : Element Styles variation msg
-view_book =
-  dummy_box "a book"
-
-view_re_folder : Element Styles variation msg
-view_re_folder =
-  dummy_box "re folder"
-
-view_re_tag : Element Styles variation msg
-view_re_tag =
-  dummy_box "re tag"
-
-view_re_note : Element Styles variation msg
-view_re_note =
-  dummy_box "re note"
-
-view_re_book : Element Styles variation msg
-view_re_book =
-  dummy_box "re book"
+view_date      = text "the date"
+view_book      = text "a book"
+view_re_folder = text "re folder"
+view_re_tag    = text "re tag"
+view_re_note   = text "re note"

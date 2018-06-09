@@ -70,8 +70,9 @@ eventOpenClose tree node =
 style : Node -> H.Attribute msg
 style node =
   HA.style
-    [ ("font-weight", "bold")
-    , ("color", "blue")
+    [
+    -- ("font-weight", "bold")
+    -- , ("color", "blue")
     ]
 
 text : { a | name : String } -> Html msg

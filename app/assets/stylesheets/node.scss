@@ -1,5 +1,6 @@
 .node {
   cursor: default;
+  font-weight: normal;
 }
 
 // .node:hover {
@@ -7,7 +8,9 @@
 // }
 
 .selected {
-    background-color: yellow;
+  // background-color: #77abff;
+  font-weight: bold;
+  color:       blue;
 }
 
 .hidden {
@@ -18,17 +21,28 @@
   font-weight: bold;
 }
 
-
-.node.icon.childless:before {
-    content: "•";
+.node.icon {
+  // https://fontawesome.com/how-to-use/web-fonts-with-css
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: FontAwesome;
+  font-weight: 400;
 }
 
-.node.icon.closed:before {
-    font-family: FontAwesome;
-    content: "\f105";
-}
+.folders .icon                  { color: orange; }
+.folders .icon.closed:before    { content: "\f07b"; }
+.folders .icon.opened:before    { content: "\f07c"; }
+.folders .icon.childless:before { content: "•"; color: black }
 
-.node.icon.opened:before {
-    font-family: FontAwesome;
-    content: "\f107";
-}
+.tags .icon                     { color: green; }
+.tags .icon.opened:before       { content: "\f02b"; }
+.tags .icon.closed:before       { content: "\f02c"; }
+.tags .icon.childless:before    { content: "•"; color: black}
+
+.notes .icon                    { color: blue; }
+.notes .icon.opened:before      { content: "\f2b6"; }
+.notes .icon.closed:before      { content: "\f0e0"; }
+.notes .icon.childless:before   { content: "•"; color: black}

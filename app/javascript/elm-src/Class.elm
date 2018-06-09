@@ -7,7 +7,7 @@ li : H.Attribute msg
 li = HA.class "fa-li"
 
 ul : List (H.Attribute msg)
-ul = [HA.class "fa-ul"]
+ul = [HA.class "group fa-ul"]
 
 nodeChildless : List (H.Attribute msg)
 nodeChildless = [HA.class "node icon childless"]
