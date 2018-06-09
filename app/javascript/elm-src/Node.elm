@@ -4,11 +4,9 @@ import Html as H exposing (Html)
 import Html.Attributes as HA
 import Html.Events as HE
 import Model exposing (..)
-import View.Style exposing (..)
 import Msg   exposing  (..)
 import Node.State exposing (..)
 import Class
-import Dict
 
 -- UPDATE
 
@@ -163,15 +161,16 @@ selection model = { folder_paths = folder_paths model
                   , tag_names    = tag_names    model
                   }
 
+tag_names : Model -> List String
 tag_names model =
   selected_nodes model.tag.tree
   |> List.map .name
 
+folder_paths : Model -> List String
 folder_paths model =
   selected_nodes model.folder.tree
-  |> List.map .key
-  |> List.map ( flip Dict.get <| model.folder.path)
-  |> List.filterMap identity
+  |> List.map .path
 
+note_tags : Model -> List String
 note_tags model =
   []

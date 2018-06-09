@@ -36,24 +36,23 @@ class MainController < ApplicationController
     Location.read_all
 
 
-    folder  = { tree:   subtree( Folder.top, [:id, :name]),
-                path:   lookup(  Folder.top, :path)
+    folder  = { tree:   subtree( Folder.top, [:id, :name, :path])
               }
-    tag     = { tree:   subtree( Tag.top,    [:id, :name])
+    tag     = { tree:   subtree( Tag.top,    [:id, :name, :path])
               }
-    note    = { tree:   subtree( Note.top,   [:id, :name]),
+    note    = { tree:   subtree( Note.top,   [:id, :name, :path]),
                 path:   lookup(  Note.top, :path)
               }
     link    = { note_folder: Note.note_folder,
                 note_tag:    Note.note_tag
               }
-binding.pry
     data = {  errmsg:   "Model download ok",
               folder:   folder,
               tag:      tag,
               note:     note,
               link:     link
             }
+
     render json: data
   end
 
