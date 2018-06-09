@@ -21,4 +21,7 @@ noteFolderSelected selection note =
   if List.isEmpty selection.folder_paths then
     True
   else
-    List.member note.path selection.folder_paths
+    selection.folder_paths
+    |> List.filter ((flip String.startsWith) note.path)
+    |> List.isEmpty
+    |> not
