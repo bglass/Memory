@@ -37,7 +37,7 @@ openClose key node =
 
 view_notop : TreeType -> Selection -> Node -> Html Msg
 view_notop tree selection node =
-    uli (node |> children |> List.map (view tree selection) )
+    uli (node |> children |> sort |> List.map (view tree selection) )
 
 view : TreeType -> Selection -> Node -> Html Msg
 view tree selection node =
@@ -45,12 +45,13 @@ view tree selection node =
     if node.state.opened then
       uli
         ( [item tree node]
-            ++ (node |> children |> List.map (view tree selection) )
+            ++ (node |> children |> sort |> List.map (view tree selection) )
         )
     else
       uli [item tree node]
   else
     H.text ""
+
 
 item : TreeType -> Node -> Html Msg
 item tree node =

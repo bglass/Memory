@@ -25,3 +25,12 @@ noteFolderSelected selection note =
     |> List.filter ((flip String.startsWith) note.path)
     |> List.isEmpty
     |> not
+
+sort : List Node -> List Node
+sort nodes =
+  List.sortBy lowName nodes
+
+lowName : Node -> String
+lowName node =
+  node.name
+  |> String.toLower 
