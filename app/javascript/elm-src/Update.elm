@@ -3,18 +3,19 @@ import Msg   exposing  (Msg(..))
 import Model exposing  (..)
 import Json.Decode as JD
 import Init
+import Node
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     NoOp -> ( model, Cmd.none )
 
-    FolderMsg sub ->
-      ( model, Cmd.none )
-    NoteMsg sub ->
-      ( model, Cmd.none )
-    TagMsg sub ->
-      ( model, Cmd.none )
+    FolderMsg nodemsg ->
+      ( {model | folder = update_tree nodemsg model.folder}, Cmd.none )
+    NoteMsg nodemsg ->
+      ( {model | note = update_tree nodemsg model.note}, Cmd.none )
+    TagMsg nodemsg ->
+      ( {model | tag = update_tree nodemsg model.tag}, Cmd.none )
 
     ModelUpdate (Err error) ->
       ( {model | errmsg = format_err error}, Cmd.none )
@@ -26,6 +27,11 @@ update msg model =
             ( decoded, Cmd.none )
           Err error ->
             ( {model | errmsg = format_err error}, Cmd.none )
+
+update_tree : Msg.NodeMsg -> { a | tree : Node } -> { a | tree : Node }
+update_tree nodemsg model =
+  { model | tree = Node.update nodemsg model.tree }
+
 
 decoder : JD.Decoder Model
 decoder =
