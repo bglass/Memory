@@ -1,12 +1,15 @@
-module Node exposing (view, view_notop, update, children, selection)
+module Node exposing (view, view_notop, update, selection)
 
 import Html as H exposing (Html)
 import Html.Attributes as HA
 import Html.Events as HE
 import Model exposing (..)
 import Msg   exposing  (..)
-import Node.State exposing (..)
 import Class
+import Node.State exposing (..)
+import Node.Filter exposing (..)
+import Node.Helper exposing (..)
+
 
 -- UPDATE
 
@@ -30,13 +33,6 @@ openClose key node =
   else
     { node | children = children_each (openClose key) node }
 
-
-
-children_each : (Node -> Node) -> Node -> Children
-children_each func node =
-  Children (Just (node |> children |> List.map func ) )
-
-
 -- VIEW
 
 view_notop : TreeType -> Selection -> Node -> Html Msg
@@ -56,30 +52,22 @@ view tree selection node =
   else
     H.text ""
 
-isVisible : TreeType -> Selection -> Node -> Bool
-isVisible tree selection node =
-  node.state.visible
-  && filterTree tree selection node
-
-filterTree : TreeType -> Selection -> Node -> Bool
-filterTree tree selection node =
-  case tree of
-    FolderTree -> True
-    TagTree    -> True
-    NoteTree   ->
-      noteFolderSelected selection node
-
-noteFolderSelected : Selection -> Node -> Bool
-noteFolderSelected selection note =
-  -- List.member note.path selection.folder_paths
-  True
-
-children : Node -> (List Node)
-children node =
-  case node.children of
-    Children  Nothing        -> []
-    Children (Just children) -> children
-
+item : TreeType -> Node -> Html Msg
+item tree node =
+  H.span []
+  [   H.span
+      [ Class.li
+      , eventOpenClose tree node
+      ]
+      [ H.span (icon node) []
+      ]
+  , H.div
+      [ style node
+      , eventSelect tree node
+      , class node
+      ]
+      [text node]
+  ]
 
 eventSelect : TreeType -> Node -> H.Attribute Msg
 eventSelect tree node =
@@ -115,24 +103,6 @@ uli items =
     [ H.li [] items
     ]
 
-
-item : TreeType -> Node -> Html Msg
-item tree node =
-  H.span []
-  [   H.span
-      [ Class.li
-      , eventOpenClose tree node
-      ]
-      [ H.span (icon node) []
-      ]
-  , H.div
-      [ style node
-      , eventSelect tree node
-      , class node
-      ]
-      [text node]
-  ]
-
 icon : Node -> List (H.Attribute msg)
 icon node =
   if List.isEmpty (node |> children) then
@@ -142,35 +112,8 @@ icon node =
   else
     Class.nodeClosed
 
-selected_nodes : Node -> List Node
-selected_nodes node =
-  let
-    selected_children =
-      children node
-      |> List.map selected_nodes
-      |> List.concat
-  in
-    if  node.state.selected then
-      (node) :: selected_children
-    else
-      selected_children
-
 selection : Model -> Selection
 selection model = { folder_paths = folder_paths model
                   , note_tags    = note_tags    model
                   , tag_names    = tag_names    model
                   }
-
-tag_names : Model -> List String
-tag_names model =
-  selected_nodes model.tag.tree
-  |> List.map .name
-
-folder_paths : Model -> List String
-folder_paths model =
-  selected_nodes model.folder.tree
-  |> List.map .path
-
-note_tags : Model -> List String
-note_tags model =
-  []

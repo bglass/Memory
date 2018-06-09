@@ -3,8 +3,6 @@ module View exposing (..)
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 
-import View.Style exposing (..)
-
 import Model exposing  (..)
 
 import Display
