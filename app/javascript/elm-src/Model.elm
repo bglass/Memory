@@ -61,7 +61,10 @@ type alias State =
 
 type Children = Children (Maybe (List Node))
 
-
-
-
 type alias Style = String -- TBD
+
+type alias Selection =
+  { folder_paths : List String
+  , note_tags    : List String
+  , tag_names    : List String
+  }

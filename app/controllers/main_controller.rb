@@ -47,7 +47,7 @@ class MainController < ApplicationController
     link    = { note_folder: Note.note_folder,
                 note_tag:    Note.note_tag
               }
-
+binding.pry
     data = {  errmsg:   "Model download ok",
               folder:   folder,
               tag:      tag,

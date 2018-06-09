@@ -1,6 +1,5 @@
 module Msg exposing (..)
 
-import Treeview as T exposing (Msg)
 import Http exposing (Error)
 
 type Msg
@@ -14,12 +13,12 @@ type NodeMsg
   = Selected  String
   | OpenClose String
 
-type Tree
+type TreeType
   = FolderTree
   | TagTree
   | NoteTree
 
-treeMsg : Tree -> NodeMsg -> Msg
+treeMsg : TreeType -> NodeMsg -> Msg
 treeMsg tree =
   case tree of
     FolderTree -> FolderMsg

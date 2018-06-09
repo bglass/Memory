@@ -1,4 +1,4 @@
-module Node exposing (view, view_notop, update, children)
+module Node exposing (view, view_notop, update, children, selection)
 
 import Html as H exposing (Html)
 import Html.Attributes as HA
@@ -8,6 +8,7 @@ import View.Style exposing (..)
 import Msg   exposing  (..)
 import Node.State exposing (..)
 import Class
+import Dict
 
 -- UPDATE
 
@@ -40,39 +41,40 @@ children_each func node =
 
 -- VIEW
 
-view_notop : Tree -> Node -> Html Msg
-view_notop tree node =
-    uli (node |> children |> List.map (view tree) )
+view_notop : TreeType -> Selection -> Node -> Html Msg
+view_notop tree selection node =
+    uli (node |> children |> List.map (view tree selection) )
 
-view : Tree -> Node -> Html Msg
-view tree node =
-  if isVisible tree node then
+view : TreeType -> Selection -> Node -> Html Msg
+view tree selection node =
+  if isVisible tree selection node then
     if node.state.opened then
       uli
         ( [item tree node]
-            ++ (node |> children |> List.map (view tree) )
+            ++ (node |> children |> List.map (view tree selection) )
         )
     else
       uli [item tree node]
   else
     H.text ""
-isVisible : Tree -> Node -> Bool
-isVisible tree node =
-  node.state.visible
-  && filterTree tree node
 
-filterTree : Tree -> Node -> Bool
-filterTree tree node =
+isVisible : TreeType -> Selection -> Node -> Bool
+isVisible tree selection node =
+  node.state.visible
+  && filterTree tree selection node
+
+filterTree : TreeType -> Selection -> Node -> Bool
+filterTree tree selection node =
   case tree of
     FolderTree -> True
     TagTree    -> True
     NoteTree   ->
-      noteFolderSelected node
+      noteFolderSelected selection node
 
-noteFolderSelected : Node -> Bool
-noteFolderSelected node =
+noteFolderSelected : Selection -> Node -> Bool
+noteFolderSelected selection note =
+  -- List.member note.path selection.folder_paths
   True
-
 
 children : Node -> (List Node)
 children node =
@@ -81,11 +83,11 @@ children node =
     Children (Just children) -> children
 
 
-eventSelect : Tree -> Node -> H.Attribute Msg
+eventSelect : TreeType -> Node -> H.Attribute Msg
 eventSelect tree node =
   HE.onClick ((treeMsg tree) (Selected node.key))
 
-eventOpenClose : Tree -> Node -> H.Attribute Msg
+eventOpenClose : TreeType -> Node -> H.Attribute Msg
 eventOpenClose tree node =
   HE.onClick ((treeMsg tree) (OpenClose node.key))
 
@@ -116,7 +118,7 @@ uli items =
     ]
 
 
-item : Tree -> Node -> Html Msg
+item : TreeType -> Node -> Html Msg
 item tree node =
   H.span []
   [   H.span
@@ -141,3 +143,35 @@ icon node =
     Class.nodeOpened
   else
     Class.nodeClosed
+
+selected_nodes : Node -> List Node
+selected_nodes node =
+  let
+    selected_children =
+      children node
+      |> List.map selected_nodes
+      |> List.concat
+  in
+    if  node.state.selected then
+      (node) :: selected_children
+    else
+      selected_children
+
+selection : Model -> Selection
+selection model = { folder_paths = folder_paths model
+                  , note_tags    = note_tags    model
+                  , tag_names    = tag_names    model
+                  }
+
+tag_names model =
+  selected_nodes model.tag.tree
+  |> List.map .name
+
+folder_paths model =
+  selected_nodes model.folder.tree
+  |> List.map .key
+  |> List.map ( flip Dict.get <| model.folder.path)
+  |> List.filterMap identity
+
+note_tags model =
+  []

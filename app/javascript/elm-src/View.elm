@@ -5,33 +5,38 @@ import Html.Attributes exposing (class)
 
 import View.Style exposing (..)
 
-import Msg   exposing  (Msg(..), Tree(..))
 import Model exposing  (..)
 
-import Node
 import Display
+import Msg   exposing  (Msg(..), TreeType(..))
+
+import Node
 
 view : Model -> Html Msg
 view model =
-  div [class "main_grid"]
-  [ div [class "state_folder_set"]    [ Display.folder  model.folder ]
-  , div [class "state_tag_set"]       [ Display.tag     model.tag ]
-  , div [class "state_date_set"]      [ view_date ]
-  , div [class "folder_menu"]         [  ]
-  , div [class "tag_menu"]            [  ]
-  , div [class "note_menu"]           [  ]
-  , div [class "folder_box"]
-    [ div [class "folders"]           [ Node.view_notop FolderTree model.folder.tree ] ]
-  , div [class "tag_box"]
-    [ div [class "tags"]              [ Node.view_notop TagTree    model.tag.tree    ] ]
-  , div [class "note_box"]
-    [ div [class "notes"]             [ Node.view_notop NoteTree   model.note.tree   ] ]
-  , div [class "book"]                [ view_book ]
-  , div [class "folder_search"]       [ view_re_folder ]
-  , div [class "tag_search"]          [ view_re_tag ]
-  , div [class "note_search"]         [ view_re_note ]
-  , div [class "book_search"]         [ text model.errmsg ]
-  ]
+
+  let
+    selection = Node.selection model
+  in
+    div [class "main_grid"]
+    [ div [class "state_folder_set"]    [ Display.folder  selection  model.folder]
+    , div [class "state_tag_set"]       [ Display.tag     selection  ]
+    , div [class "state_date_set"]      [ view_date ]
+    , div [class "folder_menu"]         [  ]
+    , div [class "tag_menu"]            [  ]
+    , div [class "note_menu"]           [  ]
+    , div [class "folder_box"]
+      [ div [class "folders"]           [ Node.view_notop FolderTree selection model.folder.tree] ]
+    , div [class "tag_box"]
+      [ div [class "tags"]              [ Node.view_notop TagTree    selection model.tag.tree] ]
+    , div [class "note_box"]
+      [ div [class "notes"]             [ Node.view_notop NoteTree   selection model.note.tree] ]
+    , div [class "book"]                [ view_book ]
+    , div [class "folder_search"]       [ view_re_folder ]
+    , div [class "tag_search"]          [ view_re_tag ]
+    , div [class "note_search"]         [ view_re_note ]
+    , div [class "book_search"]         [ text model.errmsg ]
+    ]
 
 view_date      = text "the date"
 view_book      = text "a book"
