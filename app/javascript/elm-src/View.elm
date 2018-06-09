@@ -12,6 +12,28 @@ import Model exposing  (..)
 import Node
 import Display
 
+-- .main_grid
+--   .state_folder_set
+--   .state_tag_set
+--   .state_date_set
+--   .folder_menu
+--     = render partial: 'folder_buttons'
+--   .tag_menu
+--     p ts
+--   .note_menu
+--     p ns
+--   .folder_box
+--     .folders
+--   .tag_box
+--     .tags
+--   .note_box
+--     .notes
+--   .book
+--   .folder_search
+--   .tag_search
+--   .note_search
+--   .book_search
+
 view : Model -> Html Msg
 view model =
   Element.viewport stylesheet <|
@@ -41,8 +63,8 @@ viewGridLayout model =
             ]
         , cells =
             [ cell_at 0 0 3 1 view_date
-            , cell_at 0 1 3 1 <| Display.tag          model.tag
-            , cell_at 0 2 3 1 <| Display.folder       model.folder
+            , cell_at 0 1 3 1 <| Element.html <| Display.tag          model.tag
+            , cell_at 0 2 3 1 <| Element.html <| Display.folder       model.folder
             , cell_at 0 3 1 1 <| viewTree FolderTree  model.folder.tree
             , cell_at 1 3 1 1 <| viewTree TagTree     model.tag.tree
             , cell_at 2 3 1 1 <| viewTree NoteTree    model.note.tree

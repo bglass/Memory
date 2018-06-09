@@ -1,29 +1,35 @@
 module Display exposing (..)
 
-import Element as E exposing (Element)
-import Element.Attributes as EA
+import Html as H exposing (Html)
+import Html.Attributes as HA
+-- import Html.Events as HE
+
 import Dict
 import Node
 import Model exposing (..)
-import View.Style exposing (Styles(..))
+
+import Msg exposing (..)
+
+-- import View.Style exposing (Styles(..))
 -- import Style
 
 -- VIEW
 
-tag : Tag -> Element Styles variation msg
+tag : Tag -> Html Msg
 tag t =
   selected_names t.tree
-  |> List.map E.text
-  |> List.map (E.el None [EA.class "tag"])
-  |> E.row None []
+  |> List.map H.text
+  |> List.map List.singleton
+  |> List.map (H.div [HA.class "tag"])
+  |> H.span [HA.class "state_tag_set"]
 
-folder : Folder -> Element Styles variation msg
+folder : Folder -> Html Msg
 folder f =
   selected_keys f.tree
   |> List.map ( flip Dict.get <| f.path)
   |> List.filterMap identity
   |> toString
-  |> E.text
+  |> H.text
 
 selected_names :  Node -> List String
 selected_names node =
