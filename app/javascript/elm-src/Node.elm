@@ -1,4 +1,4 @@
-module Node exposing (view, update, children)
+module Node exposing (view, view_notop, update, children)
 
 import Html as H exposing (Html)
 import Html.Attributes as HA
@@ -40,15 +40,38 @@ children_each func node =
 
 -- VIEW
 
+view_notop : Tree -> Node -> Html Msg
+view_notop tree node =
+    uli (node |> children |> List.map (view tree) )
+
 view : Tree -> Node -> Html Msg
 view tree node =
-  if node.state.opened then
-    uli
-      ( [item tree node]
-          ++ (node |> children |> List.map (view tree) )
-      )
+  if isVisible tree node then
+    if node.state.opened then
+      uli
+        ( [item tree node]
+            ++ (node |> children |> List.map (view tree) )
+        )
+    else
+      uli [item tree node]
   else
-    uli [item tree node]
+    H.text ""
+isVisible : Tree -> Node -> Bool
+isVisible tree node =
+  node.state.visible
+  && filterTree tree node
+
+filterTree : Tree -> Node -> Bool
+filterTree tree node =
+  case tree of
+    FolderTree -> True
+    TagTree    -> True
+    NoteTree   ->
+      noteFolderSelected node
+
+noteFolderSelected : Node -> Bool
+noteFolderSelected node =
+  True
 
 
 children : Node -> (List Node)
@@ -69,13 +92,9 @@ eventOpenClose tree node =
 
 style : Node -> H.Attribute msg
 style node =
-  HA.style
-    [
-    -- ("font-weight", "bold")
-    -- , ("color", "blue")
-    ]
+  HA.style []
 
-text : { a | name : String } -> Html msg
+text : Node -> Html msg
 text node = H.text node.name
 
 class : Node -> H.Attribute msg
