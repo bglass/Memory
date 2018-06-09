@@ -33,6 +33,7 @@ openClose key node =
 
 
 
+children_each : (Node -> Node) -> Node -> Children
 children_each func node =
   Children (Just (node |> children |> List.map func ) )
 
@@ -112,6 +113,7 @@ item tree node =
       [text node]
   ]
 
+icon : Node -> List (H.Attribute msg)
 icon node =
   if List.isEmpty (node |> children) then
     Class.nodeChildless

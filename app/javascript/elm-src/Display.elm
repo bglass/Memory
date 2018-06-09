@@ -1,19 +1,23 @@
 module Display exposing (..)
 
 import Element as E exposing (Element)
+import Element.Attributes as EA
 import Dict
 import Node
 import Model exposing (..)
+import View.Style exposing (Styles(..))
+-- import Style
 
 -- VIEW
 
-tag : Tag -> Element style variation msg
+tag : Tag -> Element Styles variation msg
 tag t =
   selected_names t.tree
-  |> toString
-  |> E.text
+  |> List.map E.text
+  |> List.map (E.el None [EA.class "tag"])
+  |> E.row None []
 
-folder : Folder -> Element style variation msg
+folder : Folder -> Element Styles variation msg
 folder f =
   selected_keys f.tree
   |> List.map ( flip Dict.get <| f.path)
