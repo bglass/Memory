@@ -1,4 +1,4 @@
-module Node exposing (view, view_notop, update, selection)
+module Node exposing (view, view_notop, update, selection, selected_note_paths)
 
 import Html as H exposing (Html)
 import Html.Attributes as HA
@@ -118,3 +118,9 @@ selection model = { folder_paths = folder_paths model
                   , note_tags    = note_tags    model
                   , tag_names    = tag_names    model
                   }
+
+selected_note_paths : Node -> List String
+selected_note_paths node =
+  -- selected_nodes node
+  -- |> List.map .resource
+  ["eins", "zwei", "drei"]

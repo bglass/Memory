@@ -1,9 +1,13 @@
 module Update exposing (..)
-import Msg   exposing  (Msg(..))
+import Msg   exposing  (..)
 import Model exposing  (..)
 import Json.Decode as JD
+import Json.Encode as JE
 import Init
 import Node
+import Http
+
+
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -13,9 +17,12 @@ update msg model =
     FolderMsg nodemsg ->
       ( {model | folder = update_tree nodemsg model.folder}, Cmd.none )
     NoteMsg nodemsg ->
-      ( {model | note = update_tree nodemsg model.note}, Cmd.none )
+      ( {model | note = update_tree nodemsg model.note}, requestBook model.note nodemsg)
     TagMsg nodemsg ->
       ( {model | tag = update_tree nodemsg model.tag}, Cmd.none )
+
+    BookUpdate x ->
+       ( model, Cmd.none )
 
     ModelUpdate (Err error) ->
       ( {model | errmsg = format_err error}, Cmd.none )
@@ -27,6 +34,25 @@ update msg model =
             ( decoded, Cmd.none )
           Err error ->
             ( {model | errmsg = format_err error}, Cmd.none )
+
+requestBook : Note -> NodeMsg -> Cmd Msg
+requestBook note nodemsg =
+  case nodemsg of
+    Selected key ->
+      let
+        notes = Node.selected_note_paths note.tree
+                |> encodeListString
+
+      in
+        Http.send BookUpdate (Http.getString ("/book?" ++ notes) )
+    OpenClose key ->
+      Cmd.none
+
+encodeListString : List String -> String
+encodeListString strings =
+  List.map JE.string strings
+  |>       JE.list
+  |> toString
 
 update_tree : Msg.NodeMsg -> { a | tree : Node } -> { a | tree : Node }
 update_tree nodemsg model =
@@ -49,31 +75,6 @@ format_err : a -> String
 format_err error =
   "(EE) " ++ (toString error)
 
-
--- type alias HasTree a = { a | tree : T.Model }
-
--- update : T.Msg -> HasTree a -> HasTree a
--- update msg data =
---   let
---     message = remap_TMsg msg
---   in
---     {data | tree = T.update message data.tree}
-
--- remap_TMsg : T.Msg -> T.Msg
--- remap_TMsg msg =
---   (case msg of
---     T.Toggle key ->
---       T.Toggle key
---
---     T.Select key ->    -- select->toggle
---       T.Toggle key
---
---     T.Search str ->
---       T.Search str
---
---     T.ToggleCheck m c k v->
---       T.ToggleCheck m c k v
---   )
 
 
 folderDecoder : JD.Decoder Folder

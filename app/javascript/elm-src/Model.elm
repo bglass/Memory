@@ -1,5 +1,6 @@
 module Model exposing (..)
 
+-- type alias HasTree a = { a | tree : T.Model }
 
 type alias Model =
   { folder  : Folder
