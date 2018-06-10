@@ -44,15 +44,18 @@ requestBook note nodemsg =
                 |> encodeListString
 
       in
-        Http.send BookUpdate (Http.getString ("/book?" ++ notes) )
+        Http.send BookUpdate (Http.getString ("/book?jsonpaths=" ++ notes) )
     OpenClose key ->
       Cmd.none
 
-encodeListString : List String -> String
+
+-- encodeListString : List String -> String
 encodeListString strings =
   List.map JE.string strings
   |>       JE.list
-  |> toString
+  |> JE.encode 0
+
+  -- |> toString
 
 update_tree : Msg.NodeMsg -> { a | tree : Node } -> { a | tree : Node }
 update_tree nodemsg model =
