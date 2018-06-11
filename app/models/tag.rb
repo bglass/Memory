@@ -8,6 +8,7 @@ class Tag
     @@all << self
   end
 
+  def path()        "TBD";    end
 
   def text()        name;     end    # tree display
 

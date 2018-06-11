@@ -1,3 +1,16 @@
+.state_tag_set {
+  display: flex;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  flex-direction: row-reverse;
+}
+.extra_tags{
+  display: flex;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
 .tag {
     // -webkit-border-radius: 4px;
     // -moz-border-radius: 4px;
@@ -15,9 +28,3 @@
   // border-left: 5px solid transparent;
   // border-right: 5px solid transparent;
 }
-// .tag a:link, .link_button a:visited {
-  /* remove the offening underline */
-    // text-decoration: none;
-    // text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
-    // color: #FFFFFF;
-// }

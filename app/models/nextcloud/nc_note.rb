@@ -45,7 +45,7 @@ class NcNote < Note
     relative_path
   end
 
-    
+
 
 
   def self.create(node, root)
@@ -57,7 +57,8 @@ class NcNote < Note
 
   def title_of(text)
     headline = text.lines.first
-    headline.sub! /^#*\s*/, ""
+    return "" unless headline
+    headline.sub! /^#*\s*/, "" rescue binding.pry
     headline.chomp
   end
 

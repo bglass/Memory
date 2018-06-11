@@ -1,11 +1,27 @@
-module Msg exposing (Msg(..))
+module Msg exposing (..)
 
-import Treeview as T exposing (Msg)
 import Http exposing (Error)
 
 type Msg
   = NoOp
   | ModelUpdate (Result Http.Error String)
-  | FolderMsg T.Msg
-  | NoteMsg   T.Msg
-  | TagMsg    T.Msg
+  | BookUpdate  (Result Http.Error String)
+  | FolderMsg NodeMsg
+  | NoteMsg   NodeMsg
+  | TagMsg    NodeMsg
+
+type NodeMsg
+  = Selected  String
+  | OpenClose String
+
+type TreeType
+  = FolderTree
+  | TagTree
+  | NoteTree
+
+treeMsg : TreeType -> NodeMsg -> Msg
+treeMsg tree =
+  case tree of
+    FolderTree -> FolderMsg
+    TagTree    -> TagMsg
+    NoteTree   -> NoteMsg

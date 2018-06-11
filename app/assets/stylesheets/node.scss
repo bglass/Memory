@@ -1,0 +1,48 @@
+.node {
+  cursor: default;
+  font-weight: normal;
+}
+
+// .node:hover {
+//   background-color: #e3e3e3;
+// }
+
+.selected {
+  // background-color: #77abff;
+  font-weight: bold;
+  color:       blue;
+}
+
+.hidden {
+    display: none;
+}
+
+.node.icon {
+  font-weight: bold;
+}
+
+.node.icon {
+  // https://fontawesome.com/how-to-use/web-fonts-with-css
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: FontAwesome;
+  font-weight: 400;
+}
+
+.folders .icon                  { color: orange; }
+.folders .icon.closed:before    { content: "\f07b"; }
+.folders .icon.opened:before    { content: "\f07c"; }
+.folders .icon.childless:before { content: "•"; color: black }
+
+.tags .icon                     { color: green; }
+.tags .icon.opened:before       { content: "\f02b"; }
+.tags .icon.closed:before       { content: "\f02c"; }
+.tags .icon.childless:before    { content: "•"; color: black}
+
+.notes .icon                    { color: blue; }
+.notes .icon.opened:before      { content: "\f2b6"; }
+.notes .icon.closed:before      { content: "\f0e0"; }
+.notes .icon.childless:before   { content: "•"; color: black}
