@@ -25,7 +25,7 @@ view model =
     , div [class "note_menu"]           [  ]
     , div [class "folder_box"]
       [
-        div [class "folders"]           [ Node.view FolderTree selection model.folder]
+        div [class "folders"]           [ Node.viewFolder selection model.folder]
       ]
     , div [class "tag_box"]
       [

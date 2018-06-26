@@ -25,6 +25,14 @@ type alias Item a =
   }
 
 
+type alias Folders = Tree Folder
+type alias Notes   = Tree Note
+type alias Tags    = Tree Tag
+
+type alias ItemTree a = Tree (Item a)
+type alias ItemList a = List (Item a)
+
+
 type alias Folder =
   { key      : String
   , name     : String

@@ -44,7 +44,11 @@ import Node.Helper exposing (..)
 -- view_notop tree selection node =
 --     uli (node |> children |> sort |> List.map (view tree selection) )
 
-view : TreeType -> Selection -> Tree (Item a) -> Html Msg
+
+viewFolder selection node =
+  view FolderTree selection node
+
+view : TreeType -> Selection -> ItemTree a -> Html Msg
 view treeType selection node =
   -- if isVisible tree selection node then
     -- if node.state.opened then

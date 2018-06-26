@@ -5,19 +5,29 @@ import Msg   exposing  (..)
 
 import Tree exposing (Tree)
 
+folderVisible folder =
+  nodeVisible folder
 
-isVisible : TreeType -> Selection -> Item a -> Bool
-isVisible tree selection node =
-  node.state.visible
-  && filterTree tree selection node
+nodeVisible item =
+  Tree.label item
+  |> .state
+  |> .visible
 
-filterTree : TreeType -> Selection -> Item a -> Bool
-filterTree tree selection node =
-  case tree of
-    FolderTree -> True
-    TagTree    -> True
-    NoteTree   ->
-      noteFolderSelected selection node
+
+
+
+-- isVisible : TreeType -> Selection -> Item a -> Bool
+-- isVisible tree selection node =
+--   node.state.visible
+--   && filterTree tree selection node
+
+-- filterTree : TreeType -> Selection -> Item a -> Bool
+-- filterTree tree selection node =
+--   case tree of
+--     FolderTree -> True
+--     TagTree    -> True
+--     NoteTree   ->
+--       noteFolderSelected selection node
 
 noteFolderSelected : Selection -> Note -> Bool
 noteFolderSelected selection note =
@@ -29,12 +39,11 @@ noteFolderSelected selection note =
     |> List.isEmpty
     |> not
 
-sort : List (Item a) -> List (Item a)
-sort items =
-  List.sortBy lowName items
+sort nodes =
+  List.sortBy lowName nodes
 
-lowName : Item a -> String
-lowName item =
-  Tree.label item
+lowName node =
+  node
+  |> Tree.label
   |> .name
   |> String.toLower
