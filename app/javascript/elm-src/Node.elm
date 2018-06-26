@@ -10,33 +10,43 @@ import Class
 
 import Tree exposing (Tree, children)
 
-
--- import Node.State exposing (..)
+import Node.State exposing (..)
 import Node.Filter exposing (..)
 import Node.Helper exposing (..)
 
 
 -- UPDATE
 
--- update : NodeMsg -> Node -> Node
--- update nodemsg trunk =
---   case nodemsg of
---     Selected  key -> select    key trunk
---     OpenClose key -> openClose key trunk
---
--- select : String -> Node -> Node
--- select key node =
---   if node.key == key then
---     { node | state = toggle_selection node.state }
---   else
---     { node | children = children_each (select key) node }
---
--- openClose : String -> Node -> Node
--- openClose key node =
---   if node.key == key then
---     { node | state = toggle_openClose node.state }
---   else
---     { node | children = children_each (openClose key) node }
+update : NodeMsg -> ItemTree a -> ItemTree a
+update nodemsg trunk =
+  case nodemsg of
+    Selected  key -> select    key trunk
+    OpenClose key -> openClose key trunk
+
+select : String -> ItemTree a -> ItemTree a
+select key tree =
+  Tree.map (toggle_item_selection key) tree
+
+
+openClose : String -> ItemTree a -> ItemTree a
+openClose key tree =
+  Tree.map (toggle_item_openClose key) tree
+
+toggle_item_selection : String -> Item a -> Item a
+toggle_item_selection key item =
+  if key == item.key then
+    {item | state = toggle_selection item.state }
+  else
+    item
+
+toggle_item_openClose : String -> Item a -> Item a
+toggle_item_openClose key item =
+  if key == item.key then
+    {item | state = toggle_openClose item.state }
+  else
+    item
+
+
 
 -- VIEW
 

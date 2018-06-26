@@ -4,7 +4,7 @@ import Model exposing  (..)
 import Json.Decode as JD
 import Json.Encode as JE
 import Init
--- import Node
+import Node
 -- import Http
 
 import Tree exposing (Tree, tree)
@@ -16,14 +16,14 @@ update msg model =
     NoOp -> ( model, Cmd.none )
 
     FolderMsg nodemsg ->
-      -- ( {model | folder = update_tree nodemsg model.folder}, Cmd.none )
-      ( model, Cmd.none )
+      ( {model | folder = Node.update nodemsg model.folder}, Cmd.none )
+      -- ( model, Cmd.none )
     NoteMsg nodemsg ->
-      -- ( {model | note = update_tree nodemsg model.note}, requestBook model.note nodemsg)
+      -- ( {model | note = Node.update nodemsg model.note}, requestBook model.note nodemsg)
       ( model, Cmd.none )
     TagMsg nodemsg ->
-      -- ( {model | tag = update_tree nodemsg model.tag}, Cmd.none )
-      ( model, Cmd.none )
+      ( {model | tag = Node.update nodemsg model.tag}, Cmd.none )
+      -- ( model, Cmd.none )
 
     BookUpdate x ->
        ( model, Cmd.none )
@@ -60,11 +60,6 @@ encodeListString strings =
   |> JE.encode 0
 
   -- |> toString
-
--- update_tree : Msg.NodeMsg -> { a | tree : Node } -> { a | tree : Node }
--- update_tree nodemsg model =
---   { model | tree = Node.update nodemsg model.tree }
---   model
 
 
 decoder : JD.Decoder Model
