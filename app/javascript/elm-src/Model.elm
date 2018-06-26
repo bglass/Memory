@@ -45,6 +45,7 @@ type alias Note =
   { key      : String
   , name     : String
   , path     : String
+  , resource : String
   , state    : State
   , style    : Style
   }

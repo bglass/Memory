@@ -5,7 +5,7 @@ import Json.Decode as JD
 import Json.Encode as JE
 import Init
 import Node
--- import Http
+import Http
 
 import Tree exposing (Tree, tree)
 
@@ -17,13 +17,11 @@ update msg model =
 
     FolderMsg nodemsg ->
       ( {model | folder = Node.update nodemsg model.folder}, Cmd.none )
-      -- ( model, Cmd.none )
     NoteMsg nodemsg ->
-      -- ( {model | note = Node.update nodemsg model.note}, requestBook model.note nodemsg)
-      ( model, Cmd.none )
+      ( {model | note = Node.update nodemsg model.note}, requestBook model.note nodemsg)
+      -- ( model, Cmd.none )
     TagMsg nodemsg ->
       ( {model | tag = Node.update nodemsg model.tag}, Cmd.none )
-      -- ( model, Cmd.none )
 
     BookUpdate x ->
        ( model, Cmd.none )
@@ -39,18 +37,18 @@ update msg model =
           Err error ->
             ( {model | errmsg = format_err error}, Cmd.none )
 
--- requestBook : Note -> NodeMsg -> Cmd Msg
--- requestBook note nodemsg =
---   case nodemsg of
---     Selected key ->
---       let
---         notes = Node.selected_note_paths note.tree
---                 |> encodeListString
---
---       in
---         Http.send BookUpdate (Http.getString ("/book?jsonpaths=" ++ notes) )
---     OpenClose key ->
---       Cmd.none
+requestBook : Notes -> NodeMsg -> Cmd Msg
+requestBook notes nodemsg =
+  case nodemsg of
+    Selected key ->
+      let
+        paths = Node.selected_note_paths notes
+                |> encodeListString
+
+      in
+        Http.send BookUpdate (Http.getString ("/book?jsonpaths=" ++ paths) )
+    OpenClose key ->
+      Cmd.none
 
 
 encodeListString : List String -> String
@@ -112,10 +110,11 @@ tagDecoder =
 noteDecoder : JD.Decoder (Tree Note)
 noteDecoder =
   JD.map2 tree
-    ( JD.map5 Note
+    ( JD.map6 Note
       ( JD.field "id"        JD.string )
       ( JD.field "name"      JD.string )
       ( JD.field "path"      JD.string )
+      ( JD.field "resource"  JD.string )
       ( JD.succeed           Init.defaultState )
       ( JD.succeed           Init.defaultStyle )
     )

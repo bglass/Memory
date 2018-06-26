@@ -113,16 +113,9 @@ class TopNote < Note
     @@all
   end
 
-  def date
-    ""
-  end
-
-  def filename
-    ""
-  end
-
-  def path
-    ""
-  end
+  def date()          "";   end
+  def filename()      "";   end
+  def path()          "";   end
+  def resource()      "";   end
 
 end

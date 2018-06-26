@@ -89,13 +89,12 @@ view isVisible treeMsg node =
   else
     H.text ""
 
-
+isOpened : Tree { c | state : { b | opened : a } } -> a
 isOpened node =
-  -- node |> Tree.label |> .state |> .opened
-  True
+  node |> Tree.label |> .state |> .opened
 
 
--- item : TreeType -> Tree (Item a) -> Html Msg
+item : (NodeMsg -> Msg) -> Tree (Item a) -> Html Msg
 item treeMsg node =
   H.span []
   [   H.span
@@ -126,7 +125,7 @@ eventOpenClose treeMsg item =
   HE.onClick (treeMsg (OpenClose item.key))
 
 
--- style : Node -> H.Attribute msg
+style : a -> H.Attribute msg
 style node =
   HA.style []
 
@@ -171,8 +170,17 @@ selection model = { folder_paths = folder_paths model.folder
                   , tag_names    = tag_names    model
                   }
 
--- selected_note_paths : Node -> List String
--- selected_note_paths node =
---   -- selected_nodes node
---   -- |> List.map .resource
---   ["eins", "zwei", "drei"]
+selected_note_paths : Notes -> List String
+selected_note_paths tree =
+  Tree.flatten tree
+  |> List.filter isSelected
+  |> List.map .resource
+
+
+isSelected item =
+  item |> .state |> .selected
+
+
+  -- selected_nodes tree
+  -- |> List.map .resource
+  -- ["zwo", "drei", "vier"]

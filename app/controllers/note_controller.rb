@@ -25,7 +25,7 @@ class NoteController < TreeController
 
     elsif selected = params[:jsonpaths]
       @notes = Note.find_by_paths (JSON.parse selected)
-      binding.pry
+      # binding.pry
 
     elsif paths = params[:paths]
       @notes = Note.find_by_paths paths

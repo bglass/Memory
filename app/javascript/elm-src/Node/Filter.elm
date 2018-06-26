@@ -22,7 +22,7 @@ nodeVisible : Tree (Item a) -> Bool
 nodeVisible node =
   Tree.label node
   |> .state
-  |> .visible
+  |> .visible 
 
 
 

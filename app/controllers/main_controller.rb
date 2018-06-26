@@ -46,7 +46,7 @@ class MainController < ApplicationController
 
     folder  = subtree( Folder.top, [:id, :name, :path])
     tag     = subtree( Tag.top,    [:id, :name, :path])
-    note    = subtree( Note.top,   [:id, :name, :path])
+    note    = subtree( Note.top,   [:id, :name, :path, :resource])
 
     link    = { note_folder: Note.note_folder,
                 note_tag:    Note.note_tag
