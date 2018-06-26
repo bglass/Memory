@@ -45,39 +45,52 @@ import Node.Helper exposing (..)
 --     uli (node |> children |> sort |> List.map (view tree selection) )
 
 
-viewFolder selection node =
-  view FolderTree selection node
+viewFolder : Folders -> Html Msg
+viewFolder node =
+  view folderVisible node
 
-view : TreeType -> Selection -> ItemTree a -> Html Msg
-view treeType selection node =
-  -- if isVisible tree selection node then
-    -- if node.state.opened then
+viewTag : Selection -> Tags -> Html Msg
+viewTag selection node =
+  view (tagVisible selection) node
+
+viewNote : Selection -> Notes -> Html Msg
+viewNote selection node =
+  view (noteVisible selection) node
+
+
+view isVisible node =
+  if isVisible node then
+    if isOpened node then
       uli
-        ( [item treeType node]
-            -- ++ (node |> children |> sort |> List.map (view tree selection) )
+        ( [item node]
             ++ (node
                 |> Tree.children
                 |> sort
                 |> List.map
-                    ( view treeType selection
+                    ( view isVisible
                     )
                )
         )
-    -- else
-      -- uli [item tree node]
-  -- else
-    -- H.text ""
+    else
+      uli [item node]
+  else
+    H.text ""
 
 
-item : TreeType -> Tree (Item a) -> Html Msg
-item tree node =
+isOpened node =
+  -- node |> Tree.label |> .state |> .opened
+  True
+
+
+-- item : TreeType -> Tree (Item a) -> Html Msg
+item node =
   H.span []
   [   H.span
       [ Class.li
       -- , eventOpenClose tree node
       ]
       [
-        -- H.span (icon node) []
+        H.span (icon node) []
       ]
   , H.div
       [
@@ -127,15 +140,15 @@ uli items =
     [ H.li [] items
     ]
 
--- icon : Node -> List (H.Attribute msg)
--- icon node =
---   if List.isEmpty (node |> children) then
---     Class.nodeChildless
---   else if node.state.opened then
---     Class.nodeOpened
---   else
---     Class.nodeClosed
---
+icon : Tree (Item a) -> List (H.Attribute msg)
+icon node =
+  if List.isEmpty (node |> children) then
+    Class.nodeChildless
+  else if (Tree.label node |> .state |> .opened) then
+    Class.nodeOpened
+  else
+    Class.nodeClosed
+
 selection : Model -> Selection
 selection model = { folder_paths = folder_paths model.folder
                   , note_tags    = note_tags    model

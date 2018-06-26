@@ -25,15 +25,15 @@ view model =
     , div [class "note_menu"]           [  ]
     , div [class "folder_box"]
       [
-        div [class "folders"]           [ Node.viewFolder selection model.folder]
+        div [class "folders"]           [ Node.viewFolder model.folder]
       ]
     , div [class "tag_box"]
       [
-      div [class "tags"]              [ Node.view TagTree    selection model.tag]
+      div [class "tags"]              [ Node.viewTag   selection model.tag]
       ]
     , div [class "note_box"]
       [
-      div [class "notes"]             [ Node.view NoteTree   selection model.note]
+      div [class "notes"]             [ Node.viewNote   selection model.note]
       ]
     , div [class "book"]                [ view_book ]
     , div [class "folder_search"]       [ view_re_folder ]

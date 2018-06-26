@@ -5,31 +5,24 @@ import Msg   exposing  (..)
 
 import Tree exposing (Tree)
 
-folderVisible folder =
-  nodeVisible folder
+folderVisible node =
+  nodeVisible node
 
-nodeVisible item =
-  Tree.label item
+noteVisible selection node =
+  nodeVisible node
+  && noteFolderSelected selection (Tree.label node)
+
+tagVisible selection node =
+  nodeVisible node
+
+nodeVisible node =
+  Tree.label node
   |> .state
   |> .visible
 
 
 
-
--- isVisible : TreeType -> Selection -> Item a -> Bool
--- isVisible tree selection node =
---   node.state.visible
---   && filterTree tree selection node
-
--- filterTree : TreeType -> Selection -> Item a -> Bool
--- filterTree tree selection node =
---   case tree of
---     FolderTree -> True
---     TagTree    -> True
---     NoteTree   ->
---       noteFolderSelected selection node
-
-noteFolderSelected : Selection -> Note -> Bool
+-- noteFolderSelected : Selection -> Note -> Bool
 noteFolderSelected selection note =
   if List.isEmpty selection.folder_paths then
     True
