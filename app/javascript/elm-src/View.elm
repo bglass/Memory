@@ -8,7 +8,7 @@ import Model exposing  (..)
 import Display
 import Msg   exposing  (Msg(..), TreeType(..))
 
-import Node
+import Tree.Node as Node
 
 view : Model -> Html Msg
 view model =

@@ -4,7 +4,7 @@ import Model exposing  (..)
 import Json.Decode as JD
 import Json.Encode as JE
 import Init
-import Node
+import Tree.Node as Node
 import Http
 
 import Tree exposing (Tree, tree)

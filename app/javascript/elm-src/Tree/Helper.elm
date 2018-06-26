@@ -1,4 +1,4 @@
-module Node.Helper exposing (..)
+module Tree.Helper exposing (..)
 
 import Model exposing (..)
 import Msg   exposing  (..)
@@ -6,7 +6,7 @@ import Msg   exposing  (..)
 import Tree exposing (Tree, children)
 
 
-selected_nodes : Tree (Item a) -> List (Tree (Item a))
+selected_nodes : ItemTree a -> List (ItemTree a)
 selected_nodes node =
   let
     selected_children =

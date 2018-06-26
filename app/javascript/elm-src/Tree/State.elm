@@ -1,4 +1,4 @@
-module Node.State exposing (..)
+module Tree.State exposing (..)
 
 import Model exposing (..)
 

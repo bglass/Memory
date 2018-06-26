@@ -1,9 +1,11 @@
-module Node.Filter exposing (..)
+module Tree.Filter exposing (..)
 
 import Model exposing (..)
 import Msg   exposing  (..)
 
 import Tree exposing (Tree)
+
+-- Visibility
 
 folderVisible : Tree Folder -> Bool
 folderVisible node =
@@ -22,9 +24,10 @@ nodeVisible : Tree (Item a) -> Bool
 nodeVisible node =
   Tree.label node
   |> .state
-  |> .visible 
+  |> .visible
 
 
+-- Selection
 
 -- noteFolderSelected : Selection -> Note -> Bool
 noteFolderSelected selection note =
@@ -35,6 +38,8 @@ noteFolderSelected selection note =
     |> List.filter ((flip String.startsWith) note.path)
     |> List.isEmpty
     |> not
+
+-- Sorting
 
 sort nodes =
   List.sortBy lowName nodes
