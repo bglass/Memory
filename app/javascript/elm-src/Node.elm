@@ -47,32 +47,35 @@ import Node.Helper exposing (..)
 
 viewFolder : Folders -> Html Msg
 viewFolder node =
-  view folderVisible node
+  view folderVisible FolderMsg node
 
 viewTag : Selection -> Tags -> Html Msg
 viewTag selection node =
-  view (tagVisible selection) node
+  view (tagVisible selection) TagMsg node
 
 viewNote : Selection -> Notes -> Html Msg
 viewNote selection node =
-  view (noteVisible selection) node
+  view (noteVisible selection) NoteMsg node
 
-
-view isVisible node =
+view : (Tree (Item a) -> Bool)
+        -> (NodeMsg -> Msg)
+        -> Tree (Item a)
+        -> Html Msg
+view isVisible treeMsg node =
   if isVisible node then
     if isOpened node then
       uli
-        ( [item node]
+        ( [item treeMsg node]
             ++ (node
                 |> Tree.children
                 |> sort
                 |> List.map
-                    ( view isVisible
+                    ( view isVisible treeMsg
                     )
                )
         )
     else
-      uli [item node]
+      uli [item treeMsg node]
   else
     H.text ""
 
@@ -83,7 +86,7 @@ isOpened node =
 
 
 -- item : TreeType -> Tree (Item a) -> Html Msg
-item node =
+item treeMsg node =
   H.span []
   [   H.span
       [ Class.li
@@ -94,17 +97,20 @@ item node =
       ]
   , H.div
       [
-      -- style node
-      -- , eventSelect tree node
-      -- , class node
+      style node
+      , eventSelect treeMsg (Tree.label node)
+      , class (Tree.label node)
       ]
       [text node]
   ]
---
--- eventSelect : TreeType -> Node -> H.Attribute Msg
--- eventSelect tree node =
---   HE.onClick ((treeMsg tree) (Selected node.key))
---
+
+eventSelect : (NodeMsg -> Msg) -> Item a -> H.Attribute Msg
+eventSelect treeMsg item =
+  HE.onClick (treeMsg (Selected item.key))
+
+
+
+
 -- eventOpenClose : TreeType -> Node -> H.Attribute Msg
 -- eventOpenClose tree node =
 --   HE.onClick ((treeMsg tree) (OpenClose node.key))
@@ -123,15 +129,15 @@ text node =
   |> H.text
 
 class : Item a -> H.Attribute msg
-class node =
+class item =
   HA.classList
   [ ("node", True)
-  , ("selected", node.state.selected)
-  , ("checked",  node.state.checked)
-  , ("opened",   node.state.opened)
-  , ("closed",   not node.state.opened)
-  , ("disabled", not node.state.enabled)
-  , ("hidden",   not node.state.visible)
+  , ("selected", item.state.selected)
+  , ("checked",  item.state.checked)
+  , ("opened",   item.state.opened)
+  , ("closed",   not item.state.opened)
+  , ("disabled", not item.state.enabled)
+  , ("hidden",   not item.state.visible)
   ]
 
 uli : List (Html msg) -> Html msg

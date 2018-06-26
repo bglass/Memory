@@ -18,10 +18,3 @@ type TreeType
   = FolderTree
   | TagTree
   | NoteTree
-
-treeMsg : TreeType -> NodeMsg -> Msg
-treeMsg tree =
-  case tree of
-    FolderTree -> FolderMsg
-    TagTree    -> TagMsg
-    NoteTree   -> NoteMsg
