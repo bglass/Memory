@@ -3,8 +3,8 @@ module Display exposing (..)
 import Html as H exposing (Html)
 import Html.Attributes as HA
 
-import Dict
-import Node
+-- import Dict
+-- import Node
 import Model exposing (..)
 
 import Msg exposing (..)

@@ -1,11 +1,13 @@
 module Model exposing (..)
 
--- type alias HasTree a = { a | tree : T.Model }
+import Tree exposing (Tree)
+
+
 
 type alias Model =
-  { folder  : Folder
-  , tag     : Tag
-  , note    : Note
+  { folder  : Tree Folder
+  , tag     : Tree Tag
+  , note    : Tree Note
   , link    : Relations
   , book    : String    -- List Article
   , search  : String    -- Search
@@ -13,16 +15,38 @@ type alias Model =
   , errmsg  : String
   }
 
+
+type alias Item a =
+  { a
+  | name : String
+  , key  : String
+  , state : State
+  , style : Style
+  }
+
+
 type alias Folder =
-  { tree  : Node
+  { key      : String
+  , name     : String
+  , path     : String
+  , state    : State
+  , style    : Style
   }
 
 type alias Note =
-  { tree  : Node
+  { key      : String
+  , name     : String
+  , path     : String
+  , state    : State
+  , style    : Style
   }
 
 type alias Tag =
-  { tree  : Node
+  { key      : String
+  , name     : String
+  , path     : String
+  , state    : State
+  , style    : Style
   }
 
 type alias Link = List String
@@ -31,21 +55,6 @@ type alias Relations =
   { note_folder : List Link
   , note_tag    : List Link
   }
-
-type alias Node =
-  { key      : String
-  , name     : String
-  , path     : String
-  , state    : State
-  , style    : Style
-  , children : Children
-}
-
-
--- type alias Payload = -- defined by User
---   { date      : String
---   , resource  : String
---   }
 
 type alias State =
   { opened      : Bool
@@ -56,8 +65,6 @@ type alias State =
   , checked     : Bool
   , checkable   : Bool
 }
-
-type Children = Children (Maybe (List Node))
 
 type alias Style = String -- TBD
 

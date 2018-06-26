@@ -14,21 +14,30 @@ view : Model -> Html Msg
 view model =
 
   let
-    selection = Node.selection model
+    -- selection = Node.selection model
+    selection = Selection [] [] []
   in
     div [class "main_grid"]
-    [ div [class "state_folder_set"]    [ Display.folder  selection  model.folder]
-    , div [class "state_tag_set"]       [ Display.tag     selection  ]
-    , div [class "state_date_set"]      [ view_date ]
+    [
+      -- div [class "state_folder_set"]    [ Display.folder  selection  model.folder]
+    -- , div [class "state_tag_set"]       [ Display.tag     selection  ]
+    -- ,
+      div [class "state_date_set"]      [ view_date ]
     , div [class "folder_menu"]         [  ]
     , div [class "tag_menu"]            [  ]
     , div [class "note_menu"]           [  ]
     , div [class "folder_box"]
-      [ div [class "folders"]           [ Node.view_notop FolderTree selection model.folder.tree] ]
+      [
+        div [class "folders"]           [ Node.view FolderTree selection model.folder]
+      ]
     , div [class "tag_box"]
-      [ div [class "tags"]              [ Node.view_notop TagTree    selection model.tag.tree] ]
+      [
+      div [class "tags"]              [ Node.view TagTree    selection model.tag]
+      ]
     , div [class "note_box"]
-      [ div [class "notes"]             [ Node.view_notop NoteTree   selection model.note.tree] ]
+      [
+      div [class "notes"]             [ Node.view NoteTree   selection model.note]
+      ]
     , div [class "book"]                [ view_book ]
     , div [class "folder_search"]       [ view_re_folder ]
     , div [class "tag_search"]          [ view_re_tag ]

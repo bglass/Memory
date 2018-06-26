@@ -4,6 +4,9 @@ import Model exposing (..)
 import Msg   exposing  (Msg(..))
 import Http
 
+import Tree exposing (Tree, tree)
+
+
 load : ( Model, Cmd Msg )
 load =
   (empty, request_data)
@@ -24,20 +27,17 @@ request_data =
   Http.send ModelUpdate (Http.getString  "/model/")
 
 
-folder_init : Folder
-folder_init = Folder
-  ( Node "K1" "N1" "P1" defaultState defaultStyle childless )
+folder_init : Tree Folder
+folder_init =
+  tree ( Folder "K1" "N1" "P1" defaultState defaultStyle) []
 
-tag_init : Tag
-tag_init  = Tag
-  ( Node "K1" "N1" "P1" defaultState defaultStyle childless )
+tag_init : Tree Tag
+tag_init  =
+  tree ( Tag "K1" "N1" "P1" defaultState defaultStyle) []
 
-note_init : Note
-note_init = Note
-  ( Node "K1" "N1" "P1" defaultState defaultStyle childless )
-
-childless : Children
-childless = Children (Just [])
+note_init : Tree Note
+note_init =
+  tree ( Note "K1" "N1" "P1" defaultState defaultStyle) []
 
 link_init : Relations
 link_init = Relations [] []

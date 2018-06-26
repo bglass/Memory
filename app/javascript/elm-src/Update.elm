@@ -4,9 +4,10 @@ import Model exposing  (..)
 import Json.Decode as JD
 import Json.Encode as JE
 import Init
-import Node
-import Http
+-- import Node
+-- import Http
 
+import Tree exposing (Tree, tree)
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -15,11 +16,14 @@ update msg model =
     NoOp -> ( model, Cmd.none )
 
     FolderMsg nodemsg ->
-      ( {model | folder = update_tree nodemsg model.folder}, Cmd.none )
+      -- ( {model | folder = update_tree nodemsg model.folder}, Cmd.none )
+      ( model, Cmd.none )
     NoteMsg nodemsg ->
-      ( {model | note = update_tree nodemsg model.note}, requestBook model.note nodemsg)
+      -- ( {model | note = update_tree nodemsg model.note}, requestBook model.note nodemsg)
+      ( model, Cmd.none )
     TagMsg nodemsg ->
-      ( {model | tag = update_tree nodemsg model.tag}, Cmd.none )
+      -- ( {model | tag = update_tree nodemsg model.tag}, Cmd.none )
+      ( model, Cmd.none )
 
     BookUpdate x ->
        ( model, Cmd.none )
@@ -35,21 +39,21 @@ update msg model =
           Err error ->
             ( {model | errmsg = format_err error}, Cmd.none )
 
-requestBook : Note -> NodeMsg -> Cmd Msg
-requestBook note nodemsg =
-  case nodemsg of
-    Selected key ->
-      let
-        notes = Node.selected_note_paths note.tree
-                |> encodeListString
+-- requestBook : Note -> NodeMsg -> Cmd Msg
+-- requestBook note nodemsg =
+--   case nodemsg of
+--     Selected key ->
+--       let
+--         notes = Node.selected_note_paths note.tree
+--                 |> encodeListString
+--
+--       in
+--         Http.send BookUpdate (Http.getString ("/book?jsonpaths=" ++ notes) )
+--     OpenClose key ->
+--       Cmd.none
 
-      in
-        Http.send BookUpdate (Http.getString ("/book?jsonpaths=" ++ notes) )
-    OpenClose key ->
-      Cmd.none
 
-
--- encodeListString : List String -> String
+encodeListString : List String -> String
 encodeListString strings =
   List.map JE.string strings
   |>       JE.list
@@ -57,9 +61,10 @@ encodeListString strings =
 
   -- |> toString
 
-update_tree : Msg.NodeMsg -> { a | tree : Node } -> { a | tree : Node }
-update_tree nodemsg model =
-  { model | tree = Node.update nodemsg model.tree }
+-- update_tree : Msg.NodeMsg -> { a | tree : Node } -> { a | tree : Node }
+-- update_tree nodemsg model =
+--   { model | tree = Node.update nodemsg model.tree }
+--   model
 
 
 decoder : JD.Decoder Model
@@ -80,41 +85,66 @@ format_err error =
 
 
 
-folderDecoder : JD.Decoder Folder
+folderDecoder : JD.Decoder (Tree Folder)
 folderDecoder =
-  JD.map Folder
-    ( JD.field "tree"       nodeDecoder)
-    -- ( JD.field "path"       (JD.dict JD.string) )
-
-tagDecoder : JD.Decoder Tag
-tagDecoder =
-  JD.map Tag
-    ( JD.field "tree"       nodeDecoder)
-    -- ( JD.field "path"       (JD.dict JD.string) )
-    -- ( JD.field "notes"      (JD.dict (JD.list JD.string) ) )
-
-noteDecoder : JD.Decoder Note
-noteDecoder =
-  JD.map Note
-    ( JD.field "tree"       nodeDecoder)
-    -- ( JD.field "path"       (JD.dict JD.string) )
-
-nodeDecoder : JD.Decoder Node
-nodeDecoder =
-  JD.map6 Node
-    ( JD.field "id"        JD.string )
-    ( JD.field "name"      JD.string )
-    ( JD.field "path"      JD.string )
-    ( JD.succeed           Init.defaultState )
-    ( JD.succeed           Init.defaultStyle )
-    -- ( JD.field "data"      payloadDecoder )
+  JD.map2 tree
+    ( JD.map5 Folder
+      ( JD.field "id"        JD.string )
+      ( JD.field "name"      JD.string )
+      ( JD.field "path"      JD.string )
+      ( JD.succeed           Init.defaultState )
+      ( JD.succeed           Init.defaultStyle )
+    )
     ( JD.field "children"
-      <| JD.map Children
-      <| JD.maybe
       <| JD.list
       <| JD.lazy
-      <| \_ -> nodeDecoder
+      <| (\_ -> folderDecoder)
     )
+
+
+tagDecoder : JD.Decoder (Tree Tag)
+tagDecoder =
+  JD.map2 tree
+    ( JD.map5 Tag
+      ( JD.field "id"        JD.string )
+      ( JD.field "name"      JD.string )
+      ( JD.field "path"      JD.string )
+      ( JD.succeed           Init.defaultState )
+      ( JD.succeed           Init.defaultStyle )
+    )
+    ( JD.field "children" <| JD.list <| JD.lazy <| (\_ -> tagDecoder) )
+
+noteDecoder : JD.Decoder (Tree Note)
+noteDecoder =
+  JD.map2 tree
+    ( JD.map5 Note
+      ( JD.field "id"        JD.string )
+      ( JD.field "name"      JD.string )
+      ( JD.field "path"      JD.string )
+      ( JD.succeed           Init.defaultState )
+      ( JD.succeed           Init.defaultStyle )
+    )
+    ( JD.field "children" <| JD.list <| JD.lazy <| (\_ -> noteDecoder) )
+
+
+
+
+-- nodeDecoder : JD.Decoder Node
+-- nodeDecoder =
+--   JD.map6 Node
+--     ( JD.field "id"        JD.string )
+--     ( JD.field "name"      JD.string )
+--     ( JD.field "path"      JD.string )
+--     ( JD.succeed           Init.defaultState )
+--     ( JD.succeed           Init.defaultStyle )
+--     -- ( JD.field "data"      payloadDecoder )
+--     ( JD.field "children"
+--       <| JD.map Children
+--       <| JD.maybe
+--       <| JD.list
+--       <| JD.lazy
+--       <| \_ -> nodeDecoder
+--     )
 
 relationsDecoder : JD.Decoder Relations
 relationsDecoder =
