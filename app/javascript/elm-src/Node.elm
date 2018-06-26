@@ -90,7 +90,7 @@ item treeMsg node =
   H.span []
   [   H.span
       [ Class.li
-      -- , eventOpenClose tree node
+      , eventOpenClose treeMsg (Tree.label node)
       ]
       [
         H.span (icon node) []
@@ -111,11 +111,11 @@ eventSelect treeMsg item =
 
 
 
--- eventOpenClose : TreeType -> Node -> H.Attribute Msg
--- eventOpenClose tree node =
---   HE.onClick ((treeMsg tree) (OpenClose node.key))
---
---
+eventOpenClose : (NodeMsg -> Msg) -> Item a -> H.Attribute Msg
+eventOpenClose treeMsg item =
+  HE.onClick (treeMsg (OpenClose item.key))
+
+
 -- style : Node -> H.Attribute msg
 style node =
   HA.style []
