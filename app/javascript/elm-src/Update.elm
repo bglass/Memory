@@ -127,25 +127,6 @@ noteDecoder =
     ( JD.field "children" <| JD.list <| JD.lazy <| (\_ -> noteDecoder) )
 
 
-
-
--- nodeDecoder : JD.Decoder Node
--- nodeDecoder =
---   JD.map6 Node
---     ( JD.field "id"        JD.string )
---     ( JD.field "name"      JD.string )
---     ( JD.field "path"      JD.string )
---     ( JD.succeed           Init.defaultState )
---     ( JD.succeed           Init.defaultStyle )
---     -- ( JD.field "data"      payloadDecoder )
---     ( JD.field "children"
---       <| JD.map Children
---       <| JD.maybe
---       <| JD.list
---       <| JD.lazy
---       <| \_ -> nodeDecoder
---     )
-
 relationsDecoder : JD.Decoder Relations
 relationsDecoder =
   JD.map2 Relations

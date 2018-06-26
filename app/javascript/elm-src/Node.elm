@@ -12,8 +12,8 @@ import Tree exposing (Tree, children)
 
 
 -- import Node.State exposing (..)
--- import Node.Filter exposing (..)
--- import Node.Helper exposing (..)
+import Node.Filter exposing (..)
+import Node.Helper exposing (..)
 
 
 -- UPDATE
@@ -53,6 +53,7 @@ view treeType selection node =
             -- ++ (node |> children |> sort |> List.map (view tree selection) )
             ++ (node
                 |> Tree.children
+                |> sort
                 |> List.map
                     ( view treeType selection
                     )
@@ -131,12 +132,12 @@ uli items =
 --   else
 --     Class.nodeClosed
 --
--- selection : Model -> Selection
--- selection model = { folder_paths = folder_paths model
---                   , note_tags    = note_tags    model
---                   , tag_names    = tag_names    model
---                   }
---
+selection : Model -> Selection
+selection model = { folder_paths = folder_paths model.folder
+                  , note_tags    = note_tags    model
+                  , tag_names    = tag_names    model
+                  }
+
 -- selected_note_paths : Node -> List String
 -- selected_note_paths node =
 --   -- selected_nodes node

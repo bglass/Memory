@@ -3,6 +3,8 @@ module Display exposing (..)
 import Html as H exposing (Html)
 import Html.Attributes as HA
 
+import Tree exposing (Tree)
+
 -- import Dict
 -- import Node
 import Model exposing (..)
@@ -19,7 +21,7 @@ tag selection =
   |> List.map (H.div [HA.class "tag"])
   |> H.span [HA.class "state_tag_set"]
 
-folder : Selection -> Folder -> Html Msg
+folder : Selection -> Tree Folder -> Html Msg
 folder selection f =
   selection.folder_paths
   |> toString

@@ -3,12 +3,15 @@ module Node.Filter exposing (..)
 import Model exposing (..)
 import Msg   exposing  (..)
 
-isVisible : TreeType -> Selection -> Node -> Bool
+import Tree exposing (Tree)
+
+
+isVisible : TreeType -> Selection -> Item a -> Bool
 isVisible tree selection node =
   node.state.visible
   && filterTree tree selection node
 
-filterTree : TreeType -> Selection -> Node -> Bool
+filterTree : TreeType -> Selection -> Item a -> Bool
 filterTree tree selection node =
   case tree of
     FolderTree -> True
@@ -16,7 +19,7 @@ filterTree tree selection node =
     NoteTree   ->
       noteFolderSelected selection node
 
-noteFolderSelected : Selection -> Node -> Bool
+noteFolderSelected : Selection -> Note -> Bool
 noteFolderSelected selection note =
   if List.isEmpty selection.folder_paths then
     True
@@ -26,11 +29,12 @@ noteFolderSelected selection note =
     |> List.isEmpty
     |> not
 
-sort : List Node -> List Node
-sort nodes =
-  List.sortBy lowName nodes
+sort : List (Item a) -> List (Item a)
+sort items =
+  List.sortBy lowName items
 
-lowName : Node -> String
-lowName node =
-  node.name
-  |> String.toLower 
+lowName : Item a -> String
+lowName item =
+  Tree.label item
+  |> .name
+  |> String.toLower
