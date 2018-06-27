@@ -10,7 +10,6 @@ import Tree.Leaf as Leaf
 import Tree exposing (Tree, children)
 
 import Tree.Filter exposing (..)
-import Tree.Helper exposing (..)
 
 
 -- UPDATE
@@ -98,8 +97,34 @@ selection model = { folder_paths = folder_paths model.folder
                   , tag_names    = tag_names    model
                   }
 
-selected_note_paths : Notes -> List String
-selected_note_paths tree =
+selected_nodes : ItemTree a -> ItemList a
+selected_nodes tree =
   Tree.flatten tree
   |> List.filter Leaf.isSelected
-  |> List.map .resource
+
+-- selected_notes : Notes -> List String
+selected_notes field tree =
+  selected_nodes tree
+  |> List.map field
+
+folder_paths : Tree Folder -> List String
+folder_paths folder =
+  selected_nodes folder
+  |> List.map .path
+
+note_tags : Model -> List String
+note_tags model =
+  []
+
+
+tag_names : Model -> List String
+tag_names model =
+  selected_nodes model.tag
+  |> List.map .name
+
+
+debugNoteSelection selection notes =
+  selected_notes .resource notes
+  -- |> List.map    ( selection.folder_paths |> List.filter (flip String.startsWith) )
+  |> toString
+  |> H.text

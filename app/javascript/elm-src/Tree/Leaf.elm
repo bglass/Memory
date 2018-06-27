@@ -31,10 +31,6 @@ isSelected item =
   item |> .state |> .selected
 
 
-  -- selected_nodes tree
-  -- |> List.map .resource
-  -- ["zwo", "drei", "vier"]
-
 -- VIEW
 
 

@@ -35,18 +35,9 @@ class MainController < ApplicationController
     respond_to :json
     Location.read_all
 
-
-    # folder  = { tree:   subtree( Folder.top, [:id, :name, :path])
-    #           }
-    # tag     = { tree:   subtree( Tag.top,    [:id, :name, :path])
-    #           }
-    # note    = { tree:   subtree( Note.top,   [:id, :name, :path]),
-    #             path:   lookup(  Note.top, :path)
-    #           }
-
     folder  = subtree( Folder.top, [:id, :name, :path])
     tag     = subtree( Tag.top,    [:id, :name, :path])
-    note    = subtree( Note.top,   [:id, :name, :path, :resource])
+    note    = subtree( Note.top,   [:id, :name, :resource])
 
     link    = { note_folder: Note.note_folder,
                 note_tag:    Note.note_tag

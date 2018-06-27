@@ -29,21 +29,23 @@ nodeVisible node =
 
 -- Selection
 
--- noteFolderSelected : Selection -> Note -> Bool
+noteFolderSelected : Selection -> Note -> Bool
 noteFolderSelected selection note =
   if List.isEmpty selection.folder_paths then
     True
   else
     selection.folder_paths
-    |> List.filter ((flip String.startsWith) note.path)
+    |> List.filter ((flip String.startsWith) note.resource)
     |> List.isEmpty
     |> not
 
 -- Sorting
 
+sort : List (ItemTree a) -> List (ItemTree a)
 sort nodes =
   List.sortBy lowName nodes
 
+lowName : ItemTree a -> String
 lowName node =
   node
   |> Tree.label

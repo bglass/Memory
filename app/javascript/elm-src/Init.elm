@@ -37,7 +37,7 @@ tag_init  =
 
 note_init : Tree Note
 note_init =
-  tree ( Note "K1" "N1" "P1" "R1" defaultState defaultStyle) []
+  tree ( Note "K1" "N1" "R1" defaultState defaultStyle) []
 
 link_init : Relations
 link_init = Relations [] []

@@ -42,7 +42,7 @@ requestBook notes nodemsg =
   case nodemsg of
     Selected key ->
       let
-        paths = Node.selected_note_paths notes
+        paths = Node.selected_notes .resource notes
                 |> encodeListString
 
       in
@@ -110,10 +110,9 @@ tagDecoder =
 noteDecoder : JD.Decoder (Tree Note)
 noteDecoder =
   JD.map2 tree
-    ( JD.map6 Note
+    ( JD.map5 Note
       ( JD.field "id"        JD.string )
       ( JD.field "name"      JD.string )
-      ( JD.field "path"      JD.string )
       ( JD.field "resource"  JD.string )
       ( JD.succeed           Init.defaultState )
       ( JD.succeed           Init.defaultStyle )
