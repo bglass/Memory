@@ -16,10 +16,6 @@ class NoteController < TreeController
     respond_to :json
     Location.read_all
 
-
-
-
-
     if selected = params[:selected]
       @notes = Note.map selected
 
@@ -36,6 +32,9 @@ class NoteController < TreeController
     fields = [:id, :date, :tags, :path, :resource_name, :html]
 
     collection = collect(items: @notes, fields: fields)
+
+    binding.pry
+
 
     render json: collection
   end

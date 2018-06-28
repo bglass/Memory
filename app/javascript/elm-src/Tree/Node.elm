@@ -30,7 +30,6 @@ openClose key tree =
 
 -- VIEW
 
-
 viewFolder : Folders -> Html Msg
 viewFolder node =
   view folderVisible FolderMsg node
@@ -74,8 +73,6 @@ branches isVisible treeMsg node =
 isOpened : Tree { c | state : { b | opened : a } } -> a
 isOpened node =
   node |> Tree.label |> .state |> .opened
-
-
 
 uli : List (Html msg) -> Html msg
 uli items =
