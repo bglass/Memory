@@ -34,7 +34,7 @@ isSelected item =
 -- VIEW
 
 
--- viewItem : (NodeMsg -> Msg) -> ItemTree a -> Html Msg
+view : (NodeMsg -> Msg) -> List (H.Attribute Msg) -> Item a -> H.Html Msg
 view treeMsg icon item =
   H.span []
   [   H.span

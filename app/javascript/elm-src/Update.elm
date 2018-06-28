@@ -8,7 +8,7 @@ import Tree.Node as Node
 import Http
 
 import Tree exposing (Tree, tree)
-
+import Task
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -18,10 +18,13 @@ update msg model =
     FolderMsg nodemsg ->
       ( {model | folder = Node.update nodemsg model.folder}, Cmd.none )
     NoteMsg nodemsg ->
-      ( {model | note = Node.update nodemsg model.note}, requestBook model.note nodemsg)
-      -- ( model, Cmd.none )
+      ( {model | note = Node.update nodemsg model.note}, message (RequestBook nodemsg) )
     TagMsg nodemsg ->
       ( {model | tag = Node.update nodemsg model.tag}, Cmd.none )
+
+    RequestBook nodemsg ->
+      (model, requestBook model.note nodemsg)
+       -- ( model, Cmd.none )
 
     BookUpdate x ->
        ( model, Cmd.none )
@@ -36,6 +39,10 @@ update msg model =
             ( decoded, Cmd.none )
           Err error ->
             ( {model | errmsg = format_err error}, Cmd.none )
+
+--http://faq.elm-community.org/#how-do-i-generate-a-new-message-as-a-command
+message : msg -> Cmd msg
+message msg = Task.perform identity (Task.succeed msg)
 
 requestBook : Notes -> NodeMsg -> Cmd Msg
 requestBook notes nodemsg =

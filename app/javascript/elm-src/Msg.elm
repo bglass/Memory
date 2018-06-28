@@ -6,6 +6,7 @@ type Msg
   = NoOp
   | ModelUpdate (Result Http.Error String)
   | BookUpdate  (Result Http.Error String)
+  | RequestBook NodeMsg
   | FolderMsg NodeMsg
   | NoteMsg   NodeMsg
   | TagMsg    NodeMsg
