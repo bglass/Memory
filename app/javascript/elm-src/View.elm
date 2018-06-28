@@ -5,6 +5,7 @@ import Html.Attributes exposing (class)
 
 import Model exposing  (..)
 
+import Book
 import Display
 import Msg   exposing  (Msg(..), TreeType(..))
 
@@ -35,7 +36,7 @@ view model =
       [
       div [class "notes"]             [ Node.viewNote   selection model.note]
       ]
-    , div [class "book"]                [ view_book ]
+    , div [class "book"]                [ Book.view model.book]
     , div [class "folder_search"]       [ view_re_folder ]
     , div [class "tag_search"]          [ view_re_tag ]
     , div [class "note_search"]         [ view_re_note ]
@@ -43,7 +44,6 @@ view model =
     ]
 
 view_date      = text "the date"
-view_book      = text "a book"
 view_re_folder = text "re folder"
 view_re_tag    = text "re tag"
 view_re_note   = text "re note"

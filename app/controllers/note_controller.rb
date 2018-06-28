@@ -29,13 +29,11 @@ class NoteController < TreeController
     else @notes = []
     end
 
-    fields = [:id, :date, :tags, :path, :resource_name, :html]
+    fields = [:id, :date, :tags, :resource, :html, :source]
 
     collection = collect(items: @notes, fields: fields)
 
-    binding.pry
-
-
+# binding.pry
     render json: collection
   end
 
@@ -56,6 +54,7 @@ class NoteController < TreeController
       fields.each do |f|
         record[f] = item.send(f)
       end
+      record[:id] = record[:id].to_s
       collection.push record
     end
     collection

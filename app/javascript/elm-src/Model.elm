@@ -2,17 +2,34 @@ module Model exposing (..)
 
 import Tree exposing (Tree)
 
+type alias Folders = Tree Folder
+type alias Notes   = Tree Note
+type alias Tags    = Tree Tag
 
+type alias ItemTree a = Tree (Item a)
+type alias ItemList a = List (Item a)
+type alias Link = List String
 
 type alias Model =
   { folder  : Tree Folder
   , tag     : Tree Tag
   , note    : Tree Note
   , link    : Relations
-  , book    : String    -- List Article
+  , book    : Book    -- List Article
   , search  : String    -- Search
   , config  : String    -- Config
   , errmsg  : String
+  }
+
+type alias Book = List Article
+
+type alias Article =
+  { key       : String
+  , date      : String
+  , tags      : List String
+  , resource  : String
+  , html      : String
+  , source    : String
   }
 
 
@@ -23,14 +40,6 @@ type alias Item a =
   , state : State
   , style : Style
   }
-
-
-type alias Folders = Tree Folder
-type alias Notes   = Tree Note
-type alias Tags    = Tree Tag
-
-type alias ItemTree a = Tree (Item a)
-type alias ItemList a = List (Item a)
 
 
 type alias Folder =
@@ -57,7 +66,6 @@ type alias Tag =
   , style    : Style
   }
 
-type alias Link = List String
 
 type alias Relations =
   { note_folder : List Link

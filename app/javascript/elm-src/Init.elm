@@ -17,7 +17,7 @@ empty = Model
   tag_init
   note_init
   link_init
-  ""                -- book
+  []                -- book
   ""                -- search
   ""                -- config
   " ."              -- (error) message

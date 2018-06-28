@@ -26,8 +26,16 @@ update msg model =
       (model, requestBook model.note nodemsg)
        -- ( model, Cmd.none )
 
-    BookUpdate x ->
-       ( model, Cmd.none )
+    BookUpdate (Err error) ->
+      ( {model | errmsg = format_err error}, Cmd.none )
+    BookUpdate (Ok download) ->
+      let result = JD.decodeString bookDecoder download
+      in
+        case result of
+          Ok decoded ->
+            ( {model | book = decoded}, Cmd.none )
+          Err error ->
+            ( {model | errmsg = format_err error}, Cmd.none )
 
     ModelUpdate (Err error) ->
       ( {model | errmsg = format_err error}, Cmd.none )
@@ -47,15 +55,14 @@ message msg = Task.perform identity (Task.succeed msg)
 requestBook : Notes -> NodeMsg -> Cmd Msg
 requestBook notes nodemsg =
   case nodemsg of
-    Selected key ->
+    OpenClose key -> Cmd.none
+    Selected  key ->
       let
         paths = Node.selected_notes .resource notes
                 |> encodeListString
 
       in
         Http.send BookUpdate (Http.getString ("/book?jsonpaths=" ++ paths) )
-    OpenClose key ->
-      Cmd.none
 
 
 encodeListString : List String -> String
@@ -67,6 +74,8 @@ encodeListString strings =
   -- |> toString
 
 
+
+
 decoder : JD.Decoder Model
 decoder =
   JD.map8 Model
@@ -74,7 +83,7 @@ decoder =
     ( JD.field "tag"       (tagDecoder)    )
     ( JD.field "note"      (noteDecoder)    )
     ( JD.field "link"      (relationsDecoder)    )
-    ( JD.succeed           ""         )  --  (JD.list d_Article) )
+    ( JD.succeed           []         )  --  (JD.list d_Article) )
     ( JD.succeed           ""         )           --  (JD.list JD.string) )
     ( JD.succeed           ""         )           --  (d_Config)          )
     ( JD.field "errmsg"    (JD.string)         )
@@ -82,6 +91,35 @@ decoder =
 format_err : a -> String
 format_err error =
   "(EE) " ++ (toString error)
+
+
+bookDecoder : JD.Decoder Book
+bookDecoder =
+  JD.list articleDecoder
+
+articleDecoder : JD.Decoder Article
+articleDecoder =
+  JD.map6 Article
+  ( JD.field "id"        JD.string )
+  ( JD.field "date"      JD.string )
+  ( JD.field "tags"    ( JD.list JD.string ) )
+  ( JD.field "resource"  JD.string )
+  ( JD.field "html"      JD.string )
+  ( JD.field "source"    JD.string )
+
+
+
+-- type alias Book = List Article
+--
+-- type alias Article =
+--   { key       : String
+--   , date      : String
+--   , tags      : List String
+--   , resource  : String
+--   , html      : String
+--   , source    : String
+--   }
+
 
 
 
