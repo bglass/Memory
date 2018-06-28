@@ -1,7 +1,6 @@
 module Tree.Filter exposing (..)
 
 import Model exposing (..)
-import Msg   exposing  (..)
 
 import Tree exposing (Tree)
 

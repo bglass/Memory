@@ -2,7 +2,6 @@ module Tree.Node exposing (..)
 -- (view, view_notop, update, selection, selected_note_paths)
 
 import Html as H exposing (Html)
-import Html.Attributes as HA
 import Model exposing (..)
 import Msg   exposing  (..)
 import Tree.Leaf as Leaf
@@ -31,10 +30,6 @@ openClose key tree =
 
 -- VIEW
 
--- view_notop : TreeType -> Selection -> Node -> Html Msg
--- view_notop tree selection node =
---     uli (node |> children |> sort |> List.map (view tree selection) )
-
 
 viewFolder : Folders -> Html Msg
 viewFolder node =
@@ -46,7 +41,12 @@ viewTag selection node =
 
 viewNote : Selection -> Notes -> Html Msg
 viewNote selection node =
-  view (noteVisible selection) NoteMsg node
+  view_noTop (noteVisible selection) NoteMsg node
+
+view_noTop : (ItemTree a -> Bool) -> (NodeMsg -> Msg) -> ItemTree a -> Html Msg
+view_noTop isVisible treeMsg node =
+    uli (node |> Tree.children |> sort |> List.map (view isVisible treeMsg) )
+
 
 view : (Tree (Item a) -> Bool)
         -> (NodeMsg -> Msg)
@@ -61,6 +61,7 @@ view isVisible treeMsg node =
   else
     H.text ""
 
+branches : ( ItemTree a -> Bool ) -> (NodeMsg -> Msg) -> ItemTree a -> List (Html Msg)
 branches isVisible treeMsg node =
     if (isOpened node) then
       node
@@ -102,7 +103,7 @@ selected_nodes tree =
   Tree.flatten tree
   |> List.filter Leaf.isSelected
 
--- selected_notes : Notes -> List String
+selected_notes : (Item a -> b) -> ItemTree a -> List b
 selected_notes field tree =
   selected_nodes tree
   |> List.map field
@@ -121,10 +122,3 @@ tag_names : Model -> List String
 tag_names model =
   selected_nodes model.tag
   |> List.map .name
-
-
-debugNoteSelection selection notes =
-  selected_notes .resource notes
-  -- |> List.map    ( selection.folder_paths |> List.filter (flip String.startsWith) )
-  |> toString
-  |> H.text

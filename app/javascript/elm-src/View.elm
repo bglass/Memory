@@ -35,7 +35,7 @@ view model =
       [
       div [class "notes"]             [ Node.viewNote   selection model.note]
       ]
-    , div [class "book"]                [ Node.debugNoteSelection selection model.note]
+    , div [class "book"]                [ view_book ]
     , div [class "folder_search"]       [ view_re_folder ]
     , div [class "tag_search"]          [ view_re_tag ]
     , div [class "note_search"]         [ view_re_note ]
