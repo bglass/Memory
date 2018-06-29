@@ -4,10 +4,11 @@ import Model exposing  (..)
 import Json.Decode as JD
 import Json.Encode as JE
 import Init
-import Node
+import Tree.Node as Node
 import Http
 
-
+import Tree exposing (Tree, tree)
+import Task
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -15,14 +16,26 @@ update msg model =
     NoOp -> ( model, Cmd.none )
 
     FolderMsg nodemsg ->
-      ( {model | folder = update_tree nodemsg model.folder}, Cmd.none )
+      ( {model | folder = Node.update nodemsg model.folder}, Cmd.none )
     NoteMsg nodemsg ->
-      ( {model | note = update_tree nodemsg model.note}, requestBook model.note nodemsg)
+      ( {model | note = Node.update nodemsg model.note}, message (RequestBook nodemsg) )
     TagMsg nodemsg ->
-      ( {model | tag = update_tree nodemsg model.tag}, Cmd.none )
+      ( {model | tag = Node.update nodemsg model.tag}, Cmd.none )
 
-    BookUpdate x ->
-       ( model, Cmd.none )
+    RequestBook nodemsg ->
+      (model, requestBook model.note nodemsg)
+       -- ( model, Cmd.none )
+
+    BookUpdate (Err error) ->
+      ( {model | errmsg = format_err error}, Cmd.none )
+    BookUpdate (Ok download) ->
+      let result = JD.decodeString bookDecoder download
+      in
+        case result of
+          Ok decoded ->
+            ( {model | book = decoded}, Cmd.none )
+          Err error ->
+            ( {model | errmsg = format_err error}, Cmd.none )
 
     ModelUpdate (Err error) ->
       ( {model | errmsg = format_err error}, Cmd.none )
@@ -35,21 +48,24 @@ update msg model =
           Err error ->
             ( {model | errmsg = format_err error}, Cmd.none )
 
-requestBook : Note -> NodeMsg -> Cmd Msg
-requestBook note nodemsg =
+--http://faq.elm-community.org/#how-do-i-generate-a-new-message-as-a-command
+message : msg -> Cmd msg
+message msg = Task.perform identity (Task.succeed msg)
+
+requestBook : Notes -> NodeMsg -> Cmd Msg
+requestBook notes nodemsg =
   case nodemsg of
-    Selected key ->
+    OpenClose key -> Cmd.none
+    Selected  key ->
       let
-        notes = Node.selected_note_paths note.tree
+        paths = Node.selected_notes .resource notes
                 |> encodeListString
 
       in
-        Http.send BookUpdate (Http.getString ("/book?jsonpaths=" ++ notes) )
-    OpenClose key ->
-      Cmd.none
+        Http.send BookUpdate (Http.getString ("/book?jsonpaths=" ++ paths) )
 
 
--- encodeListString : List String -> String
+encodeListString : List String -> String
 encodeListString strings =
   List.map JE.string strings
   |>       JE.list
@@ -57,9 +73,7 @@ encodeListString strings =
 
   -- |> toString
 
-update_tree : Msg.NodeMsg -> { a | tree : Node } -> { a | tree : Node }
-update_tree nodemsg model =
-  { model | tree = Node.update nodemsg model.tree }
+
 
 
 decoder : JD.Decoder Model
@@ -69,7 +83,7 @@ decoder =
     ( JD.field "tag"       (tagDecoder)    )
     ( JD.field "note"      (noteDecoder)    )
     ( JD.field "link"      (relationsDecoder)    )
-    ( JD.succeed           ""         )  --  (JD.list d_Article) )
+    ( JD.succeed           []         )  --  (JD.list d_Article) )
     ( JD.succeed           ""         )           --  (JD.list JD.string) )
     ( JD.succeed           ""         )           --  (d_Config)          )
     ( JD.field "errmsg"    (JD.string)         )
@@ -79,42 +93,77 @@ format_err error =
   "(EE) " ++ (toString error)
 
 
+bookDecoder : JD.Decoder Book
+bookDecoder =
+  JD.list articleDecoder
 
-folderDecoder : JD.Decoder Folder
+articleDecoder : JD.Decoder Article
+articleDecoder =
+  JD.map6 Article
+  ( JD.field "id"        JD.string )
+  ( JD.field "date"      JD.string )
+  ( JD.field "tags"    ( JD.list JD.string ) )
+  ( JD.field "resource"  JD.string )
+  ( JD.field "html"      JD.string )
+  ( JD.field "source"    JD.string )
+
+
+
+-- type alias Book = List Article
+--
+-- type alias Article =
+--   { key       : String
+--   , date      : String
+--   , tags      : List String
+--   , resource  : String
+--   , html      : String
+--   , source    : String
+--   }
+
+
+
+
+folderDecoder : JD.Decoder (Tree Folder)
 folderDecoder =
-  JD.map Folder
-    ( JD.field "tree"       nodeDecoder)
-    -- ( JD.field "path"       (JD.dict JD.string) )
-
-tagDecoder : JD.Decoder Tag
-tagDecoder =
-  JD.map Tag
-    ( JD.field "tree"       nodeDecoder)
-    -- ( JD.field "path"       (JD.dict JD.string) )
-    -- ( JD.field "notes"      (JD.dict (JD.list JD.string) ) )
-
-noteDecoder : JD.Decoder Note
-noteDecoder =
-  JD.map Note
-    ( JD.field "tree"       nodeDecoder)
-    -- ( JD.field "path"       (JD.dict JD.string) )
-
-nodeDecoder : JD.Decoder Node
-nodeDecoder =
-  JD.map6 Node
-    ( JD.field "id"        JD.string )
-    ( JD.field "name"      JD.string )
-    ( JD.field "path"      JD.string )
-    ( JD.succeed           Init.defaultState )
-    ( JD.succeed           Init.defaultStyle )
-    -- ( JD.field "data"      payloadDecoder )
+  JD.map2 tree
+    ( JD.map5 Folder
+      ( JD.field "id"        JD.string )
+      ( JD.field "name"      JD.string )
+      ( JD.field "path"      JD.string )
+      ( JD.succeed           Init.defaultState )
+      ( JD.succeed           Init.defaultStyle )
+    )
     ( JD.field "children"
-      <| JD.map Children
-      <| JD.maybe
       <| JD.list
       <| JD.lazy
-      <| \_ -> nodeDecoder
+      <| (\_ -> folderDecoder)
     )
+
+
+tagDecoder : JD.Decoder (Tree Tag)
+tagDecoder =
+  JD.map2 tree
+    ( JD.map5 Tag
+      ( JD.field "id"        JD.string )
+      ( JD.field "name"      JD.string )
+      ( JD.field "path"      JD.string )
+      ( JD.succeed           Init.defaultState )
+      ( JD.succeed           Init.defaultStyle )
+    )
+    ( JD.field "children" <| JD.list <| JD.lazy <| (\_ -> tagDecoder) )
+
+noteDecoder : JD.Decoder (Tree Note)
+noteDecoder =
+  JD.map2 tree
+    ( JD.map5 Note
+      ( JD.field "id"        JD.string )
+      ( JD.field "name"      JD.string )
+      ( JD.field "resource"  JD.string )
+      ( JD.succeed           Init.defaultState )
+      ( JD.succeed           Init.defaultStyle )
+    )
+    ( JD.field "children" <| JD.list <| JD.lazy <| (\_ -> noteDecoder) )
+
 
 relationsDecoder : JD.Decoder Relations
 relationsDecoder =

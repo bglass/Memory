@@ -5,10 +5,11 @@ import Html.Attributes exposing (class)
 
 import Model exposing  (..)
 
+import Book
 import Display
 import Msg   exposing  (Msg(..), TreeType(..))
 
-import Node
+import Tree.Node as Node
 
 view : Model -> Html Msg
 view model =
@@ -24,12 +25,18 @@ view model =
     , div [class "tag_menu"]            [  ]
     , div [class "note_menu"]           [  ]
     , div [class "folder_box"]
-      [ div [class "folders"]           [ Node.view_notop FolderTree selection model.folder.tree] ]
+      [
+        div [class "folders"]           [ Node.viewFolder model.folder]
+      ]
     , div [class "tag_box"]
-      [ div [class "tags"]              [ Node.view_notop TagTree    selection model.tag.tree] ]
+      [
+      div [class "tags"]              [ Node.viewTag   selection model.tag]
+      ]
     , div [class "note_box"]
-      [ div [class "notes"]             [ Node.view_notop NoteTree   selection model.note.tree] ]
-    , div [class "book"]                [ view_book ]
+      [
+      div [class "notes"]             [ Node.viewNote   selection model.note]
+      ]
+    , div [class "book"]                [ Book.view model.book]
     , div [class "folder_search"]       [ view_re_folder ]
     , div [class "tag_search"]          [ view_re_tag ]
     , div [class "note_search"]         [ view_re_note ]
@@ -37,7 +44,6 @@ view model =
     ]
 
 view_date      = text "the date"
-view_book      = text "a book"
 view_re_folder = text "re folder"
 view_re_tag    = text "re tag"
 view_re_note   = text "re note"

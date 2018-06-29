@@ -16,16 +16,12 @@ class NoteController < TreeController
     respond_to :json
     Location.read_all
 
-
-
-
-
     if selected = params[:selected]
       @notes = Note.map selected
 
     elsif selected = params[:jsonpaths]
       @notes = Note.find_by_paths (JSON.parse selected)
-      binding.pry
+      # binding.pry
 
     elsif paths = params[:paths]
       @notes = Note.find_by_paths paths
@@ -33,10 +29,11 @@ class NoteController < TreeController
     else @notes = []
     end
 
-    fields = [:id, :date, :tags, :path, :resource_name, :html]
+    fields = [:id, :date, :tags, :resource, :html, :source]
 
     collection = collect(items: @notes, fields: fields)
 
+# binding.pry
     render json: collection
   end
 
@@ -57,6 +54,7 @@ class NoteController < TreeController
       fields.each do |f|
         record[f] = item.send(f)
       end
+      record[:id] = record[:id].to_s
       collection.push record
     end
     collection

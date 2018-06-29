@@ -6,6 +6,7 @@ type Msg
   = NoOp
   | ModelUpdate (Result Http.Error String)
   | BookUpdate  (Result Http.Error String)
+  | RequestBook NodeMsg
   | FolderMsg NodeMsg
   | NoteMsg   NodeMsg
   | TagMsg    NodeMsg
@@ -18,10 +19,3 @@ type TreeType
   = FolderTree
   | TagTree
   | NoteTree
-
-treeMsg : TreeType -> NodeMsg -> Msg
-treeMsg tree =
-  case tree of
-    FolderTree -> FolderMsg
-    TagTree    -> TagMsg
-    NoteTree   -> NoteMsg

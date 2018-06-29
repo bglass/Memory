@@ -1,51 +1,76 @@
 module Model exposing (..)
 
--- type alias HasTree a = { a | tree : T.Model }
+import Tree exposing (Tree)
+
+type alias Folders = Tree Folder
+type alias Notes   = Tree Note
+type alias Tags    = Tree Tag
+
+type alias ItemTree a = Tree (Item a)
+type alias ItemList a = List (Item a)
+type alias Link = List String
 
 type alias Model =
-  { folder  : Folder
-  , tag     : Tag
-  , note    : Note
+  { folder  : Tree Folder
+  , tag     : Tree Tag
+  , note    : Tree Note
   , link    : Relations
-  , book    : String    -- List Article
+  , book    : Book    -- List Article
   , search  : String    -- Search
   , config  : String    -- Config
   , errmsg  : String
   }
 
+type alias Book = List Article
+
+type alias Article =
+  { key       : String
+  , date      : String
+  , tags      : List String
+  , resource  : String
+  , html      : String
+  , source    : String
+  }
+
+
+type alias Item a =
+  { a
+  | name : String
+  , key  : String
+  , state : State
+  , style : Style
+  }
+
+
 type alias Folder =
-  { tree  : Node
-  }
-
-type alias Note =
-  { tree  : Node
-  }
-
-type alias Tag =
-  { tree  : Node
-  }
-
-type alias Link = List String
-
-type alias Relations =
-  { note_folder : List Link
-  , note_tag    : List Link
-  }
-
-type alias Node =
   { key      : String
   , name     : String
   , path     : String
   , state    : State
   , style    : Style
-  , children : Children
-}
+  }
+
+type alias Note =
+  { key      : String
+  , name     : String
+  , resource : String
+  , state    : State
+  , style    : Style
+  }
+
+type alias Tag =
+  { key      : String
+  , name     : String
+  , path     : String
+  , state    : State
+  , style    : Style
+  }
 
 
--- type alias Payload = -- defined by User
---   { date      : String
---   , resource  : String
---   }
+type alias Relations =
+  { note_folder : List Link
+  , note_tag    : List Link
+  }
 
 type alias State =
   { opened      : Bool
@@ -56,8 +81,6 @@ type alias State =
   , checked     : Bool
   , checkable   : Bool
 }
-
-type Children = Children (Maybe (List Node))
 
 type alias Style = String -- TBD
 
