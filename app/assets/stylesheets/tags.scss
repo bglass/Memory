@@ -1,9 +1,20 @@
-.state_tag_set {
+.state_tag_set,
+.article_tags {
   display: flex;
   overflow: hidden;
   flex-wrap: nowrap;
+}
+.state_tag_set {
   flex-direction: row-reverse;
 }
+
+.article_tags  {
+  // flex-direction: row;
+}
+
+
+
+
 .extra_tags{
   display: flex;
   overflow: hidden;
