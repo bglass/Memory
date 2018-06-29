@@ -2,6 +2,7 @@ module Display exposing (..)
 
 import Html as H exposing (Html)
 import Html.Attributes as HA
+import Set
 
 import Tree exposing (Tree)
 
@@ -16,6 +17,7 @@ import Msg exposing (..)
 tag : Selection -> Html Msg
 tag selection =
   selection.tag_names
+  |> Set.toList
   |> List.map H.text
   |> List.map List.singleton
   |> List.map (H.div [HA.class "tag"])

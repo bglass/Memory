@@ -1,6 +1,8 @@
 module Model exposing (..)
 
+import Set exposing (Set)
 import Tree exposing (Tree)
+
 
 type alias Folders = Tree Folder
 type alias Notes   = Tree Note
@@ -30,8 +32,10 @@ type alias Article =
   , resource  : String
   , html      : String
   , source    : String
+  , mode      : ArticleMode
   }
 
+type ArticleMode = ArticleView | ArticleEdit
 
 type alias Item a =
   { a
@@ -87,5 +91,5 @@ type alias Style = String -- TBD
 type alias Selection =
   { folder_paths : List String
   , note_tags    : List String
-  , tag_names    : List String
+  , tag_names    : Set String
   }

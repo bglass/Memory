@@ -30,13 +30,13 @@ view model =
       ]
     , div [class "tag_box"]
       [
-      div [class "tags"]              [ Node.viewTag   selection model.tag]
+      div [class "tags"]                [ Node.viewTag    selection model.tag]
       ]
     , div [class "note_box"]
       [
-      div [class "notes"]             [ Node.viewNote   selection model.note]
+      div [class "notes"]               [ Node.viewNote   selection model.note]
       ]
-    , div [class "book"]                [ Book.view model.book]
+    , div [class "book"]                [ Book.view       selection model.book]
     , div [class "folder_search"]       [ view_re_folder ]
     , div [class "tag_search"]          [ view_re_tag ]
     , div [class "note_search"]         [ view_re_note ]

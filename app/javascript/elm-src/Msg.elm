@@ -10,6 +10,7 @@ type Msg
   | FolderMsg NodeMsg
   | NoteMsg   NodeMsg
   | TagMsg    NodeMsg
+  | Edit String
 
 type NodeMsg
   = Selected  String

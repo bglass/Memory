@@ -6,6 +6,7 @@ import Json.Encode as JE
 import Init
 import Tree.Node as Node
 import Http
+import Book
 
 import Tree exposing (Tree, tree)
 import Task
@@ -21,6 +22,9 @@ update msg model =
       ( {model | note = Node.update nodemsg model.note}, message (RequestBook nodemsg) )
     TagMsg nodemsg ->
       ( {model | tag = Node.update nodemsg model.tag}, Cmd.none )
+
+    Edit article ->
+      ( { model | book = Book.setEdit model.book article}, Cmd.none )
 
     RequestBook nodemsg ->
       (model, requestBook model.note nodemsg)
@@ -99,27 +103,14 @@ bookDecoder =
 
 articleDecoder : JD.Decoder Article
 articleDecoder =
-  JD.map6 Article
+  JD.map7 Article
   ( JD.field "id"        JD.string )
   ( JD.field "date"      JD.string )
   ( JD.field "tags"    ( JD.list JD.string ) )
   ( JD.field "resource"  JD.string )
   ( JD.field "html"      JD.string )
   ( JD.field "source"    JD.string )
-
-
-
--- type alias Book = List Article
---
--- type alias Article =
---   { key       : String
---   , date      : String
---   , tags      : List String
---   , resource  : String
---   , html      : String
---   , source    : String
---   }
-
+  ( JD.succeed           ArticleView )
 
 
 

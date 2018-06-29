@@ -5,6 +5,7 @@ import Html as H exposing (Html)
 import Model exposing (..)
 import Msg   exposing  (..)
 import Tree.Leaf as Leaf
+import Set exposing (Set)
 
 import Tree exposing (Tree, children)
 
@@ -32,11 +33,11 @@ openClose key tree =
 
 viewFolder : Folders -> Html Msg
 viewFolder node =
-  view folderVisible FolderMsg node
+  view_noTop folderVisible FolderMsg node
 
 viewTag : Selection -> Tags -> Html Msg
 viewTag selection node =
-  view (tagVisible selection) TagMsg node
+  view_noTop (tagVisible selection) TagMsg node
 
 viewNote : Selection -> Notes -> Html Msg
 viewNote selection node =
@@ -115,7 +116,8 @@ note_tags model =
   []
 
 
-tag_names : Model -> List String
+tag_names : Model -> Set String
 tag_names model =
   selected_nodes model.tag
   |> List.map .name
+  |> Set.fromList
