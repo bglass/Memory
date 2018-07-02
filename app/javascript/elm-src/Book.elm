@@ -47,7 +47,9 @@ editArticle selection article =
   article.source
   |> text
   |> List.singleton
-  |> textarea [HA.id ("t" ++ article.key) ]
+  |> textarea [ HA.hidden True
+              , HA.id ("e" ++ article.key)
+              ]
   |> List.singleton
   |> div  [ class "editor"]
 
@@ -56,6 +58,7 @@ viewArticle : Selection -> Article -> Html Msg
 viewArticle selection article =
   div [ class "article_wrap"
       , eventEdit article.key
+      , HA.id ("v" ++ article.key) 
       ]
   [ viewDate    article.date
   , viewTags    selection article.tags

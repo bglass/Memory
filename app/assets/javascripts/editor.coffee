@@ -11,5 +11,5 @@ class @Editor
 
   constructor: (key) ->
 
-    id = "#t"+key
-    new SimpleMDE element: $(id)[0]
+    $("#v"+key).hide()
+    new SimpleMDE element: $("#e"+key)[0]
