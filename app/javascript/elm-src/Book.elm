@@ -5,6 +5,7 @@ import Html.Attributes as HA exposing (class)
 import Html.Events as HE
 import Msg exposing (..)
 import Json.Encode as JE
+import Json.Decode as JD
 import Model exposing (..)
 import Set exposing (Set)
 
@@ -42,9 +43,9 @@ editArticle selection article =
   article.source
   |> text
   |> List.singleton
-  |> textarea []
+  |> textarea [HA.id ("t" ++ article.key) ]
   |> List.singleton
-  |> div [class "editor"]
+  |> div  [ class "editor"]
 
 
 viewArticle : Selection -> Article -> Html Msg
@@ -86,4 +87,9 @@ innerHtml html = span [ JE.string html |> HA.property "innerHTML" ] []
 
 eventEdit : String -> Attribute Msg
 eventEdit key =
-  HE.onDoubleClick (Edit key)
+  HE.onDoubleClick (EditSet key)
+
+
+-- eventLoaded : String -> Attribute Msg
+-- eventLoaded key =
+--   HE.on "load" (JD.succeed (EditCall key))

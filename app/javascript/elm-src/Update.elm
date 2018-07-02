@@ -7,6 +7,7 @@ import Init
 import Tree.Node as Node
 import Http
 import Book
+import Port
 
 import Tree exposing (Tree, tree)
 import Task
@@ -23,8 +24,11 @@ update msg model =
     TagMsg nodemsg ->
       ( {model | tag = Node.update nodemsg model.tag}, Cmd.none )
 
-    Edit article ->
-      ( { model | book = Book.setEdit model.book article}, Cmd.none )
+    EditSet article ->
+      ( { model | book = Book.setEdit model.book article}, message (EditCall article) )
+
+    EditCall article_key ->
+      ( model, Port.elm2js (encodeListString["EDITOR", article_key]) )
 
     RequestBook nodemsg ->
       (model, requestBook model.note nodemsg)
@@ -52,7 +56,7 @@ update msg model =
           Err error ->
             ( {model | errmsg = format_err error}, Cmd.none )
 
---http://faq.elm-community.org/#how-do-i-generate-a-new-message-as-a-command
+-- http://faq.elm-community.org/#how-do-i-generate-a-new-message-as-a-command
 message : msg -> Cmd msg
 message msg = Task.perform identity (Task.succeed msg)
 

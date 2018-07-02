@@ -78,3 +78,12 @@ class @Event
   edit_article: (e)->
     target = $(e.currentTarget)[0]
     new Editor unit: target
+
+  elm2js: (message) ->
+    [cmd, data] = JSON.parse(message)
+
+    switch cmd
+
+      when 'EDITOR'
+        new Editor(data)
+        # console.log "Edit article "+data
