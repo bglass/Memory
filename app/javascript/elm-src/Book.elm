@@ -34,9 +34,13 @@ view selection book =
 
 renderArticle : Selection -> Article -> Html Msg
 renderArticle selection article =
-  case article.mode of
-    ArticleView -> viewArticle selection article
-    ArticleEdit -> editArticle selection article
+  -- case article.mode of
+  --   ArticleView -> viewArticle selection article
+  --   ArticleEdit -> editArticle selection article
+  div []
+  [ viewArticle selection article
+  , editArticle selection article
+  ]
 
 editArticle : Selection -> Article -> Html Msg
 editArticle selection article =

@@ -9,20 +9,7 @@ class @Editor
   #     ed = new SimpleMDE element: $("##{id}")[0]
   #   )
 
-  constructor: (@key) ->
-    id = "t"+@key
-    console.log id
-    # ed = new SimpleMDE(element: $("##{id}")[0])
-    sleep 1000
-    ed = new SimpleMDE element: $("#t41")[0]
-    console.log " Done"
+  constructor: (key) ->
 
-
-sleep = (milliseconds) ->
-  start = (new Date).getTime()
-  i = 0
-  while i < 1e7
-    if (new Date).getTime() - start > milliseconds
-      break
-    i++
-  return
+    id = "#t"+key
+    new SimpleMDE element: $(id)[0]
