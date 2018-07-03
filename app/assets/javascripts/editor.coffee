@@ -9,7 +9,19 @@ class @Editor
   #     ed = new SimpleMDE element: $("##{id}")[0]
   #   )
 
-  constructor: (key) ->
+  constructor: (@id) ->
+    $("#v"+@id).hide()
+    @editor = new SimpleMDE
+      element:      $("#e"+@id)[0]
+      autofocus:    true
+      forceSync:    true
+      spellChecker: false
 
-    $("#v"+key).hide()
-    new SimpleMDE element: $("#e"+key)[0]
+    @editor.codemirror.on "keyup", (e, value) =>
+      main.event.editor_keyup(@, value.key)
+
+  save_and_close: ->
+    $("#e"+@id).hide()
+    $("#v"+@id).show()
+    @editor.toTextArea()
+    @editor = null;

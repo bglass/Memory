@@ -87,3 +87,19 @@ class @Event
       when 'EDITOR'
         new Editor(data)
         # console.log "Edit article "+data
+
+  editor_keyup: (editor, key) ->
+    switch key
+
+      when "Escape"
+        editor.save_and_close()
+        return true
+
+      else
+        sel = window.getSelection()
+        range = sel.getRangeAt(0)
+        rect  = range.getClientRects()[0]
+
+        console.log [sel,range,rect]
+
+        return false

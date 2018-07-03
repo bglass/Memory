@@ -42,6 +42,7 @@ renderArticle selection article =
   , editArticle selection article
   ]
 
+
 editArticle : Selection -> Article -> Html Msg
 editArticle selection article =
   article.source
@@ -58,7 +59,7 @@ viewArticle : Selection -> Article -> Html Msg
 viewArticle selection article =
   div [ class "article_wrap"
       , eventEdit article.key
-      , HA.id ("v" ++ article.key) 
+      , HA.id ("v" ++ article.key)
       ]
   [ viewDate    article.date
   , viewTags    selection article.tags
