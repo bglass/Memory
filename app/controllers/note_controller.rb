@@ -37,13 +37,13 @@ class NoteController < TreeController
     render json: collection
   end
 
-  def editor
-    respond_to :json
-    Location.read_all
-    @note = Note.find_by_resource params[:resource]
-    collection = collect items: [@note], fields: [:tags, :path, :date, :filename, :source]
-    render json: collection.first
-  end
+  # def editor
+  #   respond_to :json
+  #   Location.read_all
+  #   @note = Note.find_by_resource params[:resource]
+  #   collection = collect items: [@note], fields: [:tags, :path, :date, :filename, :source]
+  #   render json: collection.first
+  # end
 
   private
 

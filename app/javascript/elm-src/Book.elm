@@ -1,13 +1,15 @@
-module Book exposing (view, setEdit)
+module Book exposing (view, setEdit, edit)
 
 import Html exposing (..)
 import Html.Attributes as HA exposing (class)
 import Html.Events as HE
 import Msg exposing (..)
-import Json.Encode as JE
-import Json.Decode as JD
+-- import Json.Encode as JE
+-- import Json.Decode as JD
 import Model exposing (..)
 import Set exposing (Set)
+import Markdown
+import Editor
 
 -- UPDATE
 
@@ -17,53 +19,43 @@ setEdit  book article_key =
 
 setArticleEdit : String -> Article -> Article
 setArticleEdit key article =
-  if article.key == key then
-    { article | mode = ArticleEdit }
-  else
+  -- if article.key == key then
+  --   { article | mode = ArticleEdit }
+  -- else
     article
 
+
+edit : Book -> String -> KeyPress -> Book
+edit book article_key keyval =
+  book
+  |> List.map (editArticle article_key keyval)
+
+editArticle : String -> KeyPress -> Article -> Article
+editArticle  article_key keyval article =
+  if article.key == article_key then
+    {article | source = Editor.update article.source keyval }
+  else
+    article
 
 -- VIEW
 
 view : Selection -> Book -> Html Msg
 view selection book =
     book
-    |> List.map (renderArticle selection)
+    |> List.map (viewArticle selection)
     |> div [class "book"]
-
-
-renderArticle : Selection -> Article -> Html Msg
-renderArticle selection article =
-  -- case article.mode of
-  --   ArticleView -> viewArticle selection article
-  --   ArticleEdit -> editArticle selection article
-  div []
-  [ viewArticle selection article
-  , editArticle selection article
-  ]
-
-
-editArticle : Selection -> Article -> Html Msg
-editArticle selection article =
-  article.source
-  |> text
-  |> List.singleton
-  |> textarea [ HA.hidden True
-              , HA.id ("e" ++ article.key)
-              ]
-  |> List.singleton
-  |> div  [ class "editor"]
-
 
 viewArticle : Selection -> Article -> Html Msg
 viewArticle selection article =
   div [ class "article_wrap"
-      , eventEdit article.key
+      -- , eventEdit article.key
       , HA.id ("v" ++ article.key)
+      , Editor.onKeyUp article.key
+      , HA.tabindex 0
       ]
   [ viewDate    article.date
   , viewTags    selection article.tags
-  , viewContent article.html
+  , viewContent article.source
   ]
 
 viewDate : String -> Html msg
@@ -84,14 +76,15 @@ viewTags selection tags =
 
 viewContent : String -> Html msg
 viewContent content = content
-  |> innerHtml
+  |> Markdown.toHtml []
+  -- |> innerHtml
   |> List.singleton
   |> div [class "article"]
   |> List.singleton
   |> div [class "article_frame"]
 
-innerHtml : String -> Html msg
-innerHtml html = span [ JE.string html |> HA.property "innerHTML" ] []
+-- innerHtml : String -> Html msg
+-- innerHtml html = span [ JE.string html |> HA.property "innerHTML" ] []
 
 eventEdit : String -> Attribute Msg
 eventEdit key =

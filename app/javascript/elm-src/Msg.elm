@@ -1,6 +1,7 @@
 module Msg exposing (..)
 
 import Http exposing (Error)
+import Model exposing (KeyPress)
 
 type Msg
   = NoOp
@@ -12,6 +13,8 @@ type Msg
   | TagMsg    NodeMsg
   | EditSet  String
   | EditCall String
+  | Edit String KeyPress
+
 
 type NodeMsg
   = Selected  String

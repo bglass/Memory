@@ -93,3 +93,8 @@ type alias Selection =
   , note_tags    : List String
   , tag_names    : Set String
   }
+
+type alias KeyPress =
+  { keyCode   : Int
+  , key       : String
+  }
