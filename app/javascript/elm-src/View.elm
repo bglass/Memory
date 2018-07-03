@@ -42,8 +42,14 @@ view model =
     , div [class "note_search"]         [ view_re_note ]
     , div [class "book_search"]         [ text model.errmsg ]
     ]
-
+view_date : Html msg
 view_date      = text "the date"
+
+view_re_folder : Html msg
 view_re_folder = text "re folder"
+
+view_re_tag : Html msg
 view_re_tag    = text "re tag"
+
+view_re_note : Html msg
 view_re_note   = text "re note"

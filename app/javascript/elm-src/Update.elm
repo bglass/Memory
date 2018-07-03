@@ -113,7 +113,7 @@ bookDecoder =
 
 articleDecoder : JD.Decoder Article
 articleDecoder =
-  JD.map7 Article
+  JD.map8 Article
   ( JD.field "id"        JD.string )
   ( JD.field "date"      JD.string )
   ( JD.field "tags"    ( JD.list JD.string ) )
@@ -121,6 +121,7 @@ articleDecoder =
   ( JD.field "html"      JD.string )
   ( JD.field "source"    JD.string )
   ( JD.succeed           ArticleView )
+  ( JD.succeed           ( Cursor 0 0))
 
 
 

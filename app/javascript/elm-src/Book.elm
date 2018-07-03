@@ -8,7 +8,6 @@ import Msg exposing (..)
 -- import Json.Decode as JD
 import Model exposing (..)
 import Set exposing (Set)
-import Markdown
 import Editor
 
 -- UPDATE
@@ -33,7 +32,7 @@ edit book article_key keyval =
 editArticle : String -> KeyPress -> Article -> Article
 editArticle  article_key keyval article =
   if article.key == article_key then
-    {article | source = Editor.update article.source keyval }
+    Editor.update article keyval 
   else
     article
 
@@ -55,7 +54,7 @@ viewArticle selection article =
       ]
   [ viewDate    article.date
   , viewTags    selection article.tags
-  , viewContent article.source
+  , Editor.view article
   ]
 
 viewDate : String -> Html msg
@@ -74,14 +73,6 @@ viewTags selection tags =
   |> List.map (div [class "tag"])
   |> div [class "article_tags"]
 
-viewContent : String -> Html msg
-viewContent content = content
-  |> Markdown.toHtml []
-  -- |> innerHtml
-  |> List.singleton
-  |> div [class "article"]
-  |> List.singleton
-  |> div [class "article_frame"]
 
 -- innerHtml : String -> Html msg
 -- innerHtml html = span [ JE.string html |> HA.property "innerHTML" ] []
