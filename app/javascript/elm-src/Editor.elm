@@ -8,10 +8,12 @@ import Markdown
 import Html exposing (..)
 import Html.Attributes as HA exposing (class)
 import String.Extra as SE
+import Regex exposing (..)
 
-onKeyUp : String -> Attribute Msg
-onKeyUp article_key =
-  HE.on "keyup"
+
+onKeyDown : String -> Attribute Msg
+onKeyDown article_key =
+  HE.on "keydown"
   ( JD.map2 Edit
     ( JD.succeed article_key)
     keypress
@@ -20,30 +22,56 @@ onKeyUp article_key =
 
 update : Article -> KeyPress -> Article
 update article pressed =
+  let
+    split_source = String.split cursor article.source
+    old_left   = Maybe.withDefault "" (List.head split_source)
+    old_right  = Maybe.withDefault "" (List.head (List.reverse split_source))
+  in
+    { article | source = String.join cursor (modify pressed old_left old_right) }
+
+
+modify : KeyPress -> String -> String -> List String
+modify pressed old_left old_right =
   if pressed.keyCode == 39 then                       -- Right Arrow
-    { article | cursor = cursorIncrement article.cursor }
+    [ old_left ++ (String.left 1 old_right)
+    ,  String.dropLeft 1 old_right
+    ]
   else if pressed.keyCode == 37 then                  -- Left Arrow
-    { article | cursor = cursorDecrement article.cursor }
+    [ String.dropRight 1 old_left
+    , (String.right 1 old_left) ++ old_right
+    ]
   else if pressed.keyCode == 36 then                  -- Home
-    { article | cursor = Cursor 0 0 }
+    [ ""
+    , old_left ++ old_right
+    ]
   else if pressed.keyCode == 35 then                  -- End
-    { article | cursor = Cursor 0 -1 }
-  else if pressed.keyCode == 46 then                  -- DEL
-    { article | cursor = Cursor 0 -1 }
+    [ old_left ++ old_right
+    , ""
+    ]
+  else if pressed.keyCode == 46 then                  -- BS
+    [ old_left
+    , String.dropLeft 1 old_right
+    ]
+  else if pressed.keyCode == 8 then                  -- DEL
+    [ String.dropRight 1 old_left
+    , old_right
+    ]
+  else if pressed.keyCode == 13 then                  -- Enter
+    [ old_left ++ "\n"
+    , old_right
+    ]
 
   else if String.length pressed.key  == 1 then
-    insert pressed.key article
+    [ old_left ++ pressed.key
+    , old_right
+    ]
   else
-    article
+    [ old_left
+    , old_right
+    ]
 
-cursorIncrement : Cursor -> Cursor
-cursorIncrement cursor =
-  { cursor | col = cursor.col + 1 }
-
-cursorDecrement : Cursor -> Cursor
-cursorDecrement cursor =
-  {cursor | col = cursor.col - 1 }
-
+cursor : String
+cursor = "[C]"
 
 keypress : JD.Decoder KeyPress
 keypress = JD.map2 KeyPress
@@ -55,23 +83,13 @@ keypress = JD.map2 KeyPress
 view : Article -> Html msg
 view article =
   article.source
-  |> insertCursor article.cursor
+  |> replace1 "\\[C\\]" (\_ -> "")
   |> Markdown.toHtml []
-  -- |> innerHtml
   |> List.singleton
   |> div [class "article"]
   |> List.singleton
   |> div [class "article_frame"]
 
-
-insertCursor : Cursor -> String -> String
-insertCursor cursor source =
-  SE.insertAt "|" cursor.col source
-
-insert : String -> Article -> Article
-insert symbol article =
-  let
-    source = SE.insertAt symbol article.cursor.col article.source
-    cursor = Cursor 0 (article.cursor.col+1)
-  in
-    { article | source = source, cursor = cursor }
+replace1 : String -> (Match -> String) -> String -> String
+replace1 regstring =
+  replace (AtMost 1) (regex regstring)

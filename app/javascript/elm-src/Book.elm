@@ -32,7 +32,7 @@ edit book article_key keyval =
 editArticle : String -> KeyPress -> Article -> Article
 editArticle  article_key keyval article =
   if article.key == article_key then
-    Editor.update article keyval 
+    Editor.update article keyval
   else
     article
 
@@ -49,7 +49,7 @@ viewArticle selection article =
   div [ class "article_wrap"
       -- , eventEdit article.key
       , HA.id ("v" ++ article.key)
-      , Editor.onKeyUp article.key
+      , Editor.onKeyDown article.key
       , HA.tabindex 0
       ]
   [ viewDate    article.date

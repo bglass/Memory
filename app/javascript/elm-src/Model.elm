@@ -33,13 +33,8 @@ type alias Article =
   , html      : String
   , source    : String
   , mode      : ArticleMode
-  , cursor    : Cursor
   }
 
-type alias Cursor =
-  { row : Int
-  , col : Int
-  }
 
 type ArticleMode = ArticleView | ArticleEdit
 
