@@ -8,7 +8,7 @@ import Markdown
 import Html exposing (..)
 import Html.Attributes as HA exposing (class)
 import Regex exposing (..)
-
+import Dict exposing (Dict)
 
 onKeyDown : String -> Attribute Msg
 onKeyDown article_key =
@@ -62,9 +62,6 @@ modify pressed old_left old_right =
   else                                                 -- no idea -> do nothing
     Buffer old_left old_right
 
--- cursor : String
--- cursor = "[C]"
-
 keypress : JD.Decoder KeyPress
 keypress = JD.map2 KeyPress
   ( JD.field "keyCode"    JD.int)
@@ -74,16 +71,67 @@ keypress = JD.map2 KeyPress
 
 view : Article -> Html msg
 view article =
-  String.concat
-    [ article.source.left
-    , "<b id='CUR'></b>"
-    , article.source.right
-    ]
+  expose article.source
+  |> bufferToList
+  |> String.join cursor
   |> Markdown.toHtml []
   |> List.singleton
   |> div [class "article"]
   |> List.singleton
   |> div [class "article_frame"]
+
+bufferToList : Buffer -> List String
+bufferToList buffer = [buffer.left, buffer.right]
+
+expose : Buffer -> Buffer
+expose source =
+  exposeWhitespace source
+
+
+exposeWhitespace : Buffer -> Buffer
+exposeWhitespace buffer =
+  let
+    xLeft       = replace All (regex "([\\s]+)$") exchange buffer.left
+
+    wRight      = replace All (regex "^\\s*(.*)") (\{match} -> match) buffer.right
+    sRight      = replace All (regex "^(\\s*).*") exchange buffer.right
+
+    rawSpace    = xLeft ++ sRight
+                |> find All (regex (String.fromChar linefeed))
+                |> List.length
+                |> (flip List.repeat) '\n'
+                |> String.fromList
+  in
+    if (String.length sRight) > 0 then
+      Buffer xLeft (sRight ++ rawSpace ++ wRight)
+    else
+      Buffer (xLeft ++ rawSpace) (sRight ++ wRight)
+
+
+exchange : Match -> String
+exchange match =
+  match.submatches
+  |> List.head
+  |> Maybe.withDefault Nothing
+  |> Maybe.withDefault ""
+  |> String.toList
+  |> List.map ((flip Dict.get) exposeLUT)
+  |> List.map (Maybe.withDefault '?')
+  |> String.fromList
+
+expose_tag : String -> String
+expose_tag exposed =
+  "<b class='exposed'>" ++ exposed ++ "</b>"
+
+exposeLUT : Dict Char Char
+exposeLUT = Dict.fromList [(' ', '⎵'), ('\n', linefeed)]
+
+cursor : String
+cursor = "<b id='CUR'></b>"
+
+linefeed : Char
+linefeed = '␊'
+
 
 replace1 : String -> (Match -> String) -> String -> String
 replace1 regstring =
