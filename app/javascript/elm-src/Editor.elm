@@ -85,46 +85,56 @@ bufferToList buffer = [buffer.left, buffer.right]
 
 expose : Buffer -> Buffer
 expose source =
-  exposeWhitespace source
+  source
+  |> exposeWhitespace
 
 
 exposeWhitespace : Buffer -> Buffer
 exposeWhitespace buffer =
   let
-    xLeft       = replace All (regex "([\\s]+)$") exchange buffer.left
+    leftContent  = replace All (regex "[\\s\\*\\-]*$") (\_ -> "") buffer.left
+    rightContent = replace All (regex "^[\\s\\*\\-]*") (\_ -> "") buffer.right
 
-    wRight      = replace All (regex "^\\s*(.*)") (\{match} -> match) buffer.right
-    sRight      = replace All (regex "^(\\s*).*") exchange buffer.right
+    leftSpace    = String.right ((String.length buffer.left) - (String.length leftContent)) buffer.left
+    rightSpace   = String.left ((String.length buffer.right) - (String.length rightContent)) buffer.right
 
-    rawSpace    = xLeft ++ sRight
-                |> find All (regex (String.fromChar linefeed))
-                |> List.length
-                |> (flip List.repeat) '\n'
-                |> String.fromList
+    leftExpose   = exchange leftSpace
+    rightExpose  = exchange rightSpace
+
+    rawSpace     = leftSpace ++ rightSpace
   in
-    if (String.length sRight) > 0 then
-      Buffer xLeft (sRight ++ rawSpace ++ wRight)
+    if (contains (regex "\\n[\\*\\-] ") rawSpace) then
+      if (leftSpace == "") || (rightSpace == "") then
+        Buffer buffer.left buffer.right
+      else
+        Buffer (leftContent ++ leftExpose) (rightExpose ++ rawSpace ++ rightContent)
+
+    else if rawSpace == " " then
+      Buffer buffer.left buffer.right
+
+    else if rawSpace == "\n" then
+      Buffer (leftContent++leftExpose) (rightExpose++rightContent)
+
+    else if (String.length rightSpace) == 0 then
+      Buffer (leftContent ++ leftExpose++rawSpace) rightContent
+
     else
-      Buffer (xLeft ++ rawSpace) (sRight ++ wRight)
+      Buffer (leftContent ++ leftExpose) (rightExpose ++ rawSpace ++ rightContent)
 
-
-exchange : Match -> String
-exchange match =
-  match.submatches
-  |> List.head
-  |> Maybe.withDefault Nothing
-  |> Maybe.withDefault ""
+exchange : String -> String
+exchange string = string
   |> String.toList
   |> List.map ((flip Dict.get) exposeLUT)
   |> List.map (Maybe.withDefault '?')
   |> String.fromList
+  |> expose_tag
 
 expose_tag : String -> String
 expose_tag exposed =
   "<b class='exposed'>" ++ exposed ++ "</b>"
 
 exposeLUT : Dict Char Char
-exposeLUT = Dict.fromList [(' ', '⎵'), ('\n', linefeed)]
+exposeLUT = Dict.fromList [(' ', '⎵'), ('\n', linefeed), ('*', '*'), ('-', '-')]
 
 cursor : String
 cursor = "<b id='CUR'></b>"
