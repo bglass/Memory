@@ -1,0 +1,12 @@
+#CUR {
+    position:absolute;
+    display: inline-block;
+    -webkit-animation: blink 1s infinite;
+    animation: blink 2s infinite;
+    font-weight:  lighter;
+    width: 2px;
+    height: 1em;
+    background-color: black;
+    // margin-top:2px;
+    // margin-right:1px;
+}

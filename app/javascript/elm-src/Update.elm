@@ -113,16 +113,19 @@ bookDecoder =
 
 articleDecoder : JD.Decoder Article
 articleDecoder =
-  JD.map7 Article
+  JD.map6 Article
   ( JD.field "id"        JD.string )
   ( JD.field "date"      JD.string )
   ( JD.field "tags"    ( JD.list JD.string ) )
-  ( JD.field "resource"  JD.string )
   ( JD.field "html"      JD.string )
-  ( JD.field "source"    JD.string )
+  ( JD.field "source"    bufferDecoder )
   ( JD.succeed           ArticleView )
 
-
+bufferDecoder : JD.Decoder Buffer
+bufferDecoder =
+  JD.map2 Buffer
+    ( JD.succeed "")
+    ( JD.string )
 
 folderDecoder : JD.Decoder (Tree Folder)
 folderDecoder =

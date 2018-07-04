@@ -29,13 +29,16 @@ type alias Article =
   { key       : String
   , date      : String
   , tags      : List String
-  , resource  : String
   , html      : String
-  , source    : String
+  , source    : Buffer
   , mode      : ArticleMode
   }
 
-
+type alias Buffer =
+  { left  : String
+  , right : String
+  }
+  
 type ArticleMode = ArticleView | ArticleEdit
 
 type alias Item a =
