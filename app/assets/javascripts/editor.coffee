@@ -9,10 +9,17 @@ class @Editor
   #     ed = new SimpleMDE element: $("##{id}")[0]
   #   )
 
+  Markdown = (editor) ->
+    editor.data.processor = new GFMxDataProcessor
+    return
+
+
+
+
   constructor: (@id) ->
     $("#v"+@id).hide()
 
-    InlineEditor.create( $(".edit#"+@id)[0] )
+    InlineEditor.create( $(".edit#"+@id)[0]) # , plugins: Markdown )
 
     # @editor.codemirror.on "keyup", (e, value) =>
     #   main.event.editor_keyup(@, value.key)
