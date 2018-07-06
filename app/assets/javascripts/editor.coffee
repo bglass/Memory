@@ -11,17 +11,14 @@ class @Editor
 
   constructor: (@id) ->
     $("#v"+@id).hide()
-    @editor = new SimpleMDE
-      element:      $("#e"+@id)[0]
-      autofocus:    true
-      forceSync:    true
-      spellChecker: false
 
-    @editor.codemirror.on "keyup", (e, value) =>
-      main.event.editor_keyup(@, value.key)
+    InlineEditor.create( $(".edit#"+@id)[0] )
 
-  save_and_close: ->
-    $("#e"+@id).hide()
-    $("#v"+@id).show()
-    @editor.toTextArea()
-    @editor = null;
+    # @editor.codemirror.on "keyup", (e, value) =>
+    #   main.event.editor_keyup(@, value.key)
+
+  # save_and_close: ->
+  #   $("#e"+@id).hide()
+  #   $("#v"+@id).show()
+  #   @editor.toTextArea()
+  #   @editor = null;

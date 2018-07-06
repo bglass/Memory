@@ -48,11 +48,9 @@ editArticle selection article =
   article.source
   |> text
   |> List.singleton
-  |> textarea [ HA.hidden True
-              , HA.id ("e" ++ article.key)
-              ]
-  |> List.singleton
-  |> div  [ class "editor"]
+  |> div  [ class "edit"
+          , HA.id article.key
+          ]
 
 
 viewArticle : Selection -> Article -> Html Msg
